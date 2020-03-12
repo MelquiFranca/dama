@@ -146,6 +146,7 @@ function verificaPecaParaComer(origem, destino, jogadorCor) {
         && 
         !casaPulada.childNodes[0].classList.contains(jogadorCor)             
     ) {
+        casaPulada.childNodes[0].classList.add("pecaComida");
         bancoPecas.appendChild(casaPulada.childNodes[0]);
 
         return true;
@@ -178,8 +179,10 @@ function selecionarPeca(event) {
 
     Array.from(PECAS).map(peca => {
         if(peca.id == event.target.id) {
-            peca.classList.add("pecaSelecionada");
-            peca.appendChild(mao);
+            if(!peca.classList.contains("pecaSelecionada")){
+                peca.classList.add("pecaSelecionada");
+                peca.appendChild(mao);
+            }
         } else {
             peca.classList.remove("pecaSelecionada");
             if(peca.childNodes.length) {
@@ -196,9 +199,12 @@ function selecionarPeca(event) {
 // }   
 function soltaPeca(event) {
     // event.preventDefault();
+    if(event.target.childNodes.length) {
+        return;
+    }
     const pecaSelecionada = document.getElementsByClassName("pecaSelecionada");
     if(pecaSelecionada.length === 1) {  
-        const pecaId = pecaSelecionada[0];
+        const pecaId = pecaSelecionada[0].id;
         console.log(pecaId);
         if(validaMovimento(event.target, pecaId)){
             event.target.appendChild(document.getElementById(pecaId));
