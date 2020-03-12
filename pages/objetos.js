@@ -154,31 +154,56 @@ function verificaPecaParaComer(origem, destino, jogadorCor) {
 }
 function carregarEventosObjetos() {
     Array.from(PECAS).map(peca => {
-        peca.ondragstart = function(event) {
-            movimentaPeca(event);
-        }
+        // peca.ondragstart = function(event) {
+        //     movimentaPeca(event);
+        // };
+
+        peca.onclick = selecionarPeca
     });
     
     Array.from(CASAS).map(casa => {
-        casa.ondragover = function(event) {
-            event.preventDefault();
-        };  
+        // casa.ondragover = function(event) {
+        //     event.preventDefault();
+        // };  
     
-        casa.ondrop = soltaPeca;    
+        if(casa.classList.contains("black")) {
+            casa.onclick = soltaPeca;
+        }
     });
 }
 
-function movimentaPeca(event) {
-    // event.preventDefault();
-    // console.log(event.target);
-    event.dataTransfer.setData("Id", event.target.id);
-}   
+function selecionarPeca(event) {
+    const mao = document.createElement("div");
+    mao.classList.add("mao");
+
+    Array.from(PECAS).map(peca => {
+        if(peca.id == event.target.id) {
+            peca.classList.add("pecaSelecionada");
+            peca.appendChild(mao);
+        } else {
+            peca.classList.remove("pecaSelecionada");
+            if(peca.childNodes.length) {
+                peca.removeChild(peca.childNodes[0]);
+            }
+        }
+    });   
+}
+
+// function movimentaPeca(event) {
+//     // event.preventDefault();
+//     // console.log(event.target);
+//     event.dataTransfer.setData("Id", event.target.id);
+// }   
 function soltaPeca(event) {
     // event.preventDefault();
-    const id = event.dataTransfer.getData('Id');
-    if(validaMovimento(event.target, id)){
-        event.target.appendChild(document.getElementById(id));
-        enviaPosicaoTabuleiro();
+    const pecaSelecionada = document.getElementsByClassName("pecaSelecionada");
+    if(pecaSelecionada.length === 1) {  
+        const pecaId = pecaSelecionada[0];
+        console.log(pecaId);
+        if(validaMovimento(event.target, pecaId)){
+            event.target.appendChild(document.getElementById(pecaId));
+            enviaPosicaoTabuleiro();
+        }
     }
 }
 
