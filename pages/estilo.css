@@ -193,8 +193,16 @@ body {
 #fechar-chat {
     cursor: pointer;
     border: none;
-    padding: 0;
+    /* padding: 10px; */
     background: none;
+    height: 30px;
+    width: 30px;
+    color: #FFF;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    /* border: 1px solid #0c5d75; */
+    justify-content: center;
 }
 
 .chat-form  label {
