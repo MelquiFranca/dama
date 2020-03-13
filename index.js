@@ -36,9 +36,9 @@ io.on('connection', function(socket) {
         // console.log(dados);
         socket.broadcast.emit('atualiza-tabuleiro-banco-pecas', dados);
     });
-    // socket.on("banco-pecas", function(dados) {
-    //     socket.broadcast.emit('atualiza-banco-pecas', dados);
-    // });
+    socket.on("mensagem", function(dados) {
+        socket.broadcast.emit('retorno-mensagem', dados);
+    });
     
 });
 

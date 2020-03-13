@@ -87,12 +87,12 @@ body {
 }
 
 .mao {
-    width: 70%;
-    height: 70%;
+    width: 85%;
+    height: 85%;
     border-radius: 50%;
     background-image: url("img/mao.jpg");
     background-size: cover;
-    box-shadow: 0px 0px 2px 5px green;
+    box-shadow: 0px 0px 2px 3px green;
 }
 
 .pecaMini {
@@ -152,6 +152,122 @@ body {
     flex: 2;
     justify-content: center;
 }
+#exibe-chat {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    justify-content: center;
+    border: none;
+    background: #04945d;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: pointer;
+}
+#exibe-chat:active {
+    background: #047e4f;
+}
+.chat-form {
+    flex-direction: column;
+    display: none;
+    background: #1587aa;
+    padding: 10px;
+    border-radius: 4px;
+    width: 95%;
+    max-width: 550px;
+    margin: 5px auto;
+    align-content: center;
+}
+
+.chat-dialogo {
+    /* border: 4px groove #DDD; */
+    background: #DDD;
+    border-radius: 4px;
+    margin: 5px;
+    width: 95%;
+}
+
+#fechar-chat {
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+.chat-form  label {
+    width: 100%;
+    font-weight: bold;
+    color: #222;
+    justify-content: center;
+}
+.chat-form  textarea {
+    border-radius: 2px;
+    resize: none;
+    width: 100%;
+    /* max-width: 350px; */
+    padding: 10px;
+}
+
+.chat-form  #enviar-mensagem {
+    background: #04945d;
+    color: #FFF;
+    border: none;
+    width: 100%;
+    border-radius: 2px;
+    /* max-width: 350px; */
+    margin-top: 5px;
+    justify-content: center; 
+    padding: 5px 0;   
+    cursor: pointer;
+}
+#mensagens {
+    background: none;
+    right: 5px;
+    top: 5px;
+    max-width: 300px;
+    /* height: 50%; */
+    position: absolute;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.mensagem {
+    /* right: 5px;
+    top: 5px; */
+    /* max-width: 300px; */
+    max-height: 100px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    background: #FFF;
+    color: #666;
+    font-weight: bold;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+    animation-name: sumir-mensagem;
+    animation-duration: 8s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes sumir-mensagem {
+    0% {
+        right: -305px;
+    }
+    5% {
+        right: 5px;
+    }
+    50% { opacity: 1; }
+    /* 50% { opacity: 0.9; } */
+    60% { opacity: 0.9; }
+    70% { opacity: 0.7; }
+    80% { opacity: 0.6; }
+    100% { opacity: 0; }
+}
+
 [draggable] {
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -168,15 +284,15 @@ body {
     }
     .corpo {
         flex-direction: column;
-        padding: 0px 10px;
+        padding: 0px 5px;
         flex: 20;
     }
 
     .corpo .tabuleiro {
-        max-width: 339px;
-        max-height: 339px;
-        min-width: 339px;
-        min-height: 339px;    
+        max-width: 350px;
+        max-height: 350px;
+        min-width: 350px;
+        min-height: 350px;    
         /* height: 90%; */
         /* flex: 2; */
     }
@@ -204,5 +320,10 @@ body {
     .pecaComida {
         width: 30px;
         height: 30px;
+    }
+
+    .chat-form {
+        max-width: 550px;
+        width: 100%;
     }
 }

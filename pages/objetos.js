@@ -3,6 +3,10 @@ const DAMAS = document.getElementsByClassName('dama');
 const CASAS = document.getElementsByClassName('casa');
 const POSICOES = document.getElementsByClassName('black'); 
 const BANCO_PECAS = document.getElementById("bancoPecas");
+const CHAT = document.getElementById("chat-form");
+const EXIBE_CHAT = document.getElementById("exibe-chat");
+const FECHA_CHAT = document.getElementById("fechar-chat");
+const MENSAGENS = document.getElementById("mensagens");
 
 main();
 
@@ -172,6 +176,10 @@ function carregarEventosObjetos() {
             casa.onclick = soltaPeca;
         }
     });
+
+    CHAT.onsubmit = enviaChat
+    EXIBE_CHAT.onclick = exibeChat
+    FECHA_CHAT.onclick = fechaChat
 }
 
 function selecionarPeca(event) {
@@ -314,12 +322,17 @@ function atualizaTabuleiro(dados) {
     })
 }
 
-const socket = io("http://localhost:3333");
+const socket = io("http://192.168.1.4:3333");
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    
     atualizaBancoPecas(data.bancoPecas);
     atualizaTabuleiro(data.tabuleiro);
 });
+
+socket.on("retorno-mensagem", function(data) {
+    console.log(data);
+    exibeMensagem(data);
+})
 
 function atualizaBancoPecas(data) {
     if (Object.keys(data).length) {
@@ -334,7 +347,48 @@ function atualizaBancoPecas(data) {
         });
     }
 }
-// socket.on('atualiza-banco-pecas', function(data) {    
-//     // atualizaBancoPecas(data);
-//     console.log(data);
-// });
+
+function enviaChat(event) {
+    event.preventDefault();
+    const mensagem = document.getElementById("texto");
+    if(mensagem.value.length) {
+        socket.emit("mensagem", mensagem.value);     
+        
+        document.getElementById("enviar-mensagem").disabled = true;
+        document.getElementById("enviar-mensagem").style.background = "#999";
+        document.getElementById("enviar-mensagem").innerText = "Aguarde...";
+        setTimeout((teste) => {
+            document.getElementById("enviar-mensagem").style.background = "#04945d";
+            document.getElementById("enviar-mensagem").disabled = false;
+            document.getElementById("enviar-mensagem").innerText = "Enviar";
+        }, 8000);
+    }
+}
+
+function exibeMensagem(texto) {
+        const mensagem = document.createElement("div");
+        mensagem.classList.add("mensagem");
+        mensagem.id = MENSAGENS.childNodes.length;
+        mensagem.innerText = texto;
+        MENSAGENS.appendChild(mensagem);
+
+        setTimeout(() => {
+            document.getElementById("enviar-mensagem").style.background = "#04945d";
+            document.getElementById("enviar-mensagem").disabled = false;
+            const mensagemRemover = document.getElementById(mensagem.id);
+            MENSAGENS.removeChild(mensagemRemover);
+        }, 8000);
+}
+function exibeChat(event) {
+    event.preventDefault();
+    CHAT.style.display = "flex";
+    BANCO_PECAS.style.display = "none";
+    event.target.style.display = "none";
+}
+
+function fechaChat(event) {
+    event.preventDefault();
+    EXIBE_CHAT.style.display = "flex";
+    BANCO_PECAS.style.display = "flex";
+    CHAT.style.display = "none";   
+}

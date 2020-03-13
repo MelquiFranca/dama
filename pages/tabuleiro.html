@@ -7,7 +7,7 @@
     </head>
     <body>
         <h2 class="titulo">Jogo Dama</h2>
-        <div class="corpo">
+        <div class="corpo" id="corpo">
             <div class="menu">
                 <h4>Menu</h4>
             </div>
@@ -19,9 +19,25 @@
                 <h4>Status do Jogo</h4>
                 <div class="bancoPecas" id="bancoPecas"></div>
             </div>
-        </div> 
-        <p style="text-align: center;">Desenvolvido por Melquisedeque Pereira França</p>
-        
+        </div>         
+        <div id="mensagens"></div>
+        <form class="chat-form" id="chat-form">
+            <div>
+                <label for="texto">CHAT</label>
+                <button id="fechar-chat">X</button>
+            </div>
+            <textarea 
+                name="texto" 
+                id="texto" 
+                rows="3" 
+                maxlength="100"
+                placeholder="Envie aqui uma mensagem para o seu oponente..."></textarea>
+            <button type="submit" id="enviar-mensagem">Enviar</button>
+        </form>
+
+        <button id="exibe-chat">Chat</button>
+
+        <!-- <p style="text-align: center;">Desenvolvido por Melquisedeque Pereira França</p> -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
         <script src="/socket.io/socket.io.js"></script>
         <!-- <script src="acoes.js"></script> -->
