@@ -162,7 +162,7 @@ body {
     -webkit-user-drag: element;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
     div, body, html {
         height: inherit;
     }

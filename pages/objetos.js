@@ -1,7 +1,8 @@
 const PECAS = document.getElementsByClassName('peca');
 const DAMAS = document.getElementsByClassName('dama');
 const CASAS = document.getElementsByClassName('casa');
-const POSICOES = document.getElementsByClassName('black');    
+const POSICOES = document.getElementsByClassName('black'); 
+const BANCO_PECAS = document.getElementById("bancoPecas");
 
 main();
 
@@ -205,7 +206,7 @@ function soltaPeca(event) {
     const pecaSelecionada = document.getElementsByClassName("pecaSelecionada");
     if(pecaSelecionada.length === 1) {  
         const pecaId = pecaSelecionada[0].id;
-        console.log(pecaId);
+        // console.log(pecaId);
         if(validaMovimento(event.target, pecaId)){
             event.target.appendChild(document.getElementById(pecaId));
             enviaPosicaoTabuleiro();
@@ -281,10 +282,14 @@ function desenhaLinhaTabuleiro(inicio, ln, cl) {
 }
 
 function enviaPosicaoTabuleiro() {        
-    socket.emit("tabuleiro", converteTabuleiroEmArray());       
+    socket.emit("", ); 
+    socket.emit("tabuleiro-banco-pecas", {
+        tabuleiro: converteTabuleiroEmObjeto(), 
+        bancoPecas: {...Array.from(BANCO_PECAS.childNodes).map(peca => peca.id)}
+    });  
 }
 
-function converteTabuleiroEmArray() {
+function converteTabuleiroEmObjeto() {
     let obj = {};
     Array.from(CASAS).map(casa => {        
         if(casa.childNodes.length) {
@@ -311,6 +316,25 @@ function atualizaTabuleiro(dados) {
 
 const socket = io("http://localhost:3333");
 
-socket.on('atualiza-tabuleiro', function(data) {    
-    atualizaTabuleiro(data);
+socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    
+    atualizaBancoPecas(data.bancoPecas);
+    atualizaTabuleiro(data.tabuleiro);
 });
+
+function atualizaBancoPecas(data) {
+    if (Object.keys(data).length) {
+        Object.keys(data).map(indice => {
+            const peca = document.getElementById(data[indice]);
+            peca.classList.remove("pecaSelecionada");
+            peca.classList.add("pecaComida");
+            if(peca.childNodes.length) {
+                peca.removeChild(peca.childNodes[0]);
+            }
+            BANCO_PECAS.appendChild(peca);
+        });
+    }
+}
+// socket.on('atualiza-banco-pecas', function(data) {    
+//     // atualizaBancoPecas(data);
+//     console.log(data);
+// });

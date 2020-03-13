@@ -32,9 +32,13 @@ app.get('/inicio', (req, res) => {
 io.on('connection', function(socket) {
     // console.log("Jogador conectado.");
     // socket.emit("teste", {usuario: "Melquisedeque"});
-    socket.on("tabuleiro", function(dados) {
-        socket.broadcast.emit('atualiza-tabuleiro', dados);
+    socket.on("tabuleiro-banco-pecas", function(dados) {
+        // console.log(dados);
+        socket.broadcast.emit('atualiza-tabuleiro-banco-pecas', dados);
     });
+    // socket.on("banco-pecas", function(dados) {
+    //     socket.broadcast.emit('atualiza-banco-pecas', dados);
+    // });
     
 });
 
