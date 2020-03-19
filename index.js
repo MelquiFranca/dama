@@ -43,7 +43,6 @@ app.post('/validaLogin', (req, res) => {
 
     } else {
         const existeSala = Salas.selecionar(sala);
-        
         if(existeSala) {
             const entrou = Salas.entrarSala(sala, jogador, cor);
 
@@ -56,7 +55,7 @@ app.post('/validaLogin', (req, res) => {
         } else {
             Salas.criar(sala, jogador, cor);
             res.send({sala, jogador});
-
+            
         }
 }
 });

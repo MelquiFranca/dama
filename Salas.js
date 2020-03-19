@@ -1,28 +1,31 @@
-const SALAS = require('./salas.json');
 const fs = require("fs");
-    
-function listar() {
-    return SALAS;
-}
+const path = require("path");
+
+// function listar() {
+//     return SALAS;
+// }
     
 function selecionar(sala) {
-        const busca = SALAS.filter(item => {
-        if(item.sala == sala) {
-            return sala;
+    const ARQUIVO = path.resolve("salas", `${sala}.json`);
+    const existeSala = fs.existsSync(ARQUIVO);
+
+    if(existeSala) {
+        const sala = JSON.parse(fs.readFileSync(ARQUIVO,  "utf8"));
+
+        if(!sala.sala) {
+            return null;
         }
-    });
-    if(busca.length) {
-        return busca[0];
-    }  
+
+        return sala;
+    }
+    
     return null;
 }
 
 function criar(sala, jogador, cor) {        
     let novaSala = selecionar(sala);
 
-    if(novaSala) {
-        return novaSala;
-    } else {
+    if(!novaSala) {
         let jogadorRed;
         let jogadorBlue;
 
@@ -40,8 +43,10 @@ function criar(sala, jogador, cor) {
             jogadorBlue
         };
 
-        SALAS.push(novaSala);  
-        fs.writeFileSync('./salas.json', JSON.stringify(SALAS));
+        const ARQUIVO = path.resolve("salas", `${sala}.json`);
+        fs.writeFileSync(ARQUIVO, JSON.stringify(novaSala), {
+            encoding: "utf8"
+        });
     }
 
     return novaSala;
@@ -56,22 +61,25 @@ function entrarSala(sala, jogador, cor) {
         let validacao;
 
         if(cor == 0) { 
-            validacao = (sala.jogadorRed == null) && (sala.jogadorBlue != jogador);
+            validacao = (salaExistente.jogadorRed == null) && (salaExistente.jogadorBlue != jogador);
         } else if(cor == 1){
-            validacao = (sala.jogadorBlue == null) && (sala.jogadorRed != jogador);
+            validacao = (salaExistente.jogadorBlue == null) && (salaExistente.jogadorRed != jogador);
         }
 
         if(validacao) {
-                const novaSala = SALAS.map(sl => {
-                    if(sl.sala == sala) {
-                        sl.jogadorBlue = jogador;
-                    }
+            if(cor == 0) { 
+                salaExistente.jogadorRed = jogador;
+            } else if(cor == 1){
+                salaExistente.jogadorBlue = jogador;
+            }
+            
+            const ARQUIVO = path.resolve("salas", `${sala}.json`);
+            fs.writeFileSync(ARQUIVO, JSON.stringify(salaExistente), {
+                encoding: "utf8"
+            });
 
-                    return sl;
-                });
-                
-                fs.writeFileSync('./salas.json', JSON.stringify(novaSala));
-                return salaExistente;
+            return salaExistente;
+
         } else {
             return {erro: "A sala está cheia ou o nome do jogador informado já existe na sala."};
         }
@@ -80,7 +88,7 @@ function entrarSala(sala, jogador, cor) {
 }
 
 module.exports = {
-    listar,
+    // listar,
     selecionar,
     criar,
     entrarSala

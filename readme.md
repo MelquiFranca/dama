@@ -14,3 +14,7 @@
 - **3 Conexão Sala**
   - [x] Verificar se existe vaga na sala
   - [ ] Guardar Histórico da sala que ainda está em andamento, caso o usuário feche a tela.
+
+- **4 Estrutura de arquivo da Sala**
+  - [ ] Criação de Um arquivo para cada nova sala
+  - [ ] Exclusão do arquivo após a fechamento da sala
