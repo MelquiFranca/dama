@@ -43,7 +43,7 @@ function validaMovimentoDama(linColOrigem, linColDestino, jogadorCor) {
     const movDistanciaLinha = Math.abs(linColDestino[0] - linColOrigem[0]);
     const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
     if(movDistanciaColuna == movDistanciaLinha) {
-        // console.log(movDistanciaColuna, movDistanciaLinha);
+        console.log(movDistanciaColuna, movDistanciaLinha);
         retorno = true;
     }
     // const novaOrigem;
