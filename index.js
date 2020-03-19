@@ -6,12 +6,12 @@ const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
 
-// const arrayPosicoes = {
-//     0: [0,1,2,3],
-//     1: [1]
-// }
+const Salas = require('./Salas');
+
 app.use(cors());
 app.use(express.static(__dirname + '/pages'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/tabuleiro/:id', (req, res) => {
     res.sendFile(__dirname + '/pages/tabuleiro.html');
@@ -28,20 +28,56 @@ app.get('/tabuleiro', (req, res) => {
 app.get('/inicio', (req, res) => {
     res.sendFile(__dirname + '/pages/entrar.html');
 });
+app.post('/validaLogin', (req, res) => {
+    // res.sendFile(__dirname + '/pages/entrar.html');
+    const {sala, jogador, cor, entrarSala} = req.body;
+
+
+    if(entrarSala) {
+        const retorno = Salas.entrarSala(sala, jogador, cor);
+        if(retorno.erro) {
+            res.send(retorno);
+        }
+
+        res.send({sala, jogador});
+
+    } else {
+        const existeSala = Salas.selecionar(sala);
+        
+        if(existeSala) {
+            const entrou = Salas.entrarSala(sala, jogador, cor);
+
+            if(entrou.erro) {
+                res.send(entrou);
+            } else {                
+                res.send({sala, jogador});
+            }
+
+        } else {
+            Salas.criar(sala, jogador, cor);
+            res.send({sala, jogador});
+
+        }
+}
+});
 
 io.on('connection', function(socket) {
-    // console.log("Jogador conectado.");
-    // socket.emit("teste", {usuario: "Melquisedeque"});
+    
+    socket.on("nova-sala", function(sala) {
+        socket.join(sala);
+    })
+    // console.log(socket.rooms);
     socket.on("tabuleiro-banco-pecas", function(dados) {
         // console.log(dados);
-        socket.broadcast.emit('atualiza-tabuleiro-banco-pecas', dados);
+        socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', {tabuleiro: dados.tabuleiro, bancoPecas: dados.bancoPecas});
     });
+
     socket.on("mensagem", function(dados) {
-        socket.broadcast.emit('retorno-mensagem', dados);
+        socket.in(dados.sala).emit('retorno-mensagem', dados.mensagem);
     });
     
 });
 
 http.listen('3333', () => {
-    console.log('Hello World');
+    // console.log('Hello World');
 });

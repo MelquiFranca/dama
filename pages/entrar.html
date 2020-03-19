@@ -5,18 +5,34 @@
 </head>
 <body>
     <h2 class="titulo">Entrar</h2>
-    <form action="" class="form-group">
-        <input class="input" type="text" placeholder="Digite o seu nome" />
-        <input class="input" type="text" placeholder="Digite o código de sala existente">
+    <!-- <div class="logo">
+        <div class="pecaAnimada">ENTRAR NA SALA</div>
+    </div> -->
+    <form action="tabuleiro" class="form-group" id="form-login" method="POST">
+        <input class="input" type="text" name="jogador" placeholder="Digite o seu nome" required/>
+        <input class="input" type="text" name="sala" placeholder="Digite o código de sala existente" required />
+        <div class="group-radio">
+            <label for=""><strong>Selecione a sua Peça</strong></label>
+            <div>
+                <div class="item-radio">
+                    <input type="radio" name="corJogador" id="" value="0" checked>
+                    <label class="pecaMini animacaoRotacao jogadorRed"></label>
+                </div>
+                <div class="item-radio">
+                    <input type="radio" name="corJogador" id="" value="1">
+                    <label class="pecaMini animacaoRotacao jogadorBlue" for=""></label>
+                </div>
+            </div>
+        </div>
         <button class="btn" type="submit">
             <span class="pecaMini jogadorBlue"></span>
             <div>Criar Sala</div>
         </button>
-        <button class="btn">
+        <button class="btn" id="entrar-sala" type="button">
             <span class="pecaMini jogadorRed"></span>
             <div>Entrar na sala</div>
         </button>
     </form>
-
+    <script type="module" src="entrar.js"></script>
 </body>
 </html>

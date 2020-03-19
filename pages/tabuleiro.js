@@ -38,6 +38,25 @@ function validaMovimento(casa, idpeca) {
     return retorno;
 }
 
+function validaMovimentoDama(linColOrigem, linColDestino, jogadorCor) {
+    let retorno;
+    const movDistanciaLinha = Math.abs(linColDestino[0] - linColOrigem[0]);
+    const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
+    if(movDistanciaColuna == movDistanciaLinha) {
+        // console.log(movDistanciaColuna, movDistanciaLinha);
+        retorno = true;
+    }
+    // const novaOrigem;
+    // const novoDestino;
+    // if(true) {
+    //     verificaPecaParaComer(linColOrigem, linColDestino, jogadorCor);
+    // } else {
+    //     retorno = validaMovimentoDama(novaOrigem, novoDestino, jogadorCor);
+    // }
+
+    return retorno;
+}
+
 function validaMovimentoRed(casa, peca) {
     const linColOrigem = peca.parentNode.id.split('-');
     const linColDestino = casa.id.split('-');
@@ -45,38 +64,28 @@ function validaMovimentoRed(casa, peca) {
     const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
     let retorno;
 
-    if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
-        if(linColOrigem[0] < linColDestino[0]) {            
-            retorno = true;
+    if(peca.classList.contains("dama")) {
+        retorno = validaMovimentoDama(linColOrigem, linColDestino, "red");
+    } else {
+        if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
+            if(linColOrigem[0] < linColDestino[0]) {            
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+        } else if(movDistanciaLinha == 2 && movDistanciaColuna == 2) {
+            retorno = verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorRed');
+
         } else {
             retorno = false;
+        }   
+
+        if(retorno && (parseInt(linColDestino[0]) == 7)) {
+            peca.classList.add('dama');
         }
-    } else if(movDistanciaLinha == 2 && movDistanciaColuna == 2) {
-        retorno = verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorRed');
-
-    } else {
-        retorno = false;
-    }   
-
-    if(retorno && (parseInt(linColDestino[0]) == 7)) {
-        peca.classList.add('dama');
     }
-
     return retorno;
 }
-
-// function validaMovimentoDama(origem, destino, jogadorCor) {
-//     const novaOrigem;
-//     const novoDestino;
-//     let retorno;
-//     if(true) {
-//         verificaPecaParaComer(origem, destino, jogadorCor);
-//     } else {
-//         retorno = validaMovimentoDama(novaOrigem, novoDestino, jogadorCor);
-//     }
-
-//     return retorno;
-// }
 
 function validaMovimentoBlue(casa, peca) {
     const linColOrigem = peca.parentNode.id.split('-');
@@ -84,21 +93,26 @@ function validaMovimentoBlue(casa, peca) {
     const movDistanciaLinha = Math.abs(linColDestino[0] - linColOrigem[0]);
     const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
     let retorno;
-    if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
-        if(linColOrigem[0] > linColDestino[0]) {            
-            retorno = true;
+
+    if(peca.classList.contains("dama")) {
+        retorno = validaMovimentoDama(linColOrigem, linColDestino, "blue");
+    } else {
+        if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
+            if(linColOrigem[0] > linColDestino[0]) {            
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+        } else if(movDistanciaLinha == 2 && movDistanciaColuna == 2) {
+            retorno = verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorBlue');
+
         } else {
             retorno = false;
+        }   
+
+        if(retorno && (parseInt(linColDestino[0]) == 0 )) {
+            peca.classList.add('dama');
         }
-    } else if(movDistanciaLinha == 2 && movDistanciaColuna == 2) {
-        retorno = verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorBlue');
-
-    } else {
-        retorno = false;
-    }   
-
-    if(retorno && (parseInt(linColDestino[0]) == 0 )) {
-        peca.classList.add('dama');
     }
 
     return retorno;
@@ -290,8 +304,9 @@ function desenhaLinhaTabuleiro(inicio, ln, cl) {
 }
 
 function enviaPosicaoTabuleiro() {        
-    socket.emit("", ); 
+    // socket.emit("", ); 
     socket.emit("tabuleiro-banco-pecas", {
+        sala: window.localStorage.sala,
         tabuleiro: converteTabuleiroEmObjeto(), 
         bancoPecas: {...Array.from(BANCO_PECAS.childNodes).map(peca => peca.id)}
     });  
@@ -322,18 +337,6 @@ function atualizaTabuleiro(dados) {
     })
 }
 
-const socket = io("http://192.168.1.4:3333");
-
-socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    
-    atualizaBancoPecas(data.bancoPecas);
-    atualizaTabuleiro(data.tabuleiro);
-});
-
-socket.on("retorno-mensagem", function(data) {
-    console.log(data);
-    exibeMensagem(data);
-})
-
 function atualizaBancoPecas(data) {
     if (Object.keys(data).length) {
         Object.keys(data).map(indice => {
@@ -352,7 +355,7 @@ function enviaChat(event) {
     event.preventDefault();
     const mensagem = document.getElementById("texto");
     if(mensagem.value.length) {
-        socket.emit("mensagem", mensagem.value);     
+        socket.emit("mensagem", {mensagem: mensagem.value, sala: window.localStorage.sala});     
         
         document.getElementById("enviar-mensagem").disabled = true;
         document.getElementById("enviar-mensagem").style.background = "#999";
@@ -361,22 +364,23 @@ function enviaChat(event) {
             document.getElementById("enviar-mensagem").style.background = "#04945d";
             document.getElementById("enviar-mensagem").disabled = false;
             document.getElementById("enviar-mensagem").innerText = "Enviar";
-        }, 8000);
+        }, 7000);
     }
 }
 
 function exibeMensagem(texto) {
         const mensagem = document.createElement("div");
+        const corpo = document.getElementById("corpo");
         mensagem.classList.add("mensagem");
-        mensagem.id = MENSAGENS.childNodes.length;
+        // mensagem.id = MENSAGENS.childNodes.length;
         mensagem.innerText = texto;
-        MENSAGENS.appendChild(mensagem);
+        corpo.appendChild(mensagem);
 
         setTimeout(() => {
             document.getElementById("enviar-mensagem").style.background = "#04945d";
             document.getElementById("enviar-mensagem").disabled = false;
-            const mensagemRemover = document.getElementById(mensagem.id);
-            MENSAGENS.removeChild(mensagemRemover);
+            // const mensagemRemover = document.getElementById(mensagem.id);
+            corpo.removeChild(mensagem);
         }, 8000);
 }
 function exibeChat(event) {
@@ -392,3 +396,19 @@ function fechaChat(event) {
     BANCO_PECAS.style.display = "flex";
     CHAT.style.display = "none";   
 }
+
+
+const socket = io("http://192.168.1.4:3333");
+socket.on("connect", function() {
+    socket.emit("nova-sala", window.localStorage.sala);
+});
+
+socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    
+    atualizaBancoPecas(data.bancoPecas);
+    atualizaTabuleiro(data.tabuleiro);
+});
+
+socket.on("retorno-mensagem", function(data) {
+    // console.log(data);
+    exibeMensagem(data);
+})

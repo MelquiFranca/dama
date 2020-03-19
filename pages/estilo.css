@@ -15,6 +15,9 @@ body {
     background: rgb(183, 255, 219);
     flex-direction: column;
 }
+button {
+    cursor: pointer;
+}
 .menu {
     flex: 1;
     justify-content: center;
@@ -105,6 +108,33 @@ body {
     cursor: pointer;
     color: white;
 }
+
+.animacaoRotacao {
+    animation-name: rotacaoPeca;
+    animation-duration: 6s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+.pecaAnimada {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 7px groove;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* padding: 20px; */
+    font-weight: bold;
+    cursor: pointer;
+    color: #c0c0c0;
+    animation-name: rotacaoPeca;
+    background: red;
+    border-color: rgb(160, 35, 35);
+    animation-duration: 6s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
 .jogadorRed {
     background: red;
     border-color: rgb(160, 35, 35);
@@ -127,7 +157,7 @@ body {
     border: 1px solid #CCC;
     text-align: center;
     border-radius: 2px;
-    margin: 10px 0px;
+    margin: 10px;
     padding: 5px 15px;
     font-size: 18px;
 }
@@ -139,7 +169,7 @@ body {
     align-items: flex-end;
 }
 .btn {
-    margin: 5px 0px;
+    margin: 5px 10px;
     justify-content: center;
     align-items: center;
     border-radius: 2px;
@@ -231,50 +261,107 @@ body {
     padding: 5px 0;   
     cursor: pointer;
 }
-#mensagens {
+/* #mensagens {
     background: none;
     right: 5px;
     top: 5px;
     max-width: 300px;
-    /* height: 50%; */
+    height: 50%;
     position: absolute;
     flex-direction: column;
     flex-wrap: wrap;
-}
+} */
 .mensagem {
-    /* right: 5px;
-    top: 5px; */
-    /* max-width: 300px; */
-    max-height: 100px;
+    right: 5px;
+    top: 5px;
+    max-width: 300px;
+    max-height: 90px;
     width: 100%;
-    padding: 10px;
+    padding: 10px 5px;
     border-radius: 5px;
     position: absolute;
     background: #FFF;
+    /* opacity: 0.9; */
     color: #666;
     font-weight: bold;
     font-size: 12px;
     justify-content: center;
+    text-align: center;
     align-items: center;
     animation-name: sumir-mensagem;
-    animation-duration: 8s;
+    animation-duration: 7s;
     animation-fill-mode: forwards;
+}
+
+.logo {
+    width: 30%;
+    margin-top: 20px;
+    height: 120px;
+    align-items: center;
+}
+
+.group-radio {
+    flex-direction: column;
+    align-content: center;
+    /* border: 1px solid black; */
+    height: 70px;
+    margin: 10px 0px 20px 0px;
+}
+.group-radio>label {
+    width: 100%;
+    justify-content: center;
+}
+.group-radio .item-radio {
+    align-items: center;
+}
+.group-radio .item-radio>input {
+    width: 20px;
 }
 
 @keyframes sumir-mensagem {
     0% {
+        width: 0%;
+        font-size: 0px;
         right: -305px;
     }
     5% {
         right: 5px;
+        width: 100%;
+        font-size: 8px;        
     }
-    50% { opacity: 1; }
+
+    10% {
+        font-size: 12px;
+    }
     /* 50% { opacity: 0.9; } */
-    60% { opacity: 0.9; }
-    70% { opacity: 0.7; }
-    80% { opacity: 0.6; }
+    60% { opacity: 1; }
+    70% { opacity: 0.8; }
+    80% { opacity: 0.7; }
+    90% { opacity: 0.6; }
     100% { opacity: 0; }
 }
+
+@keyframes rotacaoPeca {
+    0%{
+        transform: rotateY(0deg);        
+    }
+    33% {
+        transform: rotateY(360deg);
+    } 
+    66% {
+        transform: rotateY(720deg);
+    }
+    100% {
+        transform: rotateY(1440deg);
+    } 
+}
+/* 
+width: 0px;
+height: 0px;
+border-color: rgb(31, 31, 143);
+background: blue;
+font-size: 0px;
+ */
 
 [draggable] {
     -moz-user-select: none;
