@@ -15,6 +15,7 @@ function main() {
     gerarPecasRed(12);
     gerarPecasBlue(12);
     carregarEventosObjetos();
+    exibeInformacoesSalaNatela();
 }
 
 function validaMovimento(casa, idpeca) {
@@ -221,7 +222,7 @@ function verificaPecaParaComerDama(origem, destino, jogadorCor) {
         && 
             isCasaPuladaVazia(origem, [linhaCasaPulada, colunaCasaPulada])        
     ) {
-        console.log(casaPulada.childNodes[0]);
+        // console.log(casaPulada.childNodes[0]);
         casaPulada.childNodes[0].classList.add("pecaComida");
         bancoPecas.appendChild(casaPulada.childNodes[0]);
 
@@ -397,6 +398,10 @@ function desenhaLinhaTabuleiro(inicio, ln, cl) {
     return linha;
 }
 
+function exibeInformacoesSalaNatela() {
+
+}
+
 function enviaPosicaoTabuleiro() {        
     // socket.emit("", ); 
     socket.emit("tabuleiro-banco-pecas", {
@@ -492,9 +497,26 @@ function fechaChat(event) {
 }
 
 
+function limparHistorico() {
+    window.localStorage.removeItem("jogador");
+    window.localStorage.removeItem("sala");
+    window.localStorage.removeItem("dados");
+}
+
 const socket = io("http://192.168.1.4:3333");
-socket.on("connect", function() {
+socket.on("connect", async function() {
     socket.emit("nova-sala", window.localStorage.sala);
+
+    const retorno = await fetch("/carregaDadosSala", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({sala: window.localStorage.sala})
+    });
+    const resposta = await retorno.json();
+    // console.log(resposta || "Não Existe");
 });
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    
@@ -505,4 +527,8 @@ socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
 socket.on("retorno-mensagem", function(data) {
     // console.log(data);
     exibeMensagem(data);
-})
+});
+
+// socket.on("carrega-dados-sala", function(data) {
+//     console.log(data);
+// });

@@ -32,14 +32,13 @@ app.post('/validaLogin', (req, res) => {
     // res.sendFile(__dirname + '/pages/entrar.html');
     const {sala, jogador, cor, entrarSala} = req.body;
 
-
     if(entrarSala) {
         const retorno = Salas.entrarSala(sala, jogador, cor);
         if(retorno.erro) {
             res.send(retorno);
         }
 
-        res.send({sala, jogador});
+        res.send(retorno);
 
     } else {
         const existeSala = Salas.selecionar(sala);
@@ -49,22 +48,28 @@ app.post('/validaLogin', (req, res) => {
             if(entrou.erro) {
                 res.send(entrou);
             } else {                
-                res.send({sala, jogador});
+                res.send(entrou);
             }
 
         } else {
-            Salas.criar(sala, jogador, cor);
-            res.send({sala, jogador});
-            
+            const novaSala = Salas.criar(sala, jogador, cor);
+            res.send(novaSala);            
         }
 }
 });
 
+app.post('/carregaDadosSala', (req, res) => {
+    const { sala } = req.body;
+    const existeSala = Salas.selecionar(sala);
+    res.send(existeSala);
+})
+
 io.on('connection', function(socket) {
     
     socket.on("nova-sala", function(sala) {
-        socket.join(sala);
-    })
+        socket.join(sala);        
+    });
+
     // console.log(socket.rooms);
     socket.on("tabuleiro-banco-pecas", function(dados) {
         // console.log(dados);
@@ -74,7 +79,7 @@ io.on('connection', function(socket) {
     socket.on("mensagem", function(dados) {
         socket.in(dados.sala).emit('retorno-mensagem', dados.mensagem);
     });
-    
+        
 });
 
 http.listen('3333', () => {

@@ -1,6 +1,6 @@
 ###Lista de Pendências
 -  **1 Jogabilidade**
-   - [x] ***Comer peça com Dama***
+   - [x] Comer peça com Dama
    - [ ] Assoprar Peça que não foi comida
    - [ ] ***Vez de Jogada***
    - [ ] Cronômetro
@@ -14,8 +14,9 @@
   
 - **3 Conexão Sala**
   - [x] Verificar se existe vaga na sala
+  - [x] Carregando Dados salvos da Sala ao entrar nela **(Falta usar estes Dados para Atualizar as informações do jogo)**
   - [ ] Guardar Histórico da sala que ainda está em andamento, caso o usuário feche a tela.
 
 - **4 Estrutura de arquivo da Sala**
-  - [ ] Criação de Um arquivo para cada nova sala
+  - [x] Criação de Um arquivo para cada nova sala
   - [ ] Exclusão do arquivo após a fechamento da sala
