@@ -8,7 +8,7 @@
    - [ ] **Iniciar Nova Partida na mesma sala**
 
 - **2 Exibição/Layout**
-  - [ ] ***Cor de Dama na visão do adversário***
+  - [x] ***Cor de Dama na visão do adversário***
   - [ ] **Exibir dados dos jogadores na tela**
   - [ ] Posicionamento e layout de formulário do Chat
   

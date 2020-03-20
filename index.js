@@ -67,6 +67,7 @@ app.post('/carregaDadosSala', (req, res) => {
 io.on('connection', function(socket) {
     
     socket.on("nova-sala", function(sala) {
+        console.log(socket.id);
         socket.join(sala);        
     });
 

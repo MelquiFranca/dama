@@ -415,9 +415,15 @@ function converteTabuleiroEmObjeto() {
     let obj = {};
     Array.from(CASAS).map(casa => {        
         if(casa.childNodes.length) {
-            obj[casa.id] = casa.childNodes[0].id;
+            obj[casa.id] = {
+                pecaId: casa.childNodes[0].id,
+                isDama: casa.childNodes[0].classList.contains("dama")
+            };
         } else {
-            obj[casa.id] = null;
+            obj[casa.id] = {
+                pecaId: null,
+                isDama: false
+            };
         }
     });
 
@@ -428,7 +434,10 @@ function atualizaTabuleiro(dados) {
     // console.log(dados);
     Object.keys(dados).map((casaId) => {
         const casa = document.getElementById(casaId);
-        const peca = document.getElementById(dados[casaId]);
+        const peca = document.getElementById(dados[casaId].pecaId);
+        if(dados[casaId].isDama) {
+            peca.classList.add("dama");
+        }
         // casa.innerHTML = "";
         if(peca) {
             casa.appendChild(peca);
@@ -516,7 +525,7 @@ socket.on("connect", async function() {
         body: JSON.stringify({sala: window.localStorage.sala})
     });
     const resposta = await retorno.json();
-    // console.log(resposta || "Não Existe");
+    // console.log(socket.id);
 });
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    
