@@ -43,16 +43,14 @@ function validaMovimentoDama(linColOrigem, linColDestino, jogadorCor) {
     const movDistanciaLinha = Math.abs(linColDestino[0] - linColOrigem[0]);
     const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
     if(movDistanciaColuna == movDistanciaLinha) {
-        // console.log(movDistanciaColuna, movDistanciaLinha);
-        retorno = true;
+        retorno = isCasaPuladaVazia(linColOrigem, linColDestino);        
+        if(!retorno) {
+            retorno = verificaPecaParaComerDama(linColOrigem, linColDestino, jogadorCor);
+        }
+    } else {
+        retorno = false;
     }
-    // const novaOrigem;
-    // const novoDestino;
-    // if(true) {
-    //     verificaPecaParaComer(linColOrigem, linColDestino, jogadorCor);
-    // } else {
-    //     retorno = validaMovimentoDama(novaOrigem, novoDestino, jogadorCor);
-    // }
+    
 
     return retorno;
 }
@@ -65,7 +63,7 @@ function validaMovimentoRed(casa, peca) {
     let retorno;
 
     if(peca.classList.contains("dama")) {
-        retorno = validaMovimentoDama(linColOrigem, linColDestino, "red");
+        retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorRed");
     } else {
         if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
             if(linColOrigem[0] < linColDestino[0]) {            
@@ -95,7 +93,7 @@ function validaMovimentoBlue(casa, peca) {
     let retorno;
 
     if(peca.classList.contains("dama")) {
-        retorno = validaMovimentoDama(linColOrigem, linColDestino, "blue");
+        retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorBlue");
     } else {
         if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
             if(linColOrigem[0] > linColDestino[0]) {            
@@ -172,6 +170,102 @@ function verificaPecaParaComer(origem, destino, jogadorCor) {
     }
     return false;
 }
+
+function verificaPecaParaComerDama(origem, destino, jogadorCor) {
+    // console.log(origem, destino);
+    
+    let linhaCasaPulada;
+    let colunaCasaPulada;
+    let direita;
+    let frente;
+
+    // direita = true e esquerda = false
+    frente = origem[0] < destino[0];
+    direita = origem[1] < destino[1];
+
+    if(frente && direita) { 
+
+        linhaCasaPulada = parseInt(destino[0]) - 1;
+        colunaCasaPulada = parseInt(destino[1]) - 1;
+
+    } else if(!frente && direita) {
+
+        linhaCasaPulada = parseInt(destino[0]) + 1;
+        colunaCasaPulada = parseInt(destino[1]) - 1;
+
+    } else if(frente && !direita) {        
+        linhaCasaPulada = parseInt(destino[0]) - 1;
+        colunaCasaPulada = parseInt(destino[1]) + 1;
+
+    } else if(!frente && !direita) {
+        linhaCasaPulada = parseInt(destino[0]) + 1;
+        colunaCasaPulada = parseInt(destino[1]) + 1;
+
+    }
+
+
+    if(linhaCasaPulada < 0 || colunaCasaPulada < 0) {
+        return false;
+    }
+
+    const casaPulada = document.getElementById(`${linhaCasaPulada}-${colunaCasaPulada}`);
+    const bancoPecas = document.getElementById('bancoPecas');
+    // console.log(casaPulada.childNodes[0]);
+
+    if(
+            casaPulada.childNodes.length 
+        && 
+            casaPulada.childNodes[0].classList.contains('peca') 
+        && 
+            !casaPulada.childNodes[0].classList.contains(jogadorCor)    
+        && 
+            isCasaPuladaVazia(origem, [linhaCasaPulada, colunaCasaPulada])        
+    ) {
+        console.log(casaPulada.childNodes[0]);
+        casaPulada.childNodes[0].classList.add("pecaComida");
+        bancoPecas.appendChild(casaPulada.childNodes[0]);
+
+        return true;
+    } 
+
+    return false;
+}
+
+function isCasaPuladaVazia(origem, destino) {
+    // let inicio = Math.abs(origem[0]);
+    let fim = Math.abs(destino[0] - origem[0]);
+    let retorno;
+    const difLin = destino[0] - origem[0];
+    const difCol = destino[1] - origem[1];
+    // console.log("difLin:", difLin);
+    // console.log("difCol:", difCol);
+
+    if(fim <= 1) {
+        return true;
+    }
+
+    for(let inicio = 1; inicio <= fim - 1; inicio++) {
+
+        const lin = (difLin < 0) ? (parseInt(destino[0]) + inicio) : (parseInt(destino[0]) - inicio);
+        const col = (difCol < 0) ? (parseInt(destino[1]) + inicio) : (parseInt(destino[1]) - inicio);
+
+        // console.log(`${lin}-${col}`);
+        const casaPulada = document.getElementById(`${lin}-${col}`);
+
+        if(casaPulada.childNodes.length 
+            && 
+            casaPulada.childNodes[0].classList.contains('peca')              
+        ) {
+            retorno = false;
+            break;
+        } else {
+            retorno = true;
+        }
+    }
+
+    return retorno;
+}
+
 function carregarEventosObjetos() {
     Array.from(PECAS).map(peca => {
         // peca.ondragstart = function(event) {
