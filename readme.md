@@ -15,7 +15,7 @@
 - **3 Conexão Sala**
   - [x] Verificar se existe vaga na sala
   - [x] Carregando Dados salvos da Sala ao entrar nela **(Falta usar estes Dados para Atualizar as informações do jogo)**
-  - [ ] Guardar Histórico da sala que ainda está em andamento, caso o usuário feche a tela.
+  - [x] Guardar Histórico da sala que ainda está em andamento, caso o usuário feche a tela.
 
 - **4 Estrutura de arquivo da Sala**
   - [x] Criação de Um arquivo para cada nova sala

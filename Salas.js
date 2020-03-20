@@ -84,7 +84,8 @@ function entrarSala(sala, jogador, cor) {
 function atualizarHistoricoSala(dados) {
     const sala = selecionar(dados.sala);
     sala.tabuleiro = dados.tabuleiro;
-    console.log(sala);
+    sala.bancoPecas = dados.bancoPecas;
+    // console.log(sala);
     salvarArquivo(dados.sala, sala);
 }
 

@@ -525,7 +525,11 @@ socket.on("connect", async function() {
         body: JSON.stringify({sala: window.localStorage.sala})
     });
     const resposta = await retorno.json();
-    // console.log(socket.id);
+    if(resposta.tabuleiro) {
+        atualizaTabuleiro(resposta.tabuleiro);
+        atualizaBancoPecas(resposta.bancoPecas);
+    }
+    // console.log(resposta);
 });
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {    

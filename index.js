@@ -67,14 +67,18 @@ app.post('/carregaDadosSala', (req, res) => {
 io.on('connection', function(socket) {
     
     socket.on("nova-sala", function(sala) {
-        console.log(socket.id);
+        // console.log(socket.id);
         socket.join(sala);        
     });
 
     // console.log(socket.rooms);
     socket.on("tabuleiro-banco-pecas", function(dados) {
         // console.log(dados);
-        Salas.atualizarHistoricoSala({sala: dados.sala, tabuleiro: dados.tabuleiro});
+        Salas.atualizarHistoricoSala({
+            sala: dados.sala, 
+            tabuleiro: dados.tabuleiro, 
+            bancoPecas: dados.bancoPecas
+        });
         socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', {tabuleiro: dados.tabuleiro, bancoPecas: dados.bancoPecas});
     });
 
