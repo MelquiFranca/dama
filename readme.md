@@ -1,6 +1,6 @@
 ###Lista de Pendências
 -  **1 Jogabilidade**
-   - [ ] ***Comer peça com Dama***
+   - [x] ***Comer peça com Dama***
    - [ ] Assoprar Peça que não foi comida
    - [ ] ***Vez de Jogada***
    - [ ] Cronômetro
@@ -9,6 +9,7 @@
 
 - **2 Exibição/Layout**
   - [ ] ***Cor de Dama na visão do adversário***
+  - [ ] **Exibir dados dos jogadores na tela**
   - [ ] Posicionamento e layout de formulário do Chat
   
 - **3 Conexão Sala**
