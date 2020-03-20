@@ -150,7 +150,7 @@ button {
 .form-group {
     margin-top: 50px;
     flex-direction: column;
-    width: 400px;
+    width: 450px;
     flex: 2;
 }
 .input {
@@ -173,9 +173,20 @@ button {
     justify-content: center;
     align-items: center;
     border-radius: 2px;
-    padding: 5px 20px;
-    border: 1px solid #CCC;
-    font-size: 15px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 17px;
+}
+
+.btn-primario {
+    background: #04c8a8;
+    color: #FFF;
+}
+
+.btn-secundario {
+    background: #c5c804;
+    color: #FFF;
+
 }
 
 .btn div {
@@ -311,11 +322,18 @@ button {
     width: 100%;
     justify-content: center;
 }
+
 .group-radio .item-radio {
     align-items: center;
+    padding: 0 70px;
 }
 .group-radio .item-radio>input {
     width: 20px;
+}
+.group-radio .item-radio>div {
+    width: 70px;
+    justify-content: start;
+    align-items: center;
 }
 
 @keyframes sumir-mensagem {
