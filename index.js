@@ -74,6 +74,7 @@ io.on('connection', function(socket) {
     // console.log(socket.rooms);
     socket.on("tabuleiro-banco-pecas", function(dados) {
         // console.log(dados);
+        Salas.atualizarHistoricoSala({sala: dados.sala, tabuleiro: dados.tabuleiro});
         socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', {tabuleiro: dados.tabuleiro, bancoPecas: dados.bancoPecas});
     });
 

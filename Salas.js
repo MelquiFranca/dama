@@ -43,10 +43,7 @@ function criar(sala, jogador, cor) {
             jogadorBlue
         };
 
-        const ARQUIVO = path.resolve("salas", `${sala}.json`);
-        fs.writeFileSync(ARQUIVO, JSON.stringify(novaSala), {
-            encoding: "utf8"
-        });
+        salvarArquivo(sala, novaSala);
     }
 
     return novaSala;
@@ -73,10 +70,7 @@ function entrarSala(sala, jogador, cor) {
                 salaExistente.jogadorBlue = jogador;
             }
             
-            const ARQUIVO = path.resolve("salas", `${sala}.json`);
-            fs.writeFileSync(ARQUIVO, JSON.stringify(salaExistente), {
-                encoding: "utf8"
-            });
+            salvarArquivo(sala, salaExistente);        
 
             return salaExistente;
 
@@ -87,9 +81,23 @@ function entrarSala(sala, jogador, cor) {
 
 }
 
+function atualizarHistoricoSala(dados) {
+    const sala = selecionar(dados.sala);
+    sala.tabuleiro = dados.tabuleiro;
+    console.log(sala);
+    salvarArquivo(dados.sala, sala);
+}
+
+function salvarArquivo(sala, dados) {
+    const ARQUIVO = path.resolve("salas", `${sala}.json`);
+    fs.writeFileSync(ARQUIVO, JSON.stringify(dados), {
+        encoding: "utf8"
+    });
+}
 module.exports = {
     // listar,
     selecionar,
     criar,
-    entrarSala
+    entrarSala,
+    atualizarHistoricoSala
 }
