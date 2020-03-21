@@ -6,6 +6,7 @@
    - [ ] ***Validar Continuação de Jogada após realizar primeiro movimento***
    - [ ] Cronômetro
    - [ ] Fim de jogo
+   - [ ] **Liberar Início da partida após os Dois jogadores se conectarem**
    - [ ] **Iniciar Nova Partida na mesma sala**
 
 - **2 Exibição/Layout**
