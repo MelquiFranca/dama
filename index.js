@@ -99,6 +99,6 @@ io.on('connection', function(socket) {
         
 });
 
-http.listen(process.env.port || '3333', () => {
+http.listen(process.env.PORT || '3333', () => {
     // console.log('Hello World');
 });
