@@ -74,14 +74,23 @@ io.on('connection', function(socket) {
     // console.log(socket.rooms);
     socket.on("tabuleiro-banco-pecas", function(dados) {
         // console.log(dados);
-        Salas.atualizarHistoricoSala({
+        const retorno = Salas.atualizarHistoricoSala({
             sala: dados.sala, 
             tabuleiro: dados.tabuleiro, 
             bancoPecas: dados.bancoPecas
         });
-        socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', {tabuleiro: dados.tabuleiro, bancoPecas: dados.bancoPecas});
+        socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', retorno);
     });
+    
+    socket.on("finaliza-jogada", function(data) {
+        const retorno = Salas.atualizarVezJogada({
+            vezJogada: data.vezJogada,
+            sala: data.sala,
+        });
 
+        socket.in(data.sala).emit('inicia-jogada', retorno);
+
+    });
     socket.on("mensagem", function(dados) {
         socket.in(dados.sala).emit('retorno-mensagem', dados.mensagem);
     });

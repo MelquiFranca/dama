@@ -33,6 +33,7 @@ async function login(event) {
         window.localStorage.voce = (cor == 1) ? resposta.jogadorBlue : resposta.jogadorRed;
         window.localStorage.rival = (cor == 0) ? resposta.jogadorBlue : resposta.jogadorRed;
         window.localStorage.sala = resposta.sala;
+        window.localStorage.corPeca = cor;
         window.location = "tabuleiro";
         return true;
     } else {

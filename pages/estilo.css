@@ -35,9 +35,15 @@ button {
     align-items: center;
     /* padding: 0 20px; */
     /* background: #f6f33d; */
+    max-width: 40%;
     padding: 5px 2px;
-    border-radius: 2px;
-    /* border: 1px solid black; */
+    border-radius: 4px;
+}
+
+.vezJogada {
+    border: 5px double #FFF;
+    background: #f6f33d;
+    font-weight: bold;
 }
 
 .dados .nomes span {
@@ -170,14 +176,14 @@ button {
     color: #c0c0c0;
     animation-name: rotacaoPeca;
     background: red;
-    border-color: rgb(160, 35, 35);
+    border-color: #a02323;
     animation-duration: 6s;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
 }
 .jogadorRed {
     background: red;
-    border-color: rgb(160, 35, 35);
+    border-color: #a02323;
 }
 .jogadorBlue {
     border-color: rgb(31, 31, 143);
@@ -248,6 +254,37 @@ button {
     font-size: 13px;
     cursor: pointer;
 }
+
+#finaliza-jogada {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    justify-content: center;
+    border: 5px double #FFF;    
+    font-weight: bold;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.vezJogadaAtivo {
+    background: #a02323;
+    color: #FFF;
+}
+.vezJogadaInativo {
+    background: #413f3f;
+    color: #FFF;
+}
+
+.vezJogadaAtivo:active {
+    background: #751919;
+}
+.vezJogadaInativo:active {
+    background: #333333;
+}
+
 #exibe-chat:active {
     background: #047e4f;
 }
@@ -263,6 +300,8 @@ button {
     font-weight: bold;
     font-size: 12px;
 }
+
+
 .chat-form {
     flex-direction: column;
     display: none;
@@ -330,16 +369,16 @@ button {
     padding: 5px 0;   
     cursor: pointer;
 }
-/* #mensagens {
-    background: none;
-    right: 5px;
-    top: 5px;
-    max-width: 300px;
-    height: 50%;
-    position: absolute;
+#mensagens {
     flex-direction: column;
-    flex-wrap: wrap;
-} */
+}
+
+#mensagens .left {
+    flex: 1;
+}
+#mensagens .right {
+    width: 200px;
+}
 .mensagem {
     right: 5px;
     z-index: 10;
@@ -497,7 +536,6 @@ font-size: 0px;
 
     .corpo .dados .nomes {
         width: 45%;
-        /* background: #f6f33d; */
         padding: 5px;
         border-radius: 2px;
         /* border: 1px solid black; */

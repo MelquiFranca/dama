@@ -2,7 +2,8 @@
 -  **1 Jogabilidade**
    - [x] Comer peça com Dama
    - [ ] Assoprar Peça que não foi comida
-   - [ ] ***Vez de Jogada***
+   - [x] ***Vez de Jogada***
+   - [ ] ***Validar Continuação de Jogada após realizar primeiro movimento***
    - [ ] Cronômetro
    - [ ] Fim de jogo
    - [ ] **Iniciar Nova Partida na mesma sala**

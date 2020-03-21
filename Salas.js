@@ -39,6 +39,7 @@ function criar(sala, jogador, cor) {
 
         novaSala = {
             sala,
+            vezJogada: jogadorRed ? jogadorRed : jogadorBlue,
             jogadorRed,
             jogadorBlue
         };
@@ -87,6 +88,17 @@ function atualizarHistoricoSala(dados) {
     sala.bancoPecas = dados.bancoPecas;
     // console.log(sala);
     salvarArquivo(dados.sala, sala);
+
+    return sala;
+}
+
+function atualizarVezJogada(dados) {
+    const sala = selecionar(dados.sala);
+    sala.vezJogada = (dados.vezJogada == sala.jogadorRed) ? sala.jogadorRed : sala.jogadorBlue;
+
+    salvarArquivo(dados.sala, sala);
+
+    return sala;
 }
 
 function salvarArquivo(sala, dados) {
@@ -100,5 +112,6 @@ module.exports = {
     selecionar,
     criar,
     entrarSala,
-    atualizarHistoricoSala
+    atualizarHistoricoSala,
+    atualizarVezJogada
 }

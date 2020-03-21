@@ -31,23 +31,26 @@
                 <div class="bancoPecas" id="bancoPecas"></div>
             </div>
         </div>         
-        <!-- <div id="mensagens"></div> -->
-        <form class="chat-form" id="chat-form">
-            <div class="cabecalho">
-                <label for="texto">Mensageiro</label>
-                <button id="fechar-chat">X</button>
-            </div>
-            <textarea 
-                name="texto" 
-                id="texto" 
-                rows="5" 
-                maxlength="100"
-                placeholder="Envie aqui uma mensagem para o seu oponente..."></textarea>
-            <button type="submit" id="enviar-mensagem">Enviar</button>
-        </form>
-
+        <div id="mensagens">
+            <div class="left"></div>            
+            <form class="chat-form" id="chat-form">
+                <div class="cabecalho">
+                    <label for="texto">Mensageiro</label>
+                    <button id="fechar-chat">X</button>
+                </div>
+                <textarea 
+                    name="texto" 
+                    id="texto" 
+                    rows="5" 
+                    maxlength="100"
+                    placeholder="Envie aqui uma mensagem para o seu oponente..."></textarea>
+                <button type="submit" id="enviar-mensagem">Enviar</button>
+            </form>
+            <div class="right"></div>            
+        </div>
         <button id="exibe-chat">Chat</button>
-
+        <button id="finaliza-jogada" class="vezJogadaAtivo">Finalizar Jogada</button>
+        
         <!-- <p style="text-align: center;">Desenvolvido por Melquisedeque Pereira França</p> -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
         <script src="/socket.io/socket.io.js"></script>
