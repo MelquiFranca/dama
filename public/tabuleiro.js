@@ -628,7 +628,7 @@ function atualizaStatusJogo(data) {
     atualizaBancoPecas(data.bancoPecas);
     atualizaTabuleiro(data.tabuleiro);
 }
-const socket = io("http://192.168.1.4:3333");
+const socket = io(process.env.PORT ? '' : "http://192.168.1.4:3333");
 socket.on("connect", async function() {
     socket.emit("nova-sala", window.localStorage.sala);
 
