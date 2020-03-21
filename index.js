@@ -9,27 +9,30 @@ const cors = require('cors');
 const Salas = require('./Salas');
 
 app.use(cors());
-app.use(express.static(__dirname + '/pages'));
+app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/tabuleiro/:id', (req, res) => {
-    res.sendFile(__dirname + '/pages/tabuleiro.html');
+    res.sendFile(__dirname + '/public/tabuleiro.html');
     // res.send();
 });
 app.get('/tabuleiro', (req, res) => {
-    const pagina = fs.readFileSync(path.resolve('pages/tabuleiro.html'));
+    const pagina = fs.readFileSync(path.resolve('public/tabuleiro.html'));
     res.writeHead(200, {"Content-Type": "text/html"});     
     res.write(pagina);
-    // res.sendFile(__dirname + '/pages/tabuleiro.html');
+    // res.sendFile(__dirname + '/public/tabuleiro.html');
     res.send();
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/inicio');
+});
 app.get('/inicio', (req, res) => {
-    res.sendFile(__dirname + '/pages/entrar.html');
+    res.sendFile(__dirname + '/public/entrar.html');
 });
 app.post('/validaLogin', (req, res) => {
-    // res.sendFile(__dirname + '/pages/entrar.html');
+    // res.sendFile(__dirname + '/public/entrar.html');
     const {sala, jogador, cor, entrarSala} = req.body;
 
     if(entrarSala) {
