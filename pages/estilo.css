@@ -261,6 +261,7 @@ button {
     position: absolute;
     text-decoration: none;
     font-weight: bold;
+    font-size: 12px;
 }
 .chat-form {
     flex-direction: column;
