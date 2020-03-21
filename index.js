@@ -13,6 +13,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+    res.redirect('/inicio');
+});
 app.get('/tabuleiro/:id', (req, res) => {
     res.sendFile(__dirname + '/public/tabuleiro.html');
     // res.send();
@@ -23,10 +26,6 @@ app.get('/tabuleiro', (req, res) => {
     res.write(pagina);
     // res.sendFile(__dirname + '/public/tabuleiro.html');
     res.send();
-});
-
-app.get('/', (req, res) => {
-    res.redirect('/inicio');
 });
 app.get('/inicio', (req, res) => {
     res.sendFile(__dirname + '/public/entrar.html');
@@ -100,6 +99,6 @@ io.on('connection', function(socket) {
         
 });
 
-http.listen('3333', () => {
+http.listen(process.env.port || '3333', () => {
     // console.log('Hello World');
 });
