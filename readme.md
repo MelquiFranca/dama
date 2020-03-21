@@ -9,7 +9,7 @@
 
 - **2 Exibição/Layout**
   - [x] ***Cor de Dama na visão do adversário***
-  - [ ] **Exibir dados dos jogadores na tela**
+  - [x] **Exibir dados dos jogadores na tela**
   - [ ] Posicionamento e layout de formulário do Chat
   
 - **3 Conexão Sala**

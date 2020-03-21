@@ -8,14 +8,17 @@ const EXIBE_CHAT = document.getElementById("exibe-chat");
 const FECHA_CHAT = document.getElementById("fechar-chat");
 const MENSAGENS = document.getElementById("mensagens");
 
-main();
+if(!window.localStorage.sala) {
+    window.location = "inicio";
+} else {
+    main();
+}
 
 function main() {
     desenhaTabuleiro();
     gerarPecasRed(12);
     gerarPecasBlue(12);
     carregarEventosObjetos();
-    exibeInformacoesSalaNatela();
 }
 
 function validaMovimento(casa, idpeca) {
@@ -398,8 +401,24 @@ function desenhaLinhaTabuleiro(inicio, ln, cl) {
     return linha;
 }
 
-function exibeInformacoesSalaNatela() {
+function exibeInformacoesSalaNatela(dados) {
+    // console.log(dados);
+    const titulo = document.getElementById('titulo');
+    const nomeJogadorRed = document.getElementById('nomeJogadorRed');
+    const nomeJogadorBlue = document.getElementById('nomeJogadorBlue');
+    titulo.innerText = dados.sala.toUpperCase();
 
+    switch(window.localStorage.voce) {
+        case dados.jogadorRed: 
+            nomeJogadorRed.innerText = "Você";
+            nomeJogadorBlue.innerText = dados.jogadorBlue ? dados.jogadorBlue : "Aguardando...";
+            break;
+        case dados.jogadorBlue:
+            nomeJogadorBlue.innerText = "Você";
+            nomeJogadorRed.innerText = dados.jogadorRed ? dados.jogadorRed : "Aguardando...";
+            break;
+    }
+    
 }
 
 function enviaPosicaoTabuleiro() {        
@@ -524,7 +543,15 @@ socket.on("connect", async function() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({sala: window.localStorage.sala})
     });
+    
     const resposta = await retorno.json();
+    
+    exibeInformacoesSalaNatela({
+        sala: resposta.sala,
+        jogadorRed: resposta.jogadorRed,
+        jogadorBlue: resposta.jogadorBlue,
+    });
+
     if(resposta.tabuleiro) {
         atualizaTabuleiro(resposta.tabuleiro);
         atualizaBancoPecas(resposta.bancoPecas);

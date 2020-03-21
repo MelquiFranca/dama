@@ -6,30 +6,41 @@
         <link rel="stylesheet" type="text/css" href="estilo.css">
     </head>
     <body>
-        <h2 class="titulo">Jogo Dama</h2>
+        <h2 class="titulo" id="titulo">Jogo Dama</h2>
         <div class="corpo" id="corpo">
-            <div class="menu">
-                <h4>Menu</h4>
+            <a href="/inicio" id="sair">Sair</a>
+            <div class="dados" id="dados">
+                <h4 class="subtitulo">Dados Jogadores</h4>
+                <div class="nomes">
+                    <div class="pecaMini jogadorRed animacaoRotacao"></div> <span id="nomeJogadorRed"></span>
+                </div>
+                <div class="nomes">
+                    <div class="pecaMini jogadorBlue animacaoRotacaoInversa"></div> <span id="nomeJogadorBlue"></span>
+                </div>
+
+                <div class="outros">
+                    <strong>Outros Dados</strong>
+                </div>
             </div>
     
             <div class="tabuleiro" id="tabuleiro">
             </div>
             
             <div class="statusJogo">
-                <h4>Status do Jogo</h4>
+                <h4 class="subtitulo">Jogo Atual</h4>
                 <div class="bancoPecas" id="bancoPecas"></div>
             </div>
         </div>         
         <!-- <div id="mensagens"></div> -->
         <form class="chat-form" id="chat-form">
-            <div>
-                <label for="texto">CHAT</label>
+            <div class="cabecalho">
+                <label for="texto">Mensageiro</label>
                 <button id="fechar-chat">X</button>
             </div>
             <textarea 
                 name="texto" 
                 id="texto" 
-                rows="3" 
+                rows="5" 
                 maxlength="100"
                 placeholder="Envie aqui uma mensagem para o seu oponente..."></textarea>
             <button type="submit" id="enviar-mensagem">Enviar</button>
