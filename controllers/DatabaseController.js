@@ -12,7 +12,7 @@ if(process.env.PORT) {
 
 async function criarTabelaSalas() {
     await sequelize.query(`CREATE TABLE IF NOT EXISTS salas(
-        id INTEGER PRIMARY KEY,
+        id INT PRIMARY KEY,
         sala VARCHAR(255) UNIQUE NOT NULL,
         vezJogada VARCHAR(255) NULL,
         jogadorRed VARCHAR(255) NULL,
