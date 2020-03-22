@@ -1,9 +1,20 @@
 const {Sequelize} = require("sequelize");
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: process.env.PORT ? 'BASE_DADOS.sqlite' : 'BASE_DADOS_LOCAL.sqlite'
-
-});
+let sequelize;
+if(process.env.PORT) {
+    sequelize = new Sequelize(
+        process.env.DATABASE_URL, 
+        process.env.USER, 
+        process.env.PASS, {
+        host: `${process.env.HOST}:${process.env.PORT_DB}`,
+        dialect: 'postgres'
+      });
+} else {
+    sequelize = new Sequelize({
+        dialect: 'sqlite',
+        storage: 'BASE_DADOS_LOCAL.sqlite'
+    
+    });
+}
 
 async function criarTabelaSalas() {
     await sequelize.query(`CREATE TABLE IF NOT EXISTS salas(
