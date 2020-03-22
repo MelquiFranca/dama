@@ -9,7 +9,7 @@ const cors = require('cors');
 const Salas = require('./Salas');
 const DB = require('./controllers/DatabaseController');
 DB.criarTabelaSalas();
--
+
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
