@@ -2,3 +2,4 @@ node_modules
 tabuleiro.jpg
 molde_xadrez.jpg
 salas/*
+BASE_DADOS_LOCAL.sqlite
