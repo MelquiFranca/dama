@@ -8,8 +8,8 @@ async function selecionar(nome) {
     const sala = await DB.selecionarSalaDB(nome);
 
     if(sala.length) {
-        sala[0].tabuleiro = JSON.parse(sala[0].tabuleiro);
-        sala[0].bancoPecas = JSON.parse(sala[0].bancoPecas);
+        sala[0].tabuleiro = sala[0].tabuleiro ? JSON.parse(sala[0].tabuleiro) : sala[0].tabuleiro;
+        sala[0].bancoPecas = sala[0].bancoPecas ? JSON.parse(sala[0].bancoPecas) : sala[0].bancoPecas;
 
         return sala[0];
     }
