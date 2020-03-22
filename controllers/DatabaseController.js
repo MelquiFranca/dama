@@ -36,7 +36,7 @@ const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
 )`;
 
 async function criarTabelaSalas(BANCO) {
-    deletarTabelaSalas();
+    // deletarTabelaSalas();
     let sql;
     if(BANCO) {
         sql = SQL_CREATE_POSTGRES;
