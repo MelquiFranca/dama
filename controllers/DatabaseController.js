@@ -1,13 +1,7 @@
 const {Sequelize} = require("sequelize");
 let sequelize;
 if(process.env.PORT) {
-    sequelize = new Sequelize(
-        process.env.DATABASE_URL, 
-        process.env.USER, 
-        process.env.PASS, {
-        host: process.env.HOST,
-        dialect: 'postgres'
-      });
+    sequelize = new Sequelize(process.env.URI);
 } else {
     sequelize = new Sequelize({
         dialect: 'sqlite',
