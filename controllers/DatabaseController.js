@@ -12,7 +12,7 @@ if(process.env.PORT) {
 
 async function criarTabelaSalas() {
     await sequelize.query(`CREATE TABLE IF NOT EXISTS salas(
-        id INT PRIMARY KEY,
+        id INTEGER PRIMARY KEY,
         sala VARCHAR(255) UNIQUE NOT NULL,
         vezJogada VARCHAR(255) NULL,
         jogadorRed VARCHAR(255) NULL,
@@ -24,8 +24,8 @@ async function criarTabelaSalas() {
 
 async function inserirSalaDB(dados) {
     const retorno = await sequelize.query(`INSERT INTO salas 
-        (sala, vezJogada, jogadorRed, jogadorBlue, tabuleiro, bancoPecas) 
-        VALUES (?, ?, ?, ?, ?, ?)`, 
+        (id, sala, vezJogada, jogadorRed, jogadorBlue, tabuleiro, bancoPecas) 
+        VALUES (null, ?, ?, ?, ?, ?, ?)`, 
     {
         replacements: [
             dados.sala,
