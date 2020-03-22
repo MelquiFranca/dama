@@ -468,17 +468,18 @@ function exibeInformacoesSalaNatela(dados) {
 }
 
 function ativaJogadorVez(dados) {
+    // console.log(dados);
     let campoNomeAtual;
     let campoNomeAntigo;
     if(dados.vezJogada == dados.jogadorRed) {
         campoNomeAtual = document.getElementById("nomeJogadorRed").parentNode;
         campoNomeAntigo = document.getElementById("nomeJogadorBlue").parentNode;
 
-    } else if(dados.vezJogada == dados.jogadorBlue) {
+    } else {
         campoNomeAtual = document.getElementById("nomeJogadorBlue").parentNode;        
         campoNomeAntigo = document.getElementById("nomeJogadorRed").parentNode;
     }
-    
+      
     if(!(window.localStorage.voce == dados.vezJogada)) {
         // console.log("Não é Você: ", dados.vezJogada);
         removeEventosObjetos();
@@ -505,9 +506,13 @@ function enviaPosicaoTabuleiro() {
 
 function finalizaJogada() {
     socket.emit("finaliza-jogada", {
-        vezJogada: window.localStorage.rival,
+        vezJogada: window.localStorage.voce,
         sala: window.localStorage.sala
     });   
+
+    socket.on("atualiza-rival-bk", function(data) {
+        ativaJogadorVez(data);
+    });
 }
 
 function ativaDesativaFinalizarJogada(status) {
@@ -542,7 +547,6 @@ function converteTabuleiroEmObjeto() {
 }
 
 function atualizaTabuleiro(dados) {
-    // console.log(dados);
     Object.keys(dados).map((casaId) => {
         const casa = document.getElementById(casaId);
         const peca = document.getElementById(dados[casaId].pecaId);
@@ -557,7 +561,8 @@ function atualizaTabuleiro(dados) {
 }
 
 function atualizaBancoPecas(data) {
-    if (Object.keys(data).length) {
+    // console.log(data);
+    if(Object.keys(data).length) {
         Object.keys(data).map(indice => {
             const peca = document.getElementById(data[indice]);
             peca.classList.remove("peca");
@@ -618,8 +623,9 @@ function fechaChat(event) {
 
 
 function limparHistorico() {
-    window.localStorage.removeItem("jogador");
-    window.localStorage.removeItem("sala");
+    window.localStorage.removeItem("voce");
+    window.localStorage.removeItem("rival");
+    window.localStorage.removeItem("corPeca");
     window.localStorage.removeItem("dados");
 }
 
@@ -628,9 +634,9 @@ function atualizaStatusJogo(data) {
     atualizaBancoPecas(data.bancoPecas);
     atualizaTabuleiro(data.tabuleiro);
 }
-const socket = io(process.env.PORT ? undefined : "http://192.168.1.4:3333");
+const socket = io("http://192.168.1.4:3333");
 socket.on("connect", async function() {
-    socket.emit("nova-sala", window.localStorage.sala);
+    socket.emit("nova-sala", {sala: window.localStorage.sala, rival: window.localStorage.voce});
 
     const retorno = await fetch("/carregaDadosSala", {
         method: "POST",
@@ -657,12 +663,19 @@ socket.on("connect", async function() {
     }
 });
 
+socket.on("atualia-rival", function(rival) {
+    if(window.localStorage.rival == null) {
+        window.localStorage.rival = rival;
+    }
+});
+
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
     atualizaStatusJogo(data);
 });
 
 socket.on("inicia-jogada", function(data) {    
-    atualizaStatusJogo(data);
+    atualizaStatusJogo(data);    
+    socket.emit("atualiza-rival", data);
 });
 
 socket.on("retorno-mensagem", function(data) {

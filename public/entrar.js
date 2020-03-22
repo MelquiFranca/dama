@@ -28,7 +28,7 @@ async function login(event) {
         body: JSON.stringify({jogador, sala, cor, entrarSala})
     });
     const resposta = await retorno.json();
-
+    // console.log(resposta);
     if(resposta.sala) {
         window.localStorage.voce = (cor == 1) ? resposta.jogadorBlue : resposta.jogadorRed;
         window.localStorage.rival = (cor == 0) ? resposta.jogadorBlue : resposta.jogadorRed;
@@ -43,7 +43,8 @@ async function login(event) {
 }
 
 function limparHistorico() {
-    window.localStorage.removeItem("jogador");
-    window.localStorage.removeItem("sala");
+    window.localStorage.removeItem("voce");
+    window.localStorage.removeItem("rival");
+    window.localStorage.removeItem("corPeca");
     window.localStorage.removeItem("dados");
 }

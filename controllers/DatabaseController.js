@@ -2,6 +2,7 @@ const {Sequelize} = require("sequelize");
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: process.env.PORT ? 'BASE_DADOS.sqlite' : 'BASE_DADOS_LOCAL.sqlite'
+
 });
 
 async function criarTabelaSalas() {
