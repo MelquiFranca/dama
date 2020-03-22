@@ -5,7 +5,7 @@ if(process.env.PORT) {
         process.env.DATABASE_URL, 
         process.env.USER, 
         process.env.PASS, {
-        host: `${process.env.HOST}:${process.env.PORT_DB}`,
+        host: process.env.HOST,
         dialect: 'postgres'
       });
 } else {
