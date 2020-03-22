@@ -14,7 +14,7 @@ async function deletarTabelaSalas() {
     await sequelize.query(`DROP TABLE salas`);
 }
 async function criarTabelaSalas() {
-    deletarTabelaSalas();
+    // deletarTabelaSalas();
     await sequelize.query(`CREATE TABLE IF NOT EXISTS salas(
         id SERIAL PRIMARY KEY,
         sala VARCHAR(255) UNIQUE NOT NULL,
