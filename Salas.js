@@ -1,29 +1,26 @@
 const fs = require("fs");
 const path = require("path");
+const DB = require('./controllers/DatabaseController');
 
-// function listar() {
-//     return SALAS;
-// }
-    
-function selecionar(sala) {
-    const ARQUIVO = path.resolve("salas", `${sala}.json`);
-    const existeSala = fs.existsSync(ARQUIVO);
+async function selecionar(nome) {
+    // const ARQUIVO = path.resolve("salas", `${sala}.json`);
+    // const existeSala = fs.existsSync(ARQUIVO);
+    const sala = await DB.selecionarSalaDB(nome);
 
-    if(existeSala) {
-        const sala = JSON.parse(fs.readFileSync(ARQUIVO,  "utf8"));
+    if(sala.length) {
+        sala[0].tabuleiro = JSON.parse(sala[0].tabuleiro);
+        sala[0].bancoPecas = JSON.parse(sala[0].bancoPecas);
 
-        if(!sala.sala) {
-            return null;
-        }
-
-        return sala;
+        return sala[0];
     }
     
     return null;
 }
 
-function criar(sala, jogador, cor) {        
-    let novaSala = selecionar(sala);
+async function criar(sala, jogador, cor) {        
+    // let novaSala = selecionar(sala);
+
+    let novaSala = await selecionar(sala);
 
     if(!novaSala) {
         let jogadorRed;
@@ -41,17 +38,23 @@ function criar(sala, jogador, cor) {
             sala,
             vezJogada: jogadorRed ? jogadorRed : jogadorBlue,
             jogadorRed,
-            jogadorBlue
+            jogadorBlue,
+            tabuleiro: null,
+            bancoPecas: null
         };
 
-        salvarArquivo(sala, novaSala);
+        await DB.inserirSalaDB(novaSala);
+        novaSala = await selecionar(sala);
+        return novaSala;
+    } else {
+        return {erro: "A Sala já existe."};
     }
 
-    return novaSala;
 }
 
-function entrarSala(sala, jogador, cor) {
-    let salaExistente = selecionar(sala);
+async function entrarSala(sala, jogador, cor) {
+    // let salaExistente = selecionar(sala);
+    let salaExistente = await selecionar(sala);
 
     if(!salaExistente) {
         return {erro: "A sala não existe"};
@@ -71,7 +74,8 @@ function entrarSala(sala, jogador, cor) {
                 salaExistente.jogadorBlue = jogador;
             }
             
-            salvarArquivo(sala, salaExistente);        
+            await DB.atualizarSalaDB(salaExistente);
+            // salvarArquivo(sala, salaExistente);        
 
             return salaExistente;
 
@@ -82,31 +86,35 @@ function entrarSala(sala, jogador, cor) {
 
 }
 
-function atualizarHistoricoSala(dados) {
-    const sala = selecionar(dados.sala);
-    sala.tabuleiro = dados.tabuleiro;
-    sala.bancoPecas = dados.bancoPecas;
+async function atualizarHistoricoSala(dados) {
+    // const sala = selecionar(dados.sala);
+    const sala = await selecionar(dados.sala);
+    sala.tabuleiro = JSON.stringify(dados.tabuleiro);
+    sala.bancoPecas = JSON.stringify(dados.bancoPecas);
     // console.log(sala);
-    salvarArquivo(dados.sala, sala);
-
-    return sala;
+    // salvarArquivo(dados.sala, sala);
+    await DB.atualizarSalaDB(sala);
+    const salaAtualizada = await selecionar(dados.sala);
+    return salaAtualizada;
 }
 
-function atualizarVezJogada(dados) {
-    const sala = selecionar(dados.sala);
-    sala.vezJogada = (dados.vezJogada == sala.jogadorRed) ? sala.jogadorRed : sala.jogadorBlue;
+async function atualizarVezJogada(dados) {
+    // const sala = selecionar(dados.sala);
+    const sala = await selecionar(dados.sala);
+    sala.vezJogada = (dados.vezJogada == sala.jogadorRed) ? sala.jogadorBlue : sala.jogadorRed;
 
-    salvarArquivo(dados.sala, sala);
-
-    return sala;
+    await DB.atualizarVezJogadaSalaDB(sala);
+    // salvarArquivo(dados.sala, sala);
+    const salaAtualizada = await selecionar(dados.sala);
+    return salaAtualizada;
 }
 
-function salvarArquivo(sala, dados) {
-    const ARQUIVO = path.resolve("salas", `${sala}.json`);
-    fs.writeFileSync(ARQUIVO, JSON.stringify(dados), {
-        encoding: "utf8"
-    });
-}
+// function salvarArquivo(sala, dados) {
+//     const ARQUIVO = path.resolve("salas", `${sala}.json`);
+//     fs.writeFileSync(ARQUIVO, JSON.stringify(dados), {
+//         encoding: "utf8"
+//     });
+// }
 module.exports = {
     // listar,
     selecionar,

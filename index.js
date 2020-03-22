@@ -7,7 +7,9 @@ const fs = require('fs');
 const cors = require('cors');
 
 const Salas = require('./Salas');
-
+const DB = require('./controllers/DatabaseController');
+DB.criarTabelaSalas();
+-
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
@@ -30,62 +32,59 @@ app.get('/tabuleiro', (req, res) => {
 app.get('/inicio', (req, res) => {
     res.sendFile(__dirname + '/public/entrar.html');
 });
-app.post('/validaLogin', (req, res) => {
+app.post('/validaLogin', async (req, res) => {
     // res.sendFile(__dirname + '/public/entrar.html');
     const {sala, jogador, cor, entrarSala} = req.body;
 
     if(entrarSala) {
-        const retorno = Salas.entrarSala(sala, jogador, cor);
-        if(retorno.erro) {
-            res.send(retorno);
-        }
-
+        const retorno = await Salas.entrarSala(sala, jogador, cor);
+        // console.log("ENTROU", retorno);
         res.send(retorno);
 
     } else {
-        const existeSala = Salas.selecionar(sala);
+        const existeSala = await Salas.selecionar(sala);
         if(existeSala) {
-            const entrou = Salas.entrarSala(sala, jogador, cor);
-
-            if(entrou.erro) {
-                res.send(entrou);
-            } else {                
-                res.send(entrou);
-            }
+            const entrou = await Salas.entrarSala(sala, jogador, cor);             
+            // console.log("ENTROU",entrou);
+            res.send(entrou);
 
         } else {
-            const novaSala = Salas.criar(sala, jogador, cor);
+            const novaSala = await Salas.criar(sala, jogador, cor);
+            // console.log("NOVA",novaSala);
             res.send(novaSala);            
         }
 }
 });
 
-app.post('/carregaDadosSala', (req, res) => {
+app.post('/carregaDadosSala', async (req, res) => {
     const { sala } = req.body;
-    const existeSala = Salas.selecionar(sala);
+    const existeSala = await Salas.selecionar(sala);
+    // console.log(existeSala);
     res.send(existeSala);
 })
 
 io.on('connection', function(socket) {
     
-    socket.on("nova-sala", function(sala) {
+    socket.on("nova-sala", function(dados) {
         // console.log(socket.id);
-        socket.join(sala);        
+        // socket.emit("atualiza-rival", dados.rival);
+        socket.join(dados.sala);        
     });
-
+    // socket.emit("atualiza-rival", )
     // console.log(socket.rooms);
-    socket.on("tabuleiro-banco-pecas", function(dados) {
+    socket.on("tabuleiro-banco-pecas", async function(dados) {
         // console.log(dados);
-        const retorno = Salas.atualizarHistoricoSala({
+        const retorno = await Salas.atualizarHistoricoSala({
             sala: dados.sala, 
             tabuleiro: dados.tabuleiro, 
             bancoPecas: dados.bancoPecas
         });
+        // console.log(retorno);
         socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', retorno);
     });
     
-    socket.on("finaliza-jogada", function(data) {
-        const retorno = Salas.atualizarVezJogada({
+    socket.on("finaliza-jogada", async function(data) {
+        const retorno = await Salas.atualizarVezJogada({
             vezJogada: data.vezJogada,
             sala: data.sala,
         });
@@ -93,6 +92,10 @@ io.on('connection', function(socket) {
         socket.in(data.sala).emit('inicia-jogada', retorno);
 
     });
+
+    socket.on("atualiza-rival", function(data) {
+        socket.in(data.sala).emit('atualiza-rival-bk', data);
+    })
     socket.on("mensagem", function(dados) {
         socket.in(dados.sala).emit('retorno-mensagem', dados.mensagem);
     });
