@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const Salas = require('./Salas');
 const DB = require('./controllers/DatabaseController');
-DB.criarTabelaSalas();
+DB.criarTabelaSalas(process.env.PORT || null);
 
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
