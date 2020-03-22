@@ -22,7 +22,7 @@ const SQL_CREATE_POSTGRES = `CREATE TABLE IF NOT EXISTS salas(
     jogadorBlue VARCHAR(255) NULL,
     tabuleiro TEXT NULL,
     bancoPecas TEXT NULL,
-    PRIMARY KEY(serial)
+    PRIMARY KEY(id)
 )`;
 
 const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
@@ -48,8 +48,8 @@ async function criarTabelaSalas(BANCO) {
 
 async function inserirSalaDB(dados) {
     const retorno = await sequelize.query(`INSERT INTO salas 
-        (id, sala, vezJogada, jogadorRed, jogadorBlue, tabuleiro, bancoPecas) 
-        VALUES (null, ?, ?, ?, ?, ?, ?)`, 
+        (sala, vezJogada, jogadorRed, jogadorBlue, tabuleiro, bancoPecas) 
+        VALUES (?, ?, ?, ?, ?, ?)`, 
     {
         replacements: [
             dados.sala,
