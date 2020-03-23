@@ -43,6 +43,7 @@ async function login(event) {
 }
 
 function limparHistorico() {
+    window.localStorage.removeItem("sala");
     window.localStorage.removeItem("voce");
     window.localStorage.removeItem("rival");
     window.localStorage.removeItem("corPeca");
