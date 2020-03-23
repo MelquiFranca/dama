@@ -38,7 +38,8 @@ async function login(event) {
         window.location = "tabuleiro";
         return true;
     } else {
-        alert(resposta.erro);
+        // alert(resposta.erro, {title: "Titulo"});
+        criaAlerta(resposta.erro, "Voltar");
         return false;
     }
 }
