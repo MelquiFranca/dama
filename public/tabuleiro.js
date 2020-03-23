@@ -647,7 +647,7 @@ socket.on("connect", async function() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({sala: window.localStorage.sala})
     });
-    
+    console.log(resposta);
     const resposta = await retorno.json();
     
     exibeInformacoesSalaNatela({
