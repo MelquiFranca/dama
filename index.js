@@ -38,19 +38,19 @@ app.post('/validaLogin', async (req, res) => {
 
     if(entrarSala) {
         const retorno = await Salas.entrarSala(sala, jogador, cor);
-        // console.log("ENTROU", retorno);
+        console.log("ENTROU", retorno);
         res.send(retorno);
 
     } else {
         const existeSala = await Salas.selecionar(sala);
         if(existeSala) {
             const entrou = await Salas.entrarSala(sala, jogador, cor);             
-            // console.log("ENTROU",entrou);
+            console.log("CRIAR ENTROU EXISTENTE",entrou);
             res.send(entrou);
 
         } else {
             const novaSala = await Salas.criar(sala, jogador, cor);
-            // console.log("NOVA",novaSala);
+            console.log("NOVA",novaSala);
             res.send(novaSala);            
         }
 }
