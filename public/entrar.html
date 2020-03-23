@@ -1,44 +1,46 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-</head>
-<body>
-    <div class="cabecalhoEntrar">
-        <div class="logo">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="estilo.css">
+    </head>
+    <body class="corpo">
+        <div class="cabecalhoEntrar">
+            <div class="logo">
+            </div>
+            <h2>Jogar Dama</h2>
         </div>
-        <h2>Jogar Dama</h2>
-    </div>
-    <form action="tabuleiro" class="form-group" id="form-login" method="POST">
-        <input class="input" type="text" name="jogador" placeholder="Digite o seu nome" required/>
-        <input class="input" type="text" name="sala" placeholder="Digite o código de sala existente" required />
-        <div class="group-radio">
-            <label for=""><strong>Selecione a sua Peça</strong></label>
-            <div>
-                <div class="item-radio">
-                    <input type="radio" name="corJogador" id="" value="0" checked>
-                    <div>
-                        <div class="pecaMini animacaoRotacao jogadorRed" for=""></div>
+        <form action="tabuleiro" class="form-group" id="form-login" method="POST">
+            <input class="input" type="text" name="jogador" placeholder="Digite o seu nome" required/>
+            <input class="input" type="text" name="sala" placeholder="Digite o código de sala existente" required />
+            <div class="group-radio">
+                <label for=""><strong>Selecione a sua Peça</strong></label>
+                <div>
+                    <div class="item-radio">
+                        <input type="radio" name="corJogador" id="" value="0" checked>
+                        <div>
+                            <div class="pecaMini animacaoRotacao jogadorRed" for=""></div>
+                        </div>
                     </div>
-                </div>
-                <div class="item-radio">
-                    <input type="radio" name="corJogador" id="" value="1">
-                    <div>
-                        <div class="pecaMini animacaoRotacao jogadorBlue" for=""></div>
+                    <div class="item-radio">
+                        <input type="radio" name="corJogador" id="" value="1">
+                        <div>
+                            <div class="pecaMini animacaoRotacao jogadorBlue" for=""></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <button class="btn btn-primario" type="submit">
-            <!-- <span class="pecaMini jogadorBlue"></span> -->
-            <div>Criar Sala</div>
-        </button>
-        <button class="btn btn-secundario" id="entrar-sala" type="button">
-            <!-- <span class="pecaMini jogadorRed"></span> -->
-            <div>Entrar na sala</div>
-        </button>
-    </form>
-    <script src="util.js"></script>
-    <script src="entrar.js"></script>
-</body>
+            <button class="btn btn-primario" type="submit">
+                <!-- <span class="pecaMini jogadorBlue"></span> -->
+                <div>Criar Sala</div>
+            </button>
+            <button class="btn btn-secundario" id="entrar-sala" type="button">
+                <!-- <span class="pecaMini jogadorRed"></span> -->
+                <div>Entrar na sala</div>
+            </button>
+        </form>
+        <script src="util.js"></script>
+        <script src="entrar.js"></script>
+    </body>
 </html>

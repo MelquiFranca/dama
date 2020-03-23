@@ -210,7 +210,7 @@ button {
 }
 .titulo {
     width: 100%;
-    flex: 1;
+    /* flex: 1; */
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -445,7 +445,7 @@ button {
 }
 
 .alerta {
-    width: 100%;
+    flex: 1;
     height: 100%;
     border-radius: 4px;
     background: #139c7a;
@@ -624,8 +624,8 @@ font-size: 0px;
         font-size: 10px;
     }
 
-    /* .alerta {
-        width: 90%;
-        left: 5%;
-    } */
+    .alerta {
+        width: 150%;
+        height: 170%;
+    }
 }
