@@ -34,6 +34,7 @@ async function login(event) {
         window.localStorage.rival = (cor == 0) ? resposta.jogadorblue : resposta.jogadorred;
         window.localStorage.sala = resposta.sala;
         window.localStorage.corPeca = cor;
+        // window.localStorage.entrou = resposta.entrou;
         window.location = "tabuleiro";
         return true;
     } else {
@@ -48,4 +49,5 @@ function limparHistorico() {
     window.localStorage.removeItem("rival");
     window.localStorage.removeItem("corPeca");
     window.localStorage.removeItem("dados");
+    window.localStorage.removeItem("entrou");
 }

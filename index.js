@@ -38,20 +38,19 @@ app.post('/validaLogin', async (req, res) => {
 
     if(entrarSala) {
         const retorno = await Salas.entrarSala(sala, jogador, cor);
-        console.log("ENTROU", retorno);
+        retorno.entrou = true;
         res.send(retorno);
 
     } else {
         const existeSala = await Salas.selecionar(sala);
         if(existeSala) {
-            const entrou = await Salas.entrarSala(sala, jogador, cor);             
-            console.log("CRIAR ENTROU EXISTENTE",entrou);
-            res.send(entrou);
+            const retorno = await Salas.entrarSala(sala, jogador, cor);             
+            retorno.entrou = true;
+            res.send(retorno);
 
         } else {
-            const novaSala = await Salas.criar(sala, jogador, cor);
-            console.log("NOVA", novaSala);
-            res.send(novaSala);            
+            const retorno = await Salas.criar(sala, jogador, cor);
+            res.send(retorno);            
         }
 }
 });
@@ -66,8 +65,7 @@ app.post('/carregaDadosSala', async (req, res) => {
 io.on('connection', function(socket) {
     
     socket.on("nova-sala", function(dados) {
-        // console.log(socket.id);
-        // socket.emit("atualiza-rival", dados.rival);
+        // console.log(socket.id);        
         socket.join(dados.sala);        
     });
     // socket.emit("atualiza-rival", )
@@ -93,9 +91,15 @@ io.on('connection', function(socket) {
 
     });
 
+    socket.on("atualiza-rival-inicio", async function(data) {
+        console.log(data);
+        const sala = await Salas.selecionar(data.sala);
+        socket.in(data.sala).emit('atualiza-rival-inicio-bk', sala);
+    });
+    
     socket.on("atualiza-rival", function(data) {
         socket.in(data.sala).emit('atualiza-rival-bk', data);
-    })
+    });
     socket.on("mensagem", function(dados) {
         socket.in(dados.sala).emit('retorno-mensagem', dados.mensagem);
     });

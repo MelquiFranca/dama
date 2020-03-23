@@ -454,14 +454,17 @@ function exibeInformacoesSalaNatela(dados) {
     const nomeJogadorBlue = document.getElementById('nomeJogadorBlue');
     titulo.innerText = dados.sala.toUpperCase();
 
+
     switch(window.localStorage.voce) {
         case dados.jogadorred: 
             nomeJogadorRed.innerText = "Você";
             nomeJogadorBlue.innerText = dados.jogadorblue ? dados.jogadorblue : "Aguardando...";
+            window.localStorage.rival = dados.jogadorblue;
             break;
         case dados.jogadorblue:
             nomeJogadorBlue.innerText = "Você";
             nomeJogadorRed.innerText = dados.jogadorred ? dados.jogadorred : "Aguardando...";
+            window.localStorage.rival = dados.jogadorred;
             break;
     }
     
@@ -621,15 +624,6 @@ function fechaChat(event) {
     CHAT.style.display = "none";   
 }
 
-
-function limparHistorico() {
-    window.localStorage.removeItem("sala");
-    window.localStorage.removeItem("voce");
-    window.localStorage.removeItem("rival");
-    window.localStorage.removeItem("corPeca");
-    window.localStorage.removeItem("dados");
-}
-
 function atualizaStatusJogo(data) {
     ativaJogadorVez(data);
     atualizaBancoPecas(data.bancopecas);
@@ -662,12 +656,13 @@ socket.on("connect", async function() {
         atualizaTabuleiro(resposta.tabuleiro);
         atualizaBancoPecas(resposta.bancopecas);
     }
+    if(window.localStorage.rival) {        
+        socket.emit("atualiza-rival-inicio", {sala: window.localStorage.sala});
+    }
 });
 
-socket.on("atualia-rival", function(rival) {
-    if(window.localStorage.rival == null) {
-        window.localStorage.rival = rival;
-    }
+socket.on("atualiza-rival-inicio-bk", function(dados) {
+    exibeInformacoesSalaNatela(dados);
 });
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
