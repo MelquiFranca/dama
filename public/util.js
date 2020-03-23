@@ -11,6 +11,10 @@ function criaAlerta(msg, tituloBotao) {
     textoAlerta.innerText = msg;
     btnAlerta.innerText = tituloBotao;
 
+    btnAlerta.onclick = function() {
+        body.removeChild(alerta);
+    }
+
     alerta.appendChild(textoAlerta);
     alerta.appendChild(btnAlerta);
     body.appendChild(alerta);
