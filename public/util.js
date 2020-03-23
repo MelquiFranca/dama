@@ -17,5 +17,5 @@ function criaAlerta(msg, tituloBotao) {
 
     alerta.appendChild(textoAlerta);
     alerta.appendChild(btnAlerta);
-    body.appendChild(alerta);
+    
 }
