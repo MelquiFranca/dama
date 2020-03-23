@@ -40,7 +40,7 @@ button {
     border-radius: 4px;
 }
 
-.vezJogada {
+.vezjogada {
     border: 5px double #FFF;
     background: #f6f33d;
     font-weight: bold;
@@ -68,7 +68,7 @@ button {
     width: 100%;
     justify-content: center;
 }
-.statusJogo .bancoPecas {
+.statusJogo .bancopecas {
     background: #FFF;
     border-radius: 2px;
     padding: 10px;
@@ -181,11 +181,11 @@ button {
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
 }
-.jogadorRed {
+.jogadorred {
     background: red;
     border-color: #a02323;
 }
-.jogadorBlue {
+.jogadorblue {
     border-color: rgb(31, 31, 143);
     background: blue;
 }
@@ -551,7 +551,7 @@ font-size: 0px;
     .statusJogo {
         width: 100%;
     }
-    .statusJogo .bancoPecas {
+    .statusJogo .bancopecas {
         margin: 5px 0px;
         height: 130px;
         max-height: 260px;

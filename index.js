@@ -50,7 +50,7 @@ app.post('/validaLogin', async (req, res) => {
 
         } else {
             const novaSala = await Salas.criar(sala, jogador, cor);
-            console.log("NOVA",novaSala);
+            console.log("NOVA", novaSala);
             res.send(novaSala);            
         }
 }
@@ -77,7 +77,7 @@ io.on('connection', function(socket) {
         const retorno = await Salas.atualizarHistoricoSala({
             sala: dados.sala, 
             tabuleiro: dados.tabuleiro, 
-            bancoPecas: dados.bancoPecas
+            bancopecas: dados.bancopecas
         });
         // console.log(retorno);
         socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', retorno);
@@ -85,7 +85,7 @@ io.on('connection', function(socket) {
     
     socket.on("finaliza-jogada", async function(data) {
         const retorno = await Salas.atualizarVezJogada({
-            vezJogada: data.vezJogada,
+            vezjogada: data.vezjogada,
             sala: data.sala,
         });
 

@@ -9,7 +9,7 @@ async function selecionar(nome) {
 
     if(sala.length) {
         sala[0].tabuleiro = sala[0].tabuleiro ? JSON.parse(sala[0].tabuleiro) : null;
-        sala[0].bancoPecas = sala[0].bancoPecas ? JSON.parse(sala[0].bancoPecas) : null;
+        sala[0].bancopecas = sala[0].bancopecas ? JSON.parse(sala[0].bancopecas) : null;
 
         return sala[0];
     }
@@ -23,24 +23,24 @@ async function criar(sala, jogador, cor) {
     let novaSala = await selecionar(sala);
 
     if(!novaSala) {
-        let jogadorRed;
-        let jogadorBlue;
+        let jogadorred;
+        let jogadorblue;
 
         if(cor == 0) {
-            jogadorRed = jogador;
-            jogadorBlue = null;
+            jogadorred = jogador;
+            jogadorblue = null;
         } else {
-            jogadorRed = null;
-            jogadorBlue = jogador;
+            jogadorred = null;
+            jogadorblue = jogador;
         }
 
         novaSala = {
             sala,
-            vezJogada: jogadorRed ? jogadorRed : jogadorBlue,
-            jogadorRed,
-            jogadorBlue,
+            vezjogada: jogadorred ? jogadorred : jogadorblue,
+            jogadorred,
+            jogadorblue,
             tabuleiro: null,
-            bancoPecas: null
+            bancopecas: null
         };
 
         await DB.inserirSalaDB(novaSala);
@@ -62,16 +62,16 @@ async function entrarSala(sala, jogador, cor) {
         let validacao;
 
         if(cor == 0) { 
-            validacao = (salaExistente.jogadorRed == null) && (salaExistente.jogadorBlue != jogador);
+            validacao = (salaExistente.jogadorred == null) && (salaExistente.jogadorblue != jogador);
         } else if(cor == 1){
-            validacao = (salaExistente.jogadorBlue == null) && (salaExistente.jogadorRed != jogador);
+            validacao = (salaExistente.jogadorblue == null) && (salaExistente.jogadorred != jogador);
         }
 
         if(validacao) {
             if(cor == 0) { 
-                salaExistente.jogadorRed = jogador;
+                salaExistente.jogadorred = jogador;
             } else if(cor == 1){
-                salaExistente.jogadorBlue = jogador;
+                salaExistente.jogadorblue = jogador;
             }
             
             await DB.atualizarSalaDB(salaExistente);
@@ -90,7 +90,7 @@ async function atualizarHistoricoSala(dados) {
     // const sala = selecionar(dados.sala);
     const sala = await selecionar(dados.sala);
     sala.tabuleiro = JSON.stringify(dados.tabuleiro);
-    sala.bancoPecas = JSON.stringify(dados.bancoPecas);
+    sala.bancopecas = JSON.stringify(dados.bancopecas);
     // console.log(sala);
     // salvarArquivo(dados.sala, sala);
     await DB.atualizarSalaDB(sala);
@@ -101,7 +101,7 @@ async function atualizarHistoricoSala(dados) {
 async function atualizarVezJogada(dados) {
     // const sala = selecionar(dados.sala);
     const sala = await selecionar(dados.sala);
-    sala.vezJogada = (dados.vezJogada == sala.jogadorRed) ? sala.jogadorBlue : sala.jogadorRed;
+    sala.vezjogada = (dados.vezjogada == sala.jogadorred) ? sala.jogadorblue : sala.jogadorred;
 
     await DB.atualizarVezJogadaSalaDB(sala);
     // salvarArquivo(dados.sala, sala);

@@ -30,8 +30,8 @@ async function login(event) {
     const resposta = await retorno.json();
     // console.log(resposta);
     if(resposta.sala) {
-        window.localStorage.voce = (cor == 1) ? resposta.jogadorBlue : resposta.jogadorRed;
-        window.localStorage.rival = (cor == 0) ? resposta.jogadorBlue : resposta.jogadorRed;
+        window.localStorage.voce = (cor == 1) ? resposta.jogadorblue : resposta.jogadorred;
+        window.localStorage.rival = (cor == 0) ? resposta.jogadorblue : resposta.jogadorred;
         window.localStorage.sala = resposta.sala;
         window.localStorage.corPeca = cor;
         window.location = "tabuleiro";
