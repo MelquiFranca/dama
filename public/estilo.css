@@ -548,11 +548,11 @@ font-size: 0px;
         text-align: center;
         margin-left: 50px;
     }
-/*     
+     
     .alerta {
         width: 100%;
-        left: 5%;
-    } */
+        height: 150%;
+    } 
 }
 
 @media screen and (max-width: 900px) {
@@ -627,5 +627,6 @@ font-size: 0px;
     .alerta {
         width: 127%;
         height: 127%;
+        left: 2%;
     }
 }
