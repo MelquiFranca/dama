@@ -15,14 +15,13 @@ async function deletarTabelaSalas() {
 }
 
 const SQL_CREATE_POSTGRES = `CREATE TABLE IF NOT EXISTS salas(
-    id BIGSERIAL,
     sala VARCHAR(255) UNIQUE NOT NULL,
     vezJogada VARCHAR(255) NULL,
     jogadorRed VARCHAR(255) NULL,
     jogadorBlue VARCHAR(255) NULL,
     tabuleiro TEXT NULL,
     bancoPecas TEXT NULL,
-    PRIMARY KEY(id)
+    PRIMARY KEY(sala)
 )`;
 
 const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
@@ -36,7 +35,7 @@ const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
 )`;
 
 async function criarTabelaSalas(BANCO) {
-    // deletarTabelaSalas();
+    deletarTabelaSalas();
     let sql;
     if(BANCO) {
         sql = SQL_CREATE_POSTGRES;
