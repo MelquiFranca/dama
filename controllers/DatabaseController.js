@@ -60,6 +60,7 @@ async function inserirSalaDB(dados) {
         ],
     });
 
+    console.log(retorno);
     return retorno;
 }
 async function selecionarSalaDB(sala) {
