@@ -552,10 +552,11 @@ font-size: 0px;
         margin-left: 50px;
     } */
      
-    /* .alerta {
-        width: 100%;
-        height: 150%;
-    }  */
+    .alerta {
+        width: 90%;
+        left: 5%;
+        /* height: 150%; */
+    } 
 }
 
 @media screen and (max-width: 900px) {
@@ -627,9 +628,9 @@ font-size: 0px;
         font-size: 10px;
     }
 
-    /* .alerta {
-        width: 128%;
-        height: 128%;
-        left: 1%;
-    } */
+    .alerta {
+        width: 90%;
+        /* height: 128%; */
+        left: 5%;
+    }
 }
