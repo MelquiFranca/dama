@@ -448,7 +448,8 @@ button {
 
 .alerta {
     flex: 1;
-    height: 100%;
+    height: 50%;
+    width: 50%;
     border-radius: 4px;
     background: #139c7a;
     color: #FFF;
@@ -456,15 +457,15 @@ button {
     align-items: center;
     flex-direction: column;
     position: absolute;
-    top: 0%;
-    left: 0%;
-    margin: 0 auto;
+    top: 25%;
+    left: 25%;
+    /* margin: 0 auto; */
     opacity: 0.9;
 }
 .alerta .texto {
     flex: 4;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 22px;
     justify-content: center;
     align-items: center;
 }

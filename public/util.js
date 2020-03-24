@@ -1,4 +1,9 @@
 function criaAlerta(msg, tituloBotao) {
+    const BTN_FORMULARIO = document.getElementById("enviarFormulario");
+    const BTN_ENTRAR_SALA = document.getElementById("entrar-sala");
+    BTN_FORMULARIO.setAttribute('disabled', true);
+    BTN_ENTRAR_SALA.setAttribute('disabled', true);
+
     const body = document.getElementsByTagName("body")[0];
     const alerta = document.createElement('div');
     const textoAlerta = document.createElement('div');
@@ -12,6 +17,8 @@ function criaAlerta(msg, tituloBotao) {
     btnAlerta.innerText = tituloBotao;
 
     btnAlerta.onclick = function() {
+        BTN_FORMULARIO.removeAttribute('disabled');
+        BTN_ENTRAR_SALA.removeAttribute('disabled');
         body.removeChild(alerta);
     }
 
