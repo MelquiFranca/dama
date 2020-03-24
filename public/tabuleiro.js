@@ -416,8 +416,10 @@ function gerarPecasBlue(quantidade) {
 function desenhaTabuleiro() {
     let i = 0;
     let inicio = true;
-    let tabuleiro = document.getElementById('tabuleiro');
-    // tabuleiro.classList.add('tabuleiro');
+    const corpo = document.getElementById('corpo');
+    const tabuleiro = document.createElement('div');
+    tabuleiro.setAttribute('id', 'tabuleiro');
+    tabuleiro.classList.add('tabuleiro');
     while(i < 8) {
         let j = 0;
         while(j < 8) {
@@ -429,6 +431,7 @@ function desenhaTabuleiro() {
         i++;
     }
 
+    corpo.insertBefore(tabuleiro, corpo.childNodes[4]);
     // return tabuleiro;
 }
 
