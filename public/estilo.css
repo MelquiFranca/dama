@@ -625,8 +625,8 @@ font-size: 0px;
     }
 
     .alerta {
-        width: 127%;
-        height: 127%;
-        left: 2%;
+        width: 128%;
+        height: 128%;
+        /* left: 1%; */
     }
 }
