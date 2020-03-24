@@ -414,6 +414,7 @@ button {
     width: 100px;
     height: 100px;
     align-items: center;
+    justify-content: center;
     background-image: url("img/logo.png");
     background-size: cover;
     border-radius: 20px;     
