@@ -677,8 +677,8 @@ socket.on("connect", async function() {
     }
 });
 
-socket.on("atualiza-rival-inicio-bk", function(dados) {
-    exibeInformacoesSalaNatela(dados);
+socket.on("atualiza-rival-inicio-bk", function(data) {
+    exibeInformacoesSalaNatela(data);
 });
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
