@@ -5,6 +5,7 @@ const POSICOES = document.getElementsByClassName('black');
 const BANCO_PECAS = document.getElementById("bancopecas");
 const CHAT = document.getElementById("chat-form");
 const EXIBE_CHAT = document.getElementById("exibe-chat");
+const SAIR_SALA = document.getElementById("sair");
 const FECHA_CHAT = document.getElementById("fechar-chat");
 const MENSAGENS = document.getElementById("mensagens");
 const FINALIZA_JOGADA = document.getElementById("finaliza-jogada");
@@ -304,6 +305,7 @@ function carregarEventosObjetosJogador(corPeca) {
     EXIBE_CHAT.onclick = exibeChat
     FECHA_CHAT.onclick = fechaChat
     FINALIZA_JOGADA.onclick = finalizaJogada
+    SAIR_SALA.onclick = sairSala
 }
 
 function removeEventosObjetos() {
@@ -632,6 +634,17 @@ function atualizaStatusJogo(data) {
     atualizaBancoPecas(data.bancopecas);
     atualizaTabuleiro(data.tabuleiro);
 }
+
+function sairSala(e) {
+    e.preventDefault();
+    socket.emit('sair-sala', {
+        sala: window.localStorage.sala, 
+        jogador: window.localStorage.voce
+    });
+
+    window.location = 'inicio';
+}
+
 const socket = io();
 socket.on("connect", async function() {
     socket.emit("nova-sala", {sala: window.localStorage.sala, rival: window.localStorage.voce});

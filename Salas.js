@@ -47,7 +47,7 @@ async function criar(sala, jogador, cor) {
         novaSala = await selecionar(sala);
         return novaSala;
     } else {
-        return {erro: "A Sala já existe."};
+        return {erro: "A Sala já existe!"};
     }
 
 }
@@ -57,7 +57,7 @@ async function entrarSala(sala, jogador, cor) {
     let salaExistente = await selecionar(sala);
 
     if(!salaExistente) {
-        return {erro: "A sala não existe"};
+        return {erro: "A sala não existe!"};
     } else {
         let validacao;
 
@@ -80,12 +80,31 @@ async function entrarSala(sala, jogador, cor) {
             return salaExistente;
 
         } else {
-            return {erro: "A sala está cheia ou o nome do jogador informado já existe na sala."};
+            return {erro: "A sala está cheia ou o nome do jogador informado já existe na sala!"};
         }
     }
 
 }
 
+async function sairSala(dados) {
+    const sala = await selecionar(dados.sala);
+    if(sala) {
+        switch(dados.jogador) {
+            case sala.jogadorred:
+                sala.jogadorred = null;
+                break;
+            case sala.jogadorblue:
+                sala.jogadorblue = null;
+                break;
+        }
+
+        await DB.atualizarSalaDB(sala);
+        const salaAtualizada = await selecionar(dados.sala);
+        return salaAtualizada;
+    }
+
+    return null;
+}
 async function atualizarHistoricoSala(dados) {
     // const sala = selecionar(dados.sala);
     const sala = await selecionar(dados.sala);
@@ -121,5 +140,6 @@ module.exports = {
     criar,
     entrarSala,
     atualizarHistoricoSala,
-    atualizarVezJogada
+    atualizarVezJogada,
+    sairSala
 }

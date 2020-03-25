@@ -39,7 +39,12 @@ async function login(event) {
         return true;
     } else {
         // alert(resposta.erro, {title: "Titulo"});
-        criaAlerta(resposta.erro, "Voltar");
+        criaAlerta(resposta.erro, {
+            tituloBotao: "Voltar",
+            alertaCor: 'alertaBase',
+            alertaTextoCor: "#ff3939",
+            icone: 'fa-times-circle'
+        });
         return false;
     }
 }

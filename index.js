@@ -92,7 +92,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on("atualiza-rival-inicio", async function(data) {
-        console.log(data);
+        // console.log(data);
         const sala = await Salas.selecionar(data.sala);
         socket.in(data.sala).emit('atualiza-rival-inicio-bk', sala);
     });
@@ -104,6 +104,11 @@ io.on('connection', function(socket) {
         socket.in(dados.sala).emit('retorno-mensagem', dados.mensagem);
     });
         
+    socket.on("sair-sala", async function(dados) {
+        const sala = await Salas.sairSala(dados);
+        console.log(sala);
+        socket.in(dados.sala).emit('atualiza-rival-inicio-bk', sala);
+    });
 });
 
 http.listen(process.env.PORT || '3333', () => {
