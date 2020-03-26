@@ -7,11 +7,35 @@
         <link rel="stylesheet" type="text/css" href="estilo.css">
     </head>
     <body>
+        <button id="exibe-menu">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="menu" id="menu">            
+            <div class="logo-menu">
+                <div class="pecaMini animacaoRotacao jogadorred" for=""></div>
+                <div class="pecaMini animacaoRotacaoInversa jogadorblue" for=""></div>
+            </div>
+            <div class="item-menu">
+                <i class="icone fa fa-gamepad"></i>
+                Iniciar Novo Jogo
+            </div>
+            <div class="item-menu">
+                <i class="icone fa fa-wrench"></i>
+                Configurações
+            </div>
+            <div class="item-menu" id="sair">
+                <i class="icone fa fa-sign-out"></i>
+                Sair do Jogo
+            </div>
+            <div class="item-menu" id="voltar-menu">
+                <i class="icone fa fa-reply"></i>
+                Voltar
+            </div>
+        </div>
         <h2 class="titulo" id="titulo">Jogo Dama</h2>
         <div class="corpo" id="corpo">
-            <a id="sair">Sair</a>
             <div class="dados" id="dados">
-                <h4 class="subtitulo">Dados Jogadores</h4>
+                <!-- <h4 class="subtitulo">Dados Jogadores</h4> -->
                 <div class="nomes">
                     <div class="pecaMini jogadorred animacaoRotacao"></div> <span id="nomeJogadorRed"></span>
                 </div>
@@ -28,7 +52,7 @@
             </div> -->
             
             <div class="statusJogo">
-                <h4 class="subtitulo">Jogo Atual</h4>
+                <!-- <h4 class="subtitulo">Jogo Atual</h4> -->
                 <div class="bancopecas" id="bancopecas"></div>
             </div>
         </div>         

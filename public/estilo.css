@@ -41,7 +41,7 @@ button {
     /* background: #f6f33d; */
     width: 100%;
     padding: 5px 2px;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 .vezjogada {
@@ -77,9 +77,9 @@ button {
     border-radius: 2px;
     padding: 10px;
     border: 10px groove #DDD;
-    margin: 30px 0px;
-    height: 400px;
-    width: 200px;
+    /* margin: 30px 0px; */
+    height: 100%;
+    width: 150px;
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
@@ -88,6 +88,7 @@ button {
     justify-content: center;
     align-items: center;
     align-content: center;
+    padding-top: 30px;
 }
 .corpo .tabuleiro {
     max-width: 550px;
@@ -266,7 +267,7 @@ button {
     border-radius: 50%;
     width: 75px;
     height: 75px;
-    position: absolute;
+    position: fixed;
     bottom: 16px;
     left: 16px;
     justify-content: center;
@@ -296,7 +297,7 @@ button {
     background: #047e4f;
 }
 
-#sair {
+/* #sair {
     border: none;
     background: none;
     color: #ff3939;
@@ -306,15 +307,14 @@ button {
     text-decoration: none;
     font-weight: bold;
     font-size: 12px;
-}
-
+} */
 
 .chat-form {
     flex-direction: column;
     display: none;
     background: #1587aa;
     padding: 10px;
-    border-radius: 4px;
+    /* border-radius: 2px; */
     width: 550px;
     margin: 2px auto;
     align-content: center;
@@ -329,7 +329,7 @@ button {
 .chat-dialogo {
     /* border: 4px groove #DDD; */
     background: #DDD;
-    border-radius: 4px;
+    border-radius: 2px;
     margin: 5px;
     width: 95%;
 }
@@ -394,7 +394,7 @@ button {
     max-height: 90px;
     width: 100%;
     padding: 10px 5px;
-    border-radius: 5px;
+    border-radius: 4px;
     position: absolute;
     background: #FFF;
     /* opacity: 0.9; */
@@ -459,7 +459,7 @@ button {
     flex: 1;
     height: 100%;
     width: 100%;
-    border-radius: 4px;    
+    border-radius: 2px;    
     color: #333;
     justify-content: center;
     align-items: center;
@@ -548,24 +548,129 @@ button {
         transform: rotateY(2160deg);        
     }
 }
-/* 
-width: 0px;
-height: 0px;
-border-color: rgb(31, 31, 143);
-background: blue;
-font-size: 0px;
- */
 
-[draggable] {
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    /* Required to make elements draggable in old WebKit */
-    -khtml-user-drag: element;
-    -webkit-user-drag: element;
+@keyframes exibeMenu {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        display: none;
+    }
+    to {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+}
+@keyframes ocultaMenu {
+    from {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        display: flex;
+    }
+    to {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        display: none;
+    }
 }
 
+#exibe-menu {
+    border: none;
+    background: none;
+    font-size: 30px;
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    color: #333;
+    cursor: pointer;
+    padding: 7px 10px;
+    border-radius: 50%;
+}
+
+#exibe-menu:hover {
+    background: #b3f1d2;
+    box-shadow: 0px 0px 1px 1px #DDD;
+}
+
+.menu {
+    z-index: 20;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background: #FFF;
+    flex-direction: column;
+    padding: 10px 30px;
+}
+
+.animacaoExibeMenu {
+    display: flex;
+    animation-name: exibeMenu;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.animacaoOcultaMenu {
+    animation-name: ocultaMenu;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    /* display: none; */
+    /* animation-iteration-count: infinite; */
+}
+.item-menu {
+    display: flex;
+    width: 100%;
+    max-width: 580px;
+    height: 60px;
+    color: #555;    
+    margin: 5px 0;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.item-menu .icone {
+    /* width: 30px; */
+    justify-content: flex-end;
+    /* text-align: end; */
+    font-size: 30px;
+    /* border: 1px solid black; */
+    margin: 0 10px 0 0;
+}
+
+.item-menu:hover {
+    background: #b7ffdb;
+}
+.item-menu:active {
+    background: #a5e2c4;
+    /* color: #FFF; */
+}
+
+.logo-menu {
+    /* flex: 1; */
+    padding: 0 50px;
+    max-width: 480px;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+}
+
+.logo-menu .pecaMini {
+    width: 80px;
+    height: 80px;
+}
+
+#sair {
+    color: red;
+}
 @media screen and (max-width: 460px) {
     .logo {
         width: 250px;

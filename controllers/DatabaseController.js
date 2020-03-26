@@ -35,11 +35,11 @@ const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
 )`;
 
 async function criarTabelaSalas(BANCO) {
-    // deletarTabelaSalas();
     let sql;
     if(BANCO) {
         sql = SQL_CREATE_POSTGRES;
     } else {
+        await deletarTabelaSalas();
         sql = SQL_CREATE;
     }
     await sequelize.query(sql);

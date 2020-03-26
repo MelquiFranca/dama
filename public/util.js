@@ -1,3 +1,18 @@
+const EXIBE_MENU = document.getElementById('exibe-menu');
+const VOLTAR_MENU = document.getElementById('voltar-menu');
+
+EXIBE_MENU.onclick = function() {
+    exibeOcultaMenu(true);
+};
+VOLTAR_MENU.onclick = function() {
+    exibeOcultaMenu(false);
+};
+
+function exibeOcultaMenu(status) {
+    const menu = document.getElementById("menu");
+    menu.classList.toggle('animacaoExibeMenu');
+}
+
 function criaAlerta(msg, options) {
     const BTN_FORMULARIO = document.getElementById("enviarFormulario");
     const BTN_ENTRAR_SALA = document.getElementById("entrar-sala");

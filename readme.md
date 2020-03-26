@@ -14,6 +14,7 @@
   - [x] **Exibir dados dos jogadores na tela**
   - [x] Posicionamento e layout de formulário do Chat
   - [ ] Criar um Menu de Opções
+  - [ ] Lista de Salas Públicas Abertas
   
 - **3 Conexão Sala**
   - [x] Verificar se existe vaga na sala
