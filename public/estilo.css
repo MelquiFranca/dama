@@ -19,15 +19,20 @@ button {
     cursor: pointer;
 }
 
-/* .fa {
-    font-size: 100px;
-} */
+.topo {
+    align-items: center;
+    padding: 5px; 
+    height: 65px;
+    /* border: 1px solid black;    */
+}
+
 .dados {
     flex: 1;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 10px;
+    /* border: 1px solid black; */
 }
 .subtitulo {
     height: 80px;
@@ -88,7 +93,7 @@ button {
     justify-content: center;
     align-items: center;
     align-content: center;
-    padding-top: 30px;
+    padding-top: 10px;
 }
 .corpo .tabuleiro {
     max-width: 550px;
@@ -97,7 +102,7 @@ button {
     min-height: 550px;
     border: 3px solid black;
     flex-wrap: wrap;
-    margin: 0px 50px;
+    margin: 0px 10px;
 }
 .casa {
     max-width: 68px;
@@ -250,10 +255,10 @@ button {
 #exibe-chat {
     border-radius: 50%;
     width: 60px;
-    height: 60px;
-    position: absolute;
+    height: 55px;
+    /* position: absolute;
     bottom: 16px;
-    right: 16px;
+    right: 16px; */
     justify-content: center;
     border: 5px double #FFF;
     background: #04945d;
@@ -268,8 +273,8 @@ button {
     width: 75px;
     height: 75px;
     position: fixed;
-    bottom: 16px;
-    left: 16px;
+    bottom: 5px;
+    left: 5px;
     justify-content: center;
     border: 5px double #FFF;    
     font-weight: bold;
@@ -578,21 +583,28 @@ button {
 }
 
 #exibe-menu {
+    align-items: center;
     border: none;
     background: none;
     font-size: 30px;
-    position: fixed;
+    /* position: fixed;
     top: 5px;
-    left: 5px;
+    left: 5px; */
     color: #333;
     cursor: pointer;
-    padding: 7px 10px;
-    border-radius: 50%;
+    padding: 5px 10px;
+    border-radius: 2px;
+
+}
+
+#exibe-menu span {
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 #exibe-menu:hover {
     background: #b3f1d2;
-    box-shadow: 0px 0px 1px 1px #DDD;
+    box-shadow: 0px 0px 1px 1px #91c5ab;
 }
 
 .menu {
@@ -671,16 +683,25 @@ button {
 #sair {
     color: red;
 }
-@media screen and (max-width: 460px) {
-    .logo {
-        width: 250px;
-        height: 200px; 
+@media screen and (max-width: 355px) {
+    .corpo .tabuleiro {
+        max-width: 290px;
+        max-height: 290px;
+        min-width: 290px;
+        min-height: 290px;    
+        /* height: 90%; */
+        /* flex: 2; */
     }
-
-    /* .cabecalhoEntrar {
-        text-align: center;
-        margin-left: 50px;
-    } */
+    .statusJogo {
+        width: 100%;
+    }
+    .statusJogo .bancopecas {
+        margin: 5px 0px;
+        height: 130px;
+        max-height: 200px;
+        width: 290px;
+        max-width: 350px;
+    }
     
 }
 
@@ -702,7 +723,7 @@ button {
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
-        padding: 10px;
+        padding: 10px 50px;
     }
 
     .corpo .dados .nomes {
@@ -751,10 +772,11 @@ button {
         width: 350px;
     }
     #exibe-chat {
-        top: 5px;
-        right: 5px;
-        width: 40px;
-        height: 40px;
-        font-size: 10px;
+        /* position: absolute;
+        top: 5px; */
+        /* right: 5px; */
+        width: 65px;
+        /* height: 40px;
+        font-size: 10px; */
     }
 }

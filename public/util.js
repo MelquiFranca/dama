@@ -55,3 +55,12 @@ function criaAlerta(msg, options) {
     alerta.appendChild(btnAlerta);
     body.appendChild(alerta);
 }
+
+function limparHistorico() {
+    window.localStorage.removeItem("sala");
+    window.localStorage.removeItem("voce");
+    window.localStorage.removeItem("rival");
+    window.localStorage.removeItem("corPeca");
+    window.localStorage.removeItem("dados");
+    window.localStorage.removeItem("entrou");
+}

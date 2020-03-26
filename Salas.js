@@ -90,14 +90,20 @@ async function sairSala(dados) {
     const sala = await selecionar(dados.sala);
     if(sala) {
         switch(dados.jogador) {
-            case sala.jogadorred:
+            case sala.jogadorred: {
                 sala.jogadorred = null;
-                sala.vezjogada = sala.vezjogada == sala.jogador ? sala.jogadorred : sala.vezjogada;
+                if(sala.vezjogada == dados.jogador) {
+                    sala.vezjogada =  sala.jogadorred;
+                }
                 break;
-            case sala.jogadorblue:
+            }
+            case sala.jogadorblue: {
                 sala.jogadorblue = null;
-                sala.vezjogada = sala.vezjogada == sala.jogador ? sala.jogadorblue : sala.vezjogada;
+                if(sala.vezjogada == dados.jogador) {
+                    sala.vezjogada =  sala.jogadorblue;
+                }
                 break;
+            }
         }
 
         await DB.atualizarSalaDB(sala);

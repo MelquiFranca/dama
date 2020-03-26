@@ -306,7 +306,6 @@ function carregarEventosObjetosJogador(corPeca) {
     FECHA_CHAT.onclick = fechaChat
     FINALIZA_JOGADA.onclick = finalizaJogada
     SAIR_SALA.onclick = sairSala
-    window.onbeforeunload = sairSala
 }
 
 function removeEventosObjetos() {
@@ -643,6 +642,7 @@ function sairSala(e) {
         jogador: window.localStorage.voce
     });
 
+    limparHistorico();
     window.location = 'inicio';
 }
 

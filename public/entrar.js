@@ -1,7 +1,7 @@
 const FORMULARIO = document.getElementById("form-login");
 const BTN_ENTRAR_SALA = document.getElementById("entrar-sala");
 
-limparHistorico();   
+// limparHistorico();   
 
 FORMULARIO.onsubmit = login
 BTN_ENTRAR_SALA.onclick = login
@@ -47,13 +47,4 @@ async function login(event) {
         });
         return false;
     }
-}
-
-function limparHistorico() {
-    window.localStorage.removeItem("sala");
-    window.localStorage.removeItem("voce");
-    window.localStorage.removeItem("rival");
-    window.localStorage.removeItem("corPeca");
-    window.localStorage.removeItem("dados");
-    window.localStorage.removeItem("entrou");
 }

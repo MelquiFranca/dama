@@ -6,10 +6,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="estilo.css">
     </head>
-    <body>
-        <button id="exibe-menu">
-            <i class="fa fa-bars"></i>
-        </button>
+    <body>        
         <div class="menu" id="menu">            
             <div class="logo-menu">
                 <div class="pecaMini animacaoRotacao jogadorred" for=""></div>
@@ -32,7 +29,15 @@
                 Voltar
             </div>
         </div>
-        <h2 class="titulo" id="titulo">Jogo Dama</h2>
+
+        <div class="topo">
+            <button id="exibe-menu">
+                <i class="fa fa-bars"></i> <span>Menu</span>
+            </button>
+            <h2 class="titulo" id="titulo">Jogo Dama</h2>    
+            <button id="exibe-chat">Chat</button>
+        </div>
+
         <div class="corpo" id="corpo">
             <div class="dados" id="dados">
                 <!-- <h4 class="subtitulo">Dados Jogadores</h4> -->
@@ -72,8 +77,7 @@
                 <button type="submit" id="enviar-mensagem">Enviar</button>
             </form>
             <div class="right"></div>            
-        </div>
-        <button id="exibe-chat">Chat</button>
+        </div>        
         <button id="finaliza-jogada" class="vezJogadaAtivo">Finalizar Jogada</button>
         
         <!-- <p style="text-align: center;">Desenvolvido por Melquisedeque Pereira França</p> -->
