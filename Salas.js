@@ -92,9 +92,11 @@ async function sairSala(dados) {
         switch(dados.jogador) {
             case sala.jogadorred:
                 sala.jogadorred = null;
+                sala.vezjogada = sala.vezjogada == sala.jogador ? sala.jogadorblue : sala.vezjogada;
                 break;
             case sala.jogadorblue:
                 sala.jogadorblue = null;
+                sala.vezjogada = sala.vezjogada == sala.jogador ? sala.jogadorred : sala.vezjogada;
                 break;
         }
 
