@@ -429,7 +429,7 @@ button {
     align-items: center;
     text-align: center;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 25px;
     color: #FFF;
     animation-name: modoEspera;
     animation-duration: 3s;
@@ -628,13 +628,13 @@ button {
 
 @keyframes modoEspera {
     30% {
-        font-size: 25px;
+        font-size: 20px;
     }
     60% {
-        font-size: 35px;
+        font-size: 30px;
     } 
     80% {
-        font-size: 25px;
+        font-size: 20px;
     }
 }
 #exibe-menu {
