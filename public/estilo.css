@@ -24,7 +24,7 @@ button {
     align-content: center;
     justify-content: space-between;
     padding: 2px 2px; 
-    height: 80px;
+    height: 60px;
     /* border: 1px solid black;    */
 }
 
@@ -52,7 +52,7 @@ button {
 }
 
 .vezjogada {
-    border: 5px double #FFF;
+    border: 3px double #FFF;
     background: #f6f33d;
     font-weight: bold;
 }
