@@ -256,9 +256,9 @@ button {
 }
 #exibe-chat {
     border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    margin: 5px;
+    width: 52px;
+    height: 52px;
+    margin: 2px 5px 5px 0px;
     justify-content: center;
     border: 5px double #FFF;
     background: #04945d;
