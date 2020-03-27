@@ -414,6 +414,27 @@ button {
     animation-duration: 7s;
     animation-fill-mode: forwards;
 }
+
+#modoEspera {
+    z-index: 17;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #64646480;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: #FFF;
+    animation-name: modoEspera;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
 .cabecalhoEntrar {
     justify-content: center;
     /* border: 1px solid black; */
@@ -605,7 +626,19 @@ button {
     }
 }
 
+@keyframes modoEspera {
+    30% {
+        font-size: 25px;
+    }
+    60% {
+        font-size: 35px;
+    } 
+    80% {
+        font-size: 25px;
+    }
+}
 #exibe-menu {
+    z-index: 18;
     align-items: center;
     border: none;
     background: none;

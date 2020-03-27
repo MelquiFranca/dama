@@ -9,6 +9,8 @@ const EXIBE_CHAT = document.getElementById("exibe-chat");
 const FECHA_CHAT = document.getElementById("fechar-chat");
 const MENSAGENS = document.getElementById("mensagens");
 
+const MODO_ESPERA = document.getElementById("modoEspera");
+
 const FINALIZA_JOGADA = document.getElementById("finaliza-jogada");
 
 const SAIR_SALA = document.getElementById("sair");
@@ -527,6 +529,8 @@ function exibeInformacoesSalaNatela(dados) {
             window.localStorage.rival = dados.jogadorred;
             break;
     }
+
+
     
 }
 
@@ -726,6 +730,14 @@ function sairSala(e) {
     window.location = 'inicio';
 }
 
+function exibirModoEspera(texto) {
+    if(window.localStorage.rival == "null") {
+        MODO_ESPERA.innerText = texto;
+        MODO_ESPERA.style.display = 'flex';
+    } else {
+        MODO_ESPERA.style.display = 'none';
+    }
+}
 const socket = io();
 socket.on("connect", async function() {
     socket.emit("nova-sala", {sala: window.localStorage.sala, rival: window.localStorage.voce});
@@ -753,13 +765,17 @@ socket.on("connect", async function() {
         atualizaTabuleiro(resposta.tabuleiro);
         atualizaBancoPecas(resposta.bancopecas);
     }
+    
     if(window.localStorage.rival) {        
         socket.emit("atualiza-rival-inicio", {sala: window.localStorage.sala});
     }
+
+    exibirModoEspera('Aguardando seu rival conectar...');
 });
 
 socket.on("atualiza-rival-inicio-bk", function(data) {
     exibeInformacoesSalaNatela(data);
+    exibirModoEspera('Aguardando seu rival conectar...');
 });
 
 socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
