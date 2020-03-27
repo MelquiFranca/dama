@@ -430,6 +430,7 @@ button {
     background-size: cover;
     border-radius: 20px;     
     margin-bottom: 10px;  
+    margin-top: 10px;  
 }
 
 .group-radio {
@@ -642,7 +643,7 @@ button {
 .animacaoExibeMenu {
     display: flex;
     animation-name: exibeMenu;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
 .animacaoOcultaMenu {
@@ -803,8 +804,8 @@ button {
         font-size: 10px; */
     }
     .logo {
-        width: 70px;
-        height: 70px;
+        width: 100px;
+        height: 100px;
     }
     .alerta {
         height: 70%;
