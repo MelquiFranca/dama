@@ -5,7 +5,7 @@
    - [ ] **Assoprar Peça que não foi comida**
    - [ ] Cronômetro
    - [ ] Fim de jogo
-   - [ ] **Iniciar Nova Partida na mesma sala**
+   - [x] **Iniciar Nova Partida na mesma sala**
    - [x] Comer peça com Dama
    - [x] ***Vez de Jogada***
 

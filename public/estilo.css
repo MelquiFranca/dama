@@ -800,4 +800,13 @@ button {
         /* height: 40px;
         font-size: 10px; */
     }
+    .logo {
+        width: 70px;
+        height: 70px;
+    }
+    .alerta {
+        height: 50%;
+        width: 90%;
+        left: 5%;
+    }
 }
