@@ -256,14 +256,15 @@ button {
 #exibe-chat {
     border-radius: 50%;
     width: 50px;
-    height: 40px;
+    height: 50px;
     margin: 0;
     justify-content: center;
     border: 5px double #FFF;
     background: #04945d;
     color: #FFF;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12px;
+    padding: 5px;
     cursor: pointer;
 }
 
@@ -799,8 +800,8 @@ button {
         /* position: absolute;
         top: 5px; */
         /* right: 5px; */
-        width: 65px;
-        /* height: 40px;
+        /* width: 65px;
+        height: 40px;
         font-size: 10px; */
     }
     .logo {

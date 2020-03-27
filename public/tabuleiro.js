@@ -24,6 +24,7 @@ if(!window.localStorage.sala) {
 }
 
 function main() {
+    window.localStorage.proximaJogada = true;
     desenhaTabuleiro();
     gerarPecasRed(12);
     gerarPecasBlue(12);
@@ -66,7 +67,7 @@ function validaMovimento(casa, idpeca) {
         // retorno = retorno && validacao;
         retorno = retorno && (filho.length == 0);    
     }
-
+    window.localStorage.proximaJogada = false;
     return retorno;
 }
 
@@ -76,9 +77,10 @@ function validaMovimentoDama(linColOrigem, linColDestino, jogadorCor) {
     const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
     if(movDistanciaColuna == movDistanciaLinha) {
         retorno = isCasaPuladaVazia(linColOrigem, linColDestino);        
-        if(!retorno) {
-            
+        if(!retorno) {            
             retorno = {retorno: verificaPecaParaComerDama(linColOrigem, linColDestino, jogadorCor), comeu: true};
+        } else if(retorno && window.localStorage.proximaJogada == "false") {
+            return false;
         }
     } else {
         retorno = false;
@@ -98,7 +100,9 @@ function validaMovimentoRed(casa, peca) {
     if(peca.classList.contains("dama")) {
         retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorred");
     } else {
-        if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
+
+        if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "false") {
+
             if(linColOrigem[0] < linColDestino[0]) {            
                 retorno = true;
             } else {
@@ -128,7 +132,8 @@ function validaMovimentoBlue(casa, peca) {
     if(peca.classList.contains("dama")) {
         retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorblue");
     } else {
-        if(movDistanciaLinha == 1 && movDistanciaColuna == 1) {
+        if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "false") {
+            
             if(linColOrigem[0] > linColDestino[0]) {            
                 retorno = true;
             } else {
@@ -138,6 +143,7 @@ function validaMovimentoBlue(casa, peca) {
             retorno = {retorno: verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorblue'), comeu: true};
 
         } else {
+            // console.log("TEESTE");
             retorno = false;
         }   
 
@@ -423,8 +429,8 @@ function soltaPeca(event) {
         if(retorno){
             event.target.appendChild(document.getElementById(pecaId));   
             carregarEventosObjetosJogador(window.localStorage.corPeca, true);         
-            enviaPosicaoTabuleiro();
-            if(!retorno.retorno) {
+            enviaPosicaoTabuleiro();            
+            if(!retorno.retorno) {                
                 finalizaJogada();
             }
         }
@@ -586,6 +592,7 @@ function reiniciaJogo() {
 }
 
 function finalizaJogada() {
+    window.localStorage.proximaJogada = true;
     socket.emit("finaliza-jogada", {
         vezjogada: window.localStorage.voce,
         sala: window.localStorage.sala
