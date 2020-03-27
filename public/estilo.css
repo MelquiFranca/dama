@@ -57,7 +57,7 @@ button {
 
 .dados .nomes span {
     flex: 1;
-    margin-left: 10px;
+    margin-left: 5px;
     font-size: 12px;
 }
 
@@ -749,8 +749,9 @@ button {
 
     .corpo .dados .nomes {
         width: 48%;
-        padding: 5px;
+        padding: 2px;
         border-radius: 2px;
+        font-size: 11px;
         /* border: 1px solid black; */
     }
     .corpo .tabuleiro {
@@ -805,7 +806,7 @@ button {
         height: 70px;
     }
     .alerta {
-        height: 50%;
+        height: 70%;
         width: 90%;
         left: 5%;
     }
