@@ -39,7 +39,7 @@ async function criarTabelaSalas(BANCO) {
     if(BANCO) {
         sql = SQL_CREATE_POSTGRES;
     } else {
-        await deletarTabelaSalas();
+        // await deletarTabelaSalas();
         sql = SQL_CREATE;
     }
     await sequelize.query(sql);

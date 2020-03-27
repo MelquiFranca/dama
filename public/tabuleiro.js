@@ -37,16 +37,35 @@ function validaMovimento(casa, idpeca) {
 
     const corPeca = peca.id.split('-')[0];
     
+    let validacao;
     switch(corPeca) {
         case 'blue': 
-            retorno = retorno && validaMovimentoBlue(casa, peca);
+            validacao = validaMovimentoBlue(casa, peca);
+            if(validacao.comeu) {
+                validacao.retorno = retorno && validacao.retorno;
+                retorno = validacao;
+            } else {
+                retorno = retorno && validacao;
+            }
             break;
         case 'red':
-            retorno = retorno && validaMovimentoRed(casa, peca);
+            validacao = validaMovimentoRed(casa, peca);
+            if(validacao.comeu) {
+                validacao.retorno = retorno && validacao.retorno;
+                retorno = validacao;
+            } else {
+                retorno = retorno && validacao;
+            }
             break;        
     }
 
-    retorno = retorno && (filho.length == 0);    
+
+    if(retorno.comeu) {
+        retorno.retorno = retorno.retorno && (filho.length == 0);
+    } else {
+        // retorno = retorno && validacao;
+        retorno = retorno && (filho.length == 0);    
+    }
 
     return retorno;
 }
@@ -58,7 +77,8 @@ function validaMovimentoDama(linColOrigem, linColDestino, jogadorCor) {
     if(movDistanciaColuna == movDistanciaLinha) {
         retorno = isCasaPuladaVazia(linColOrigem, linColDestino);        
         if(!retorno) {
-            retorno = verificaPecaParaComerDama(linColOrigem, linColDestino, jogadorCor);
+            
+            retorno = {retorno: verificaPecaParaComerDama(linColOrigem, linColDestino, jogadorCor), comeu: true};
         }
     } else {
         retorno = false;
@@ -85,7 +105,7 @@ function validaMovimentoRed(casa, peca) {
                 retorno = false;
             }
         } else if(movDistanciaLinha == 2 && movDistanciaColuna == 2) {
-            retorno = verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorred');
+            retorno = {retorno: verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorred'), comeu: true};
 
         } else {
             retorno = false;
@@ -115,7 +135,7 @@ function validaMovimentoBlue(casa, peca) {
                 retorno = false;
             }
         } else if(movDistanciaLinha == 2 && movDistanciaColuna == 2) {
-            retorno = verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorblue');
+            retorno = {retorno: verificaPecaParaComer(linColOrigem, linColDestino, 'jogadorblue'), comeu: true};
 
         } else {
             retorno = false;
@@ -281,15 +301,25 @@ function isCasaPuladaVazia(origem, destino) {
     return retorno;
 }
 
-function carregarEventosObjetosJogador(corPeca) {
+function carregarEventosObjetosJogador(corPeca, proximaJogada) {
     Array.from(PECAS).map(peca => {
         // peca.ondragstart = function(event) {
         //     movimentaPeca(event);
         // };
 
+        
         if(corPeca == 0) {
             if(peca.classList.contains("jogadorred")) {
-                peca.onclick = selecionarPeca
+                if(proximaJogada) {
+                    if(peca.classList.contains("pecaSelecionada")) {
+                        peca.onclick = selecionarPeca
+                    } else {
+                        peca.onclick = null
+                    }
+
+                } else {
+                    peca.onclick = selecionarPeca
+                }
             } 
         } else if(corPeca == 1) {
             if(peca.classList.contains("jogadorblue")) {
@@ -389,9 +419,14 @@ function soltaPeca(event) {
     if(pecaSelecionada.length === 1) {  
         const pecaId = pecaSelecionada[0].id;
         // console.log(pecaId);
-        if(validaMovimento(event.target, pecaId)){
-            event.target.appendChild(document.getElementById(pecaId));
+        const retorno = validaMovimento(event.target, pecaId);
+        if(retorno){
+            event.target.appendChild(document.getElementById(pecaId));   
+            carregarEventosObjetosJogador(window.localStorage.corPeca, true);         
             enviaPosicaoTabuleiro();
+            if(!retorno.retorno) {
+                finalizaJogada();
+            }
         }
     }
 }
