@@ -3,12 +3,19 @@ const DAMAS = document.getElementsByClassName('dama');
 const CASAS = document.getElementsByClassName('casa');
 const POSICOES = document.getElementsByClassName('black'); 
 const BANCO_PECAS = document.getElementById("bancopecas");
+
 const CHAT = document.getElementById("chat-form");
 const EXIBE_CHAT = document.getElementById("exibe-chat");
-const SAIR_SALA = document.getElementById("sair");
 const FECHA_CHAT = document.getElementById("fechar-chat");
 const MENSAGENS = document.getElementById("mensagens");
+
 const FINALIZA_JOGADA = document.getElementById("finaliza-jogada");
+
+const SAIR_SALA = document.getElementById("sair");
+const NOVO_JOGO = document.getElementById('novo-menu');
+const EXIBE_MENU = document.getElementById('exibe-menu');
+const VOLTAR_MENU = document.getElementById('voltar-menu');
+
 
 if(!window.localStorage.sala) {
     window.location = "inicio";
@@ -305,7 +312,14 @@ function carregarEventosObjetosJogador(corPeca) {
     EXIBE_CHAT.onclick = exibeChat
     FECHA_CHAT.onclick = fechaChat
     FINALIZA_JOGADA.onclick = finalizaJogada
+    NOVO_JOGO.onclick = reiniciaJogo
     SAIR_SALA.onclick = sairSala
+    EXIBE_MENU.onclick = function() {
+        exibeOcultaMenu(true);
+    };
+    VOLTAR_MENU.onclick = function() {
+        exibeOcultaMenu(false);
+    };
 }
 
 function removeEventosObjetos() {
@@ -510,6 +524,30 @@ function enviaPosicaoTabuleiro() {
         tabuleiro: converteTabuleiroEmObjeto(), 
         bancopecas: {...Array.from(BANCO_PECAS.childNodes).map(peca => peca.id)}
     });  
+}
+
+
+function reiniciaJogo() {
+    function funcaoConfirmar() {
+        
+        const tabuleiro = document.getElementById('tabuleiro');
+        const corpo = document.getElementById('corpo');
+        corpo.removeChild(tabuleiro);
+        BANCO_PECAS.innerHTML = null;
+    
+        main();
+        enviaPosicaoTabuleiro();        
+        exibeOcultaMenu(false);
+
+    }
+    criaAlerta(`Deseja realmente Iniciar um novo jogo?
+    Será perdido o andamento desta partida.`, {
+        tituloBotao: "Confirmar",
+        alertaCor: 'alertaBranco',
+        alertaTextoCor: "#ff3939",
+        icone: 'fa-exclamation-circle',
+        funcaoConfirmar,
+    }, true);
 }
 
 function finalizaJogada() {

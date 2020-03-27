@@ -1,30 +1,21 @@
-const EXIBE_MENU = document.getElementById('exibe-menu');
-const VOLTAR_MENU = document.getElementById('voltar-menu');
-
-EXIBE_MENU.onclick = function() {
-    exibeOcultaMenu(true);
-};
-VOLTAR_MENU.onclick = function() {
-    exibeOcultaMenu(false);
-};
 
 function exibeOcultaMenu(status) {
     const menu = document.getElementById("menu");
     menu.classList.toggle('animacaoExibeMenu');
 }
 
-function criaAlerta(msg, options) {
-    const BTN_FORMULARIO = document.getElementById("enviarFormulario");
-    const BTN_ENTRAR_SALA = document.getElementById("entrar-sala");
-    BTN_FORMULARIO.setAttribute('disabled', true);
-    BTN_ENTRAR_SALA.setAttribute('disabled', true);
-
+function criaAlerta(msg, options, confirmar, funcaoAuxiliar) {
+    if(funcaoAuxiliar) {
+        funcaoAuxiliar();
+    }
     const body = document.getElementsByTagName("body")[0];
     const alerta = document.createElement('div');
     const alertaIcone = document.createElement('div');
     const icone = document.createElement('i');
     const textoAlerta = document.createElement('div');
     const btnAlerta = document.createElement('button');
+    const btnAlertaConfirmar = document.createElement('button');
+    
     
     alertaIcone.classList.add('alertaIcone');
     icone.classList.add('fa');
@@ -34,24 +25,43 @@ function criaAlerta(msg, options) {
     alerta.classList.add(options.alertaCor);
     textoAlerta.classList.add('texto');
     btnAlerta.classList.add("btnAlerta");
+    
 
-    // fa-chess-board
-    // fa-stack fa-lg
-
-    textoAlerta.innerText = msg;
-    btnAlerta.innerText = options.tituloBotao;
-
-    btnAlerta.onclick = function() {
-        BTN_FORMULARIO.removeAttribute('disabled');
-        BTN_ENTRAR_SALA.removeAttribute('disabled');
-        body.removeChild(alerta);
+    if(confirmar) {
+        btnAlertaConfirmar.classList.add("btnAlertaConfirmar");
+        btnAlertaConfirmar.innerText = options.tituloBotao;      
+        btnAlertaConfirmar.onclick = function() {
+            if(options.funcaoConfirmar) {
+                options.funcaoConfirmar();
+            }
+            const body = document.getElementsByTagName("body")[0];
+            body.removeChild(alerta);
+            return true;
+        }
     }
 
+    textoAlerta.innerText = msg;
+    btnAlerta.innerText = "Voltar";
+    
+
+    btnAlerta.onclick = function() {
+        if(options.funcaoVoltar) {
+            options.funcaoVoltar();
+        }
+        const body = document.getElementsByTagName("body")[0];
+        body.removeChild(alerta);
+        return false;
+    }
+
+    
     // span.appendChild(iconeTabuleiro);
     // span.appendChild(icone);
     alertaIcone.appendChild(icone);
     alerta.appendChild(alertaIcone);
     alerta.appendChild(textoAlerta);
+    if(confirmar) {
+        alerta.appendChild(btnAlertaConfirmar);
+    }
     alerta.appendChild(btnAlerta);
     body.appendChild(alerta);
 }

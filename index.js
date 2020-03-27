@@ -106,7 +106,7 @@ io.on('connection', function(socket) {
         
     socket.on("sair-sala", async function(dados) {
         const sala = await Salas.sairSala(dados);
-        console.log(sala);
+        // console.log(sala);
         socket.in(dados.sala).emit('atualiza-rival-inicio-bk', sala);
     });
 });

@@ -39,11 +39,24 @@ async function login(event) {
         return true;
     } else {
         // alert(resposta.erro, {title: "Titulo"});
+
+        function funcaoVoltar(alerta) {
+            const BTN_FORMULARIO = document.getElementById("enviarFormulario");
+            BTN_FORMULARIO.removeAttribute('disabled');
+            BTN_ENTRAR_SALA.removeAttribute('disabled');
+        }
+
         criaAlerta(resposta.erro, {
             tituloBotao: "Voltar",
-            alertaCor: 'alertaBase',
+            alertaCor: 'alertaBranco',
             alertaTextoCor: "#ff3939",
-            icone: 'fa-times-circle'
+            icone: 'fa-times-circle',
+            funcaoVoltar
+        }, false, () => {
+            const BTN_FORMULARIO = document.getElementById("enviarFormulario");
+            const BTN_ENTRAR_SALA = document.getElementById("entrar-sala");
+            BTN_FORMULARIO.setAttribute('disabled', true);
+            BTN_ENTRAR_SALA.setAttribute('disabled', true);
         });
         return false;
     }

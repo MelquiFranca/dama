@@ -1,7 +1,7 @@
 ###Lista de Pendências
 -  **1 Jogabilidade**
-   - [ ] **Liberar Início da partida após os Dois jogadores se conectarem**
    - [ ] ***Validar Continuação de Jogada após realizar primeiro movimento***
+   - [ ] **Liberar Início da partida após os Dois jogadores se conectarem**
    - [ ] **Assoprar Peça que não foi comida**
    - [ ] Cronômetro
    - [ ] Fim de jogo
