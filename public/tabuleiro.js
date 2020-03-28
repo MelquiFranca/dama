@@ -26,11 +26,11 @@ if(!window.localStorage.sala) {
 }
 
 function main() {
-    window.localStorage.proximaJogada = true;
+    // window.localStorage.proximaJogada = false;    
     desenhaTabuleiro();
     gerarPecasRed(12);
     gerarPecasBlue(12);
-    carregarEventosObjetosJogador(window.localStorage.corPeca);
+    carregarEventosObjetosJogador(window.localStorage.corPeca, window.localStorage.proximaJogada);
 }
 
 function validaMovimento(casa, idpeca) {
@@ -69,7 +69,7 @@ function validaMovimento(casa, idpeca) {
         // retorno = retorno && validacao;
         retorno = retorno && (filho.length == 0);    
     }
-    window.localStorage.proximaJogada = false;
+    window.localStorage.proximaJogada = true;
     return retorno;
 }
 
@@ -103,7 +103,7 @@ function validaMovimentoRed(casa, peca) {
         retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorred");
     } else {
 
-        if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "false") {
+        if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "true") {
 
             if(linColOrigem[0] < linColDestino[0]) {            
                 retorno = true;
@@ -134,7 +134,7 @@ function validaMovimentoBlue(casa, peca) {
     if(peca.classList.contains("dama")) {
         retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorblue");
     } else {
-        if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "false") {
+        if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "true") {
             
             if(linColOrigem[0] > linColDestino[0]) {            
                 retorno = true;
@@ -318,7 +318,7 @@ function carregarEventosObjetosJogador(corPeca, proximaJogada) {
         
         if(corPeca == 0) {
             if(peca.classList.contains("jogadorred")) {
-                if(proximaJogada) {
+                if(proximaJogada == "true") {
                     if(peca.classList.contains("pecaSelecionada")) {
                         peca.onclick = selecionarPeca
                     } else {
@@ -331,7 +331,7 @@ function carregarEventosObjetosJogador(corPeca, proximaJogada) {
             } 
         } else if(corPeca == 1) {
             if(peca.classList.contains("jogadorblue")) {
-                if(proximaJogada) {
+                if(proximaJogada == "true") {
                     if(peca.classList.contains("pecaSelecionada")) {
                         peca.onclick = selecionarPeca
                     } else {
@@ -562,7 +562,7 @@ function ativaJogadorVez(dados) {
         ativaDesativaFinalizarJogada(false);
     } else {
         // console.log("VOCE: ", dados.vezjogada);
-        carregarEventosObjetosJogador(window.localStorage.corPeca);
+        carregarEventosObjetosJogador(window.localStorage.corPeca, window.localStorage.proximaJogada);
         ativaDesativaFinalizarJogada(true);
     }
 
@@ -605,7 +605,7 @@ function reiniciaJogo() {
 }
 
 function finalizaJogada() {
-    window.localStorage.proximaJogada = true;
+    window.localStorage.proximaJogada = false;
     socket.emit("finaliza-jogada", {
         vezjogada: window.localStorage.voce,
         sala: window.localStorage.sala.toUpperCase()

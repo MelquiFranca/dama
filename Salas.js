@@ -77,6 +77,9 @@ async function entrarSala(sala, jogador, cor) {
             if(salaExistente.vezjogada == null) {
                 salaExistente.vezjogada = jogador;
             }
+
+            salaExistente.tabuleiro = JSON.stringify(salaExistente.tabuleiro);
+            salaExistente.bancopecas = JSON.stringify(salaExistente.bancopecas);
             await DB.atualizarSalaDB(salaExistente);
             // salvarArquivo(sala, salaExistente);        
 
