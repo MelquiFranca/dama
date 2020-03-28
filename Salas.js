@@ -90,23 +90,25 @@ async function entrarSala(sala, jogador, cor) {
 }
 
 async function sairSala(dados) {
+    console.log(dados);
     const sala = await selecionar(dados.sala);
     if(sala) {
         switch(dados.jogador) {
             case sala.jogadorred: {
-                sala.jogadorred = null;
+                sala.jogadorred = null;                                     
                 break;
             }
             case sala.jogadorblue: {
-                sala.jogadorblue = null;                
+                sala.jogadorblue = null;                                                     
                 break;
             }
         }
-        
+
         if(sala.vezjogada == dados.jogador) {
             sala.vezjogada =  null;
-        }
-
+        }   
+        sala.tabuleiro = JSON.stringify(dados.tabuleiro);
+        sala.bancopecas = JSON.stringify(dados.bancopecas);
         await DB.atualizarSalaDB(sala);
         const salaAtualizada = await selecionar(dados.sala);
 

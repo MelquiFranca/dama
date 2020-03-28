@@ -717,6 +717,7 @@ function atualizaStatusJogo(data) {
     ativaJogadorVez(data);
     atualizaBancoPecas(data.bancopecas);
     atualizaTabuleiro(data.tabuleiro);
+    exibirModoEspera('Aguardando seu rival conectar...');
 }
 
 function sairSala(e) {
