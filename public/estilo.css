@@ -758,11 +758,15 @@ button {
         /* width: 90%;
         height: 90%; */
     }
+    .pecaMini {
+        width: 24px;
+        height: 24px;
+    }
     .statusJogo {
         width: 100%;
     }
     .statusJogo .bancopecas {
-        margin: 5px 0px;
+        margin: 3px 0px;
         height: 130px;
         max-height: 200px;
         width: 290px;
