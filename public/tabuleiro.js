@@ -69,7 +69,7 @@ function validaMovimento(casa, idpeca) {
         // retorno = retorno && validacao;
         retorno = retorno && (filho.length == 0);    
     }
-    window.localStorage.proximaJogada = true;
+    
     return retorno;
 }
 
@@ -78,12 +78,14 @@ function validaMovimentoDama(linColOrigem, linColDestino, jogadorCor) {
     const movDistanciaLinha = Math.abs(linColDestino[0] - linColOrigem[0]);
     const movDistanciaColuna = Math.abs(linColDestino[1] - linColOrigem[1]);
     if(movDistanciaColuna == movDistanciaLinha) {
-        retorno = isCasaPuladaVazia(linColOrigem, linColDestino);        
+        retorno = isCasaPuladaVazia(linColOrigem, linColDestino);   
+    
         if(!retorno) {            
             retorno = {retorno: verificaPecaParaComerDama(linColOrigem, linColDestino, jogadorCor), comeu: true};
-        } else if(retorno && window.localStorage.proximaJogada == "false") {
-            return false;
+        } else {
+            return retorno;
         }
+
     } else {
         retorno = false;
     }
@@ -101,6 +103,9 @@ function validaMovimentoRed(casa, peca) {
 
     if(peca.classList.contains("dama")) {
         retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorred");
+        if(window.localStorage.proximaJogada == "true" && !retorno.comeu) { 
+            return false;
+        }
     } else {
 
         if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "true") {
@@ -133,6 +138,9 @@ function validaMovimentoBlue(casa, peca) {
 
     if(peca.classList.contains("dama")) {
         retorno = validaMovimentoDama(linColOrigem, linColDestino, "jogadorblue");
+        if(window.localStorage.proximaJogada == "true" && !retorno.comeu) { 
+            return false;
+        }
     } else {
         if(movDistanciaLinha == 1 && movDistanciaColuna == 1 && window.localStorage.proximaJogada != "true") {
             
@@ -437,10 +445,12 @@ function soltaPeca(event) {
         const pecaId = pecaSelecionada[0].id;
         // console.log(pecaId);
         const retorno = validaMovimento(event.target, pecaId);
-        if(retorno){
+        const retornoComeu = (retorno.comeu) ? retorno.retorno : retorno;
+        if(retornoComeu){
             event.target.appendChild(document.getElementById(pecaId));   
             carregarEventosObjetosJogador(window.localStorage.corPeca, true);         
             enviaPosicaoTabuleiro();            
+            window.localStorage.proximaJogada = true;
             if(!retorno.retorno) {                
                 finalizaJogada();
             }
@@ -583,15 +593,15 @@ function enviaPosicaoTabuleiro() {
 
 function reiniciaJogo() {
     function funcaoConfirmar() {
-        
         const tabuleiro = document.getElementById('tabuleiro');
         const corpo = document.getElementById('corpo');
         corpo.removeChild(tabuleiro);
         BANCO_PECAS.innerHTML = null;
-    
+        
         main();
         enviaPosicaoTabuleiro();        
         exibeOcultaMenu(false);
+        window.localStorage.proximaJogada = false;
 
     }
     criaAlerta(`Deseja realmente Iniciar um novo jogo?
