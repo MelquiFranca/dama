@@ -777,6 +777,9 @@ button {
         max-width: 350px;
     }
 
+    .menu {
+        padding: 8px 10px;
+    }
     .casa {
         /* max-width: 68px;
         max-height: 68px;
