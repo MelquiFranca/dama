@@ -109,6 +109,8 @@ button {
 .casa {
     max-width: 68px;
     max-height: 68px;
+    min-width: 28px;
+    min-height: 28px;
     width: 12.5%;
     height: 12.5%;
     justify-content: center;
@@ -118,9 +120,11 @@ button {
 }
 .black {
     background: black;
+    color: black;
 }
 .white {
     background: white;
+    color: #FFF;
 }
 .peca {
     max-width: 45px;
@@ -739,7 +743,7 @@ button {
 #sair {
     color: red;
 }
-@media screen and (max-width: 355px) {
+@media screen and (max-width: 375px) {
     .corpo .tabuleiro {
         max-width: 290px;
         max-height: 290px;
