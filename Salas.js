@@ -69,11 +69,14 @@ async function entrarSala(sala, jogador, cor) {
 
         if(validacao) {
             if(cor == 0) { 
-                salaExistente.jogadorred = jogador;
+                salaExistente.jogadorred = jogador;                
             } else if(cor == 1){
                 salaExistente.jogadorblue = jogador;
             }
             
+            if(salaExistente.vezjogada == null) {
+                salaExistente.vezjogada = jogador;
+            }
             await DB.atualizarSalaDB(salaExistente);
             // salvarArquivo(sala, salaExistente);        
 
@@ -92,18 +95,16 @@ async function sairSala(dados) {
         switch(dados.jogador) {
             case sala.jogadorred: {
                 sala.jogadorred = null;
-                if(sala.vezjogada == dados.jogador) {
-                    sala.vezjogada =  sala.jogadorred;
-                }
                 break;
             }
             case sala.jogadorblue: {
-                sala.jogadorblue = null;
-                if(sala.vezjogada == dados.jogador) {
-                    sala.vezjogada =  sala.jogadorblue;
-                }
+                sala.jogadorblue = null;                
                 break;
             }
+        }
+        
+        if(sala.vezjogada == dados.jogador) {
+            sala.vezjogada =  null;
         }
 
         await DB.atualizarSalaDB(sala);
