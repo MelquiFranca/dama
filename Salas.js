@@ -109,6 +109,12 @@ async function sairSala(dados) {
 
         await DB.atualizarSalaDB(sala);
         const salaAtualizada = await selecionar(dados.sala);
+
+        // if(sala.jogadorred == null && sala.jogadorblue == null) {
+        //     await DB.excluirSala(sala);
+        //     return null;
+        // }
+        
         return salaAtualizada;
     }
 

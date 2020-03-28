@@ -73,4 +73,5 @@ function limparHistorico() {
     window.localStorage.removeItem("corPeca");
     window.localStorage.removeItem("dados");
     window.localStorage.removeItem("entrou");
+    window.localStorage.removeItem("proximaJogada");
 }

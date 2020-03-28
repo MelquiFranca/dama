@@ -37,19 +37,19 @@ app.post('/validaLogin', async (req, res) => {
     const {sala, jogador, cor, entrarSala} = req.body;
 
     if(entrarSala) {
-        const retorno = await Salas.entrarSala(sala, jogador, cor);
+        const retorno = await Salas.entrarSala(sala.toUpperCase(), jogador, cor);
         retorno.entrou = true;
         res.send(retorno);
 
     } else {
-        const existeSala = await Salas.selecionar(sala);
+        const existeSala = await Salas.selecionar(sala.toUpperCase());
         if(existeSala) {
-            const retorno = await Salas.entrarSala(sala, jogador, cor);             
+            const retorno = await Salas.entrarSala(sala.toUpperCase(), jogador, cor);             
             retorno.entrou = true;
             res.send(retorno);
 
         } else {
-            const retorno = await Salas.criar(sala, jogador, cor);
+            const retorno = await Salas.criar(sala.toUpperCase(), jogador, cor);
             res.send(retorno);            
         }
 }
@@ -57,7 +57,7 @@ app.post('/validaLogin', async (req, res) => {
 
 app.post('/carregaDadosSala', async (req, res) => {
     const { sala } = req.body;
-    const existeSala = await Salas.selecionar(sala);
+    const existeSala = await Salas.selecionar(sala.toUpperCase());
     // console.log(existeSala);
     res.send(existeSala);
 })
@@ -66,7 +66,7 @@ io.on('connection', function(socket) {
     
     socket.on("nova-sala", function(dados) {
         // console.log(socket.id);        
-        socket.join(dados.sala);        
+        socket.join(dados.sala.toUpperCase());        
     });
     // socket.emit("atualiza-rival", )
     // console.log(socket.rooms);

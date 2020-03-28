@@ -565,7 +565,7 @@ function enviaPosicaoTabuleiro() {
     // socket.emit("", ); 
     socket.emit("tabuleiro-banco-pecas", {
         vezjogada: window.localStorage.voce,
-        sala: window.localStorage.sala,
+        sala: window.localStorage.sala.toUpperCase(),
         tabuleiro: converteTabuleiroEmObjeto(), 
         bancopecas: {...Array.from(BANCO_PECAS.childNodes).map(peca => peca.id)}
     });  
@@ -599,7 +599,7 @@ function finalizaJogada() {
     window.localStorage.proximaJogada = true;
     socket.emit("finaliza-jogada", {
         vezjogada: window.localStorage.voce,
-        sala: window.localStorage.sala
+        sala: window.localStorage.sala.toUpperCase()
     });   
 
     socket.on("atualiza-rival-bk", function(data) {
@@ -671,7 +671,7 @@ function enviaChat(event) {
     event.preventDefault();
     const mensagem = document.getElementById("texto");
     if(mensagem.value.length) {
-        socket.emit("mensagem", {mensagem: mensagem.value, sala: window.localStorage.sala});     
+        socket.emit("mensagem", {mensagem: mensagem.value, sala: window.localStorage.sala.toUpperCase()});     
         
         document.getElementById("enviar-mensagem").disabled = true;
         document.getElementById("enviar-mensagem").style.background = "#999";
@@ -722,7 +722,7 @@ function atualizaStatusJogo(data) {
 function sairSala(e) {
     e.preventDefault();
     socket.emit('sair-sala', {
-        sala: window.localStorage.sala, 
+        sala: window.localStorage.sala.toUpperCase(), 
         jogador: window.localStorage.voce
     });
 
@@ -740,7 +740,7 @@ function exibirModoEspera(texto) {
 }
 const socket = io();
 socket.on("connect", async function() {
-    socket.emit("nova-sala", {sala: window.localStorage.sala, rival: window.localStorage.voce});
+    socket.emit("nova-sala", {sala: window.localStorage.sala.toUpperCase(), rival: window.localStorage.voce});
 
     const retorno = await fetch("/carregaDadosSala", {
         method: "POST",
@@ -748,13 +748,13 @@ socket.on("connect", async function() {
         cache: "no-cache", 
         credentials: "same-origin", 
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({sala: window.localStorage.sala})
+        body: JSON.stringify({sala: window.localStorage.sala.toUpperCase()})
     });
     
     const resposta = await retorno.json();
     
     exibeInformacoesSalaNatela({
-        sala: resposta.sala,
+        sala: resposta.sala.toUpperCase(),
         jogadorred: resposta.jogadorred,
         jogadorblue: resposta.jogadorblue,
     });
@@ -767,7 +767,7 @@ socket.on("connect", async function() {
     }
     
     if(window.localStorage.rival) {        
-        socket.emit("atualiza-rival-inicio", {sala: window.localStorage.sala});
+        socket.emit("atualiza-rival-inicio", {sala: window.localStorage.sala.toUpperCase()});
     }
 
     exibirModoEspera('Aguardando seu rival conectar...');

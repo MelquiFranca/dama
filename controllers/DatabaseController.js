@@ -23,6 +23,10 @@ const SQL_CREATE_POSTGRES = `CREATE TABLE IF NOT EXISTS salas(
     bancopecas TEXT NULL,
     PRIMARY KEY(sala)
 )`;
+    // CREATE TABLE IF NOT EXISTS logUsuarios(
+    //     nome VARCHAR(255) NOT NULL,
+    //     data DATE NOT NULL,
+    // )
 
 const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
     id INTEGER PRIMARY KEY,
@@ -101,10 +105,19 @@ async function atualizarVezJogadaSalaDB(dados) {
     return retorno;
 }
 
+async function excluirSala(sala) {
+    const retorno = await sequelize.query(`DELETE FROM salas WHERE sala = ?`, {
+        replacements: [sala],
+    });
+    console.log(retorno);
+    return retorno[0];
+}
+
 module.exports = {
     criarTabelaSalas,
     inserirSalaDB,
     selecionarSalaDB,
     atualizarSalaDB,
-    atualizarVezJogadaSalaDB
+    atualizarVezJogadaSalaDB,
+    excluirSala,
 }
