@@ -322,7 +322,7 @@ button {
     padding: 10px;
     /* border-radius: 2px; */
     width: 550px;
-    margin: 2px auto;
+    margin: 2px auto auto 20px;
     align-content: center;
     height: 130px;
 }
@@ -385,14 +385,15 @@ button {
     cursor: pointer;
 }
 #mensagens {
-    flex-direction: column;
+    /* flex-direction: column; */
+    justify-content: center;
 }
 
 #mensagens .left {
     flex: 1;
 }
 #mensagens .right {
-    width: 200px;
+    flex: 1;
 }
 .mensagem {
     right: 5px;
@@ -829,7 +830,7 @@ button {
     }
 
     .chat-form {
-        /* width: 550px; */
+        margin: 2px auto 0 auto;
         width: 330px;
     }
     #exibe-chat {
