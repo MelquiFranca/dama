@@ -762,6 +762,13 @@ button {
         width: 290px;
         max-width: 350px;
     }
+
+    .casa {
+        /* max-width: 68px;
+        max-height: 68px;
+        min-width: 48px; */
+        min-height: 48px;
+    }
     
 }
 

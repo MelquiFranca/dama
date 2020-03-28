@@ -331,7 +331,16 @@ function carregarEventosObjetosJogador(corPeca, proximaJogada) {
             } 
         } else if(corPeca == 1) {
             if(peca.classList.contains("jogadorblue")) {
-                peca.onclick = selecionarPeca
+                if(proximaJogada) {
+                    if(peca.classList.contains("pecaSelecionada")) {
+                        peca.onclick = selecionarPeca
+                    } else {
+                        peca.onclick = null
+                    }
+
+                } else {
+                    peca.onclick = selecionarPeca
+                }
             }
         }
     });
