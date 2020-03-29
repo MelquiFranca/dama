@@ -628,7 +628,7 @@ function finalizaJogada() {
 
 function ativaDesativaFinalizarJogada(status) {
     if(status) {
-        FINALIZA_JOGADA.innerText = "Finalizar Jogada";
+        FINALIZA_JOGADA.innerText = "Finalizar";
         FINALIZA_JOGADA.classList.add("vezJogadaAtivo");
         FINALIZA_JOGADA.classList.remove("vezJogadaInativo");
     } else {
