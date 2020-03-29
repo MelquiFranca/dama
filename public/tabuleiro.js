@@ -722,7 +722,7 @@ function exibeChat(event) {
     event.preventDefault();
     CHAT.style.display = "flex";
     BANCO_PECAS.style.display = "none";
-    event.target.style.display = "none";
+    EXIBE_CHAT.style.display = "none";
 }
 
 function fechaChat(event) {

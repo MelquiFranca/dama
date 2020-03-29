@@ -36,7 +36,9 @@
             <button id="exibe-menu">
                 <i class="fa fa-bars"></i> <span>Menu</span>
             </button>            
-            <button id="exibe-chat">Chat</button>
+            <button id="exibe-chat">
+                <i class="fa fa-comments-o"></i> <span>Chat</span>
+            </button>
         </div>
 
         <div class="corpo" id="corpo">
@@ -66,16 +68,33 @@
             <div class="left"></div>            
             <form class="chat-form" id="chat-form">
                 <div class="cabecalho">
-                    <!-- <label for="texto">Mensageiro</label> -->
+                    <label for="texto">Mensagem</label>
                     <button id="fechar-chat">X</button>
                 </div>
-                <textarea 
-                    name="texto" 
-                    id="texto" 
-                    rows="5" 
-                    maxlength="100"
-                    placeholder="Envie aqui uma mensagem para o seu oponente..."></textarea>
-                <button type="submit" id="enviar-mensagem">Enviar</button>
+
+                <div class="chat-corpo">
+                    <div class="chat-historico">
+                        <div class="chat-historico-mensagem">
+                            Nenhuma Mensagem...
+                            <!-- <div class="chat-nome-usuario-voce">
+                                Você
+                            </div>
+                            <div class="chat-texto-mensagem-voce">
+                                Olá! Bom dia!
+                            </div> -->
+                        </div>
+                    </div>
+                    <textarea 
+                        name="texto" 
+                        id="texto" 
+                        rows="5" 
+                        maxlength="150"
+                        placeholder="Escreva uma mensagem..."></textarea>
+                    <div class="chat-acoes">
+                        <div></div>
+                        <button type="submit" id="enviar-mensagem">Enviar</button>
+                    </div>
+                </div>
             </form>
             <div class="right"></div>            
         </div>        
