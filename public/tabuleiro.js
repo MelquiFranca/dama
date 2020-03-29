@@ -721,14 +721,14 @@ function exibeMensagem(texto) {
 function exibeChat(event) {
     event.preventDefault();
     CHAT.style.display = "flex";
-    BANCO_PECAS.style.display = "none";
+    // BANCO_PECAS.style.display = "none";
     EXIBE_CHAT.style.display = "none";
 }
 
 function fechaChat(event) {
     event.preventDefault();
     EXIBE_CHAT.style.display = "flex";
-    BANCO_PECAS.style.display = "flex";
+    // BANCO_PECAS.style.display = "flex";
     CHAT.style.display = "none";   
 }
 
