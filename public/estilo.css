@@ -350,6 +350,7 @@ button {
     justify-content: space-between;
     align-items: center;
     padding: 20px 15px;
+    cursor: pointer;
 }
 
 .chat-form .chat-corpo {
@@ -369,6 +370,7 @@ button {
     cursor: pointer;
     border: none;
     margin: 0;
+    padding: 5px;
     background: none;
     color: #FFF;
     font-weight: bold;

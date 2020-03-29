@@ -7,6 +7,7 @@ const BANCO_PECAS = document.getElementById("bancopecas");
 const CHAT = document.getElementById("chat-form");
 const EXIBE_CHAT = document.getElementById("exibe-chat");
 const FECHA_CHAT = document.getElementById("fechar-chat");
+const CABECALHO_CHAT = document.querySelector("#chat-form .cabecalho");
 const MENSAGENS = document.getElementById("mensagens");
 
 const MODO_ESPERA = document.getElementById("modoEspera");
@@ -366,6 +367,7 @@ function carregarEventosObjetosJogador(corPeca, proximaJogada) {
     CHAT.onsubmit = enviaChat
     EXIBE_CHAT.onclick = exibeChat
     FECHA_CHAT.onclick = fechaChat
+    // CABECALHO_CHAT.onclick = fechaChat
     FINALIZA_JOGADA.onclick = finalizaJogada
     NOVO_JOGO.onclick = reiniciaJogo
     SAIR_SALA.onclick = sairSala
