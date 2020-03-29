@@ -696,7 +696,7 @@ function enviaChat(event) {
         document.getElementById("enviar-mensagem").style.background = "#999";
         document.getElementById("enviar-mensagem").innerText = "Aguarde...";
         setTimeout((teste) => {
-            document.getElementById("enviar-mensagem").style.background = "#04945d";
+            document.getElementById("enviar-mensagem").style.background = "#047294";
             document.getElementById("enviar-mensagem").disabled = false;
             document.getElementById("enviar-mensagem").innerText = "Enviar";
         }, 7000);
