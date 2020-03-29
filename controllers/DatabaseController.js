@@ -21,6 +21,7 @@ const SQL_CREATE_POSTGRES = `CREATE TABLE IF NOT EXISTS salas(
     jogadorblue VARCHAR(255) NULL,
     tabuleiro TEXT NULL,
     bancopecas TEXT NULL,
+    chat TEXT NULL,
     PRIMARY KEY(sala)
 )`;
     // CREATE TABLE IF NOT EXISTS logUsuarios(
@@ -35,15 +36,16 @@ const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
     jogadorred VARCHAR(255) NULL,
     jogadorblue VARCHAR(255) NULL,
     tabuleiro TEXT NULL,
-    bancopecas TEXT NULL
+    bancopecas TEXT NULL,
+    chat TEXT NULL
 )`;
 
 async function criarTabelaSalas(BANCO) {
     let sql;
+    await deletarTabelaSalas();
     if(BANCO) {
         sql = SQL_CREATE_POSTGRES;
     } else {
-        // await deletarTabelaSalas();
         sql = SQL_CREATE;
     }
     await sequelize.query(sql);
@@ -51,8 +53,8 @@ async function criarTabelaSalas(BANCO) {
 
 async function inserirSalaDB(dados) {
     const retorno = await sequelize.query(`INSERT INTO salas 
-        (sala, vezjogada, jogadorred, jogadorblue, tabuleiro, bancopecas) 
-        VALUES (?, ?, ?, ?, ?, ?)`, 
+        (sala, vezjogada, jogadorred, jogadorblue, tabuleiro, bancopecas, chat) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)`, 
     {
         replacements: [
             dados.sala,
@@ -60,7 +62,8 @@ async function inserirSalaDB(dados) {
             dados.jogadorred, 
             dados.jogadorblue, 
             dados.tabuleiro, 
-            dados.bancopecas
+            dados.bancopecas,
+            dados.chat
         ],
     });
 
@@ -76,7 +79,7 @@ async function selecionarSalaDB(sala) {
 }
 async function atualizarSalaDB(dados) {
     const retorno = await sequelize.query(`UPDATE salas 
-        SET vezjogada = ?, jogadorred = ?, jogadorblue = ?, tabuleiro = ?, bancopecas = ?
+        SET vezjogada = ?, jogadorred = ?, jogadorblue = ?, tabuleiro = ?, bancopecas = ?, chat = ? 
         WHERE sala = ?
     `, {
         replacements: [
@@ -85,6 +88,7 @@ async function atualizarSalaDB(dados) {
             dados.jogadorblue, 
             dados.tabuleiro, 
             dados.bancopecas,
+            dados.chat,
             dados.sala
         ],
     });
@@ -109,7 +113,7 @@ async function excluirSala(sala) {
     const retorno = await sequelize.query(`DELETE FROM salas WHERE sala = ?`, {
         replacements: [sala],
     });
-    console.log(retorno);
+    // console.log(retorno);
     return retorno[0];
 }
 

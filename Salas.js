@@ -6,7 +6,7 @@ async function selecionar(nome) {
     // const ARQUIVO = path.resolve("salas", `${sala}.json`);
     // const existeSala = fs.existsSync(ARQUIVO);
     const sala = await DB.selecionarSalaDB(nome);
-
+    
     if(sala.length) {
         sala[0].tabuleiro = sala[0].tabuleiro ? JSON.parse(sala[0].tabuleiro) : null;
         sala[0].bancopecas = sala[0].bancopecas ? JSON.parse(sala[0].bancopecas) : null;
@@ -40,7 +40,8 @@ async function criar(sala, jogador, cor) {
             jogadorred,
             jogadorblue,
             tabuleiro: null,
-            bancopecas: null
+            bancopecas: null,
+            chat: null
         };
 
         await DB.inserirSalaDB(novaSala);
@@ -80,6 +81,7 @@ async function entrarSala(sala, jogador, cor) {
 
             salaExistente.tabuleiro = JSON.stringify(salaExistente.tabuleiro);
             salaExistente.bancopecas = JSON.stringify(salaExistente.bancopecas);
+            salaExistente.chat = JSON.stringify(salaExistente.chat);
             await DB.atualizarSalaDB(salaExistente);
             // salvarArquivo(sala, salaExistente);        
 
@@ -112,6 +114,7 @@ async function sairSala(dados) {
         }   
         sala.tabuleiro = JSON.stringify(dados.tabuleiro);
         sala.bancopecas = JSON.stringify(dados.bancopecas);
+        sala.chat = JSON.stringify(dados.chat);
         await DB.atualizarSalaDB(sala);
         const salaAtualizada = await selecionar(dados.sala);
 
@@ -130,6 +133,7 @@ async function atualizarHistoricoSala(dados) {
     const sala = await selecionar(dados.sala);
     sala.tabuleiro = JSON.stringify(dados.tabuleiro);
     sala.bancopecas = JSON.stringify(dados.bancopecas);
+    sala.chat = JSON.stringify(dados.chat);
     // console.log(sala);
     // salvarArquivo(dados.sala, sala);
     await DB.atualizarSalaDB(sala);
