@@ -390,7 +390,7 @@ button {
 }
 
 .chat-form .chat-historico {
-    height: 150px;
+    height: 250px;
     padding: 10px;
     flex-direction: column;  
     overflow: auto;  
@@ -403,6 +403,7 @@ button {
     /* max-height: 100px; */
     align-items: center;
     justify-content: center;    
+    text-align: center;
 }
 .chat-nome-usuario-voce {
     font-weight: bold;
@@ -420,6 +421,8 @@ button {
     justify-content: flex-end;
     max-height: 40px;
     word-wrap: break-word;
+    font-weight: normal;
+    text-align: end;
     /* align-items: baseline;
     align-content: stretch; */
     /* border: 1px solid black; */
@@ -428,6 +431,8 @@ button {
     width: 100%;
     justify-content: flex-start;
     max-height: 40px;
+    font-weight: normal;
+    text-align: start;
 }
 .chat-form .chat-acoes {
     display: flex;
@@ -927,6 +932,9 @@ button {
 
     .chat-form {
         width: 70%;
+    }
+    .chat-form .chat-historico {
+        height: 200px;
     }
     #exibe-chat {
         font-size: 30px;

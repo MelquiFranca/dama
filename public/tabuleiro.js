@@ -693,7 +693,7 @@ function enviaChat(event) {
     const mensagem = document.getElementById("texto");
     if(mensagem.value.length) {
         socket.emit("mensagem", {mensagem: mensagem.value, sala: window.localStorage.sala.toUpperCase()});     
-        
+        adicionaHistoricoMensagem(mensagem.value);
         document.getElementById("enviar-mensagem").disabled = true;
         document.getElementById("enviar-mensagem").style.background = "#999";
         document.getElementById("enviar-mensagem").innerText = "Aguarde...";
@@ -714,12 +714,41 @@ function exibeMensagem(texto) {
         corpo.appendChild(mensagem);
 
         setTimeout(() => {
-            document.getElementById("enviar-mensagem").style.background = "#04945d";
+            document.getElementById("enviar-mensagem").style.background = "#047294";
             document.getElementById("enviar-mensagem").disabled = false;
             // const mensagemRemover = document.getElementById(mensagem.id);
             corpo.removeChild(mensagem);
         }, 8000);
 }
+
+function adicionaHistoricoMensagem(texto, rival) {
+    const chatHistorico = document.getElementById('chat-historico');
+    const chatHistoricoMensagem = document.createElement('div');
+    chatHistoricoMensagem.classList.add('chat-historico-mensagem');
+    
+    const chatNomeUsuario = document.createElement('div');  
+    const chatTextoMensagem = document.createElement('div');  
+    
+    if(rival) {
+        chatNomeUsuario.classList.add('chat-nome-usuario-rival');
+        chatTextoMensagem.classList.add('chat-texto-mensagem-rival');
+        chatNomeUsuario.innerText = window.localStorage.rival;
+        
+    } else {
+        chatNomeUsuario.classList.add('chat-nome-usuario-voce');
+        chatTextoMensagem.classList.add('chat-texto-mensagem-voce');
+        chatNomeUsuario.innerText = "Você";
+        
+    }
+    
+    chatTextoMensagem.innerText = texto;
+
+    chatHistoricoMensagem.appendChild(chatNomeUsuario);
+    chatHistoricoMensagem.appendChild(chatTextoMensagem);
+
+    chatHistorico.appendChild(chatHistoricoMensagem);
+}
+
 function exibeChat(event) {
     event.preventDefault();
     CHAT.style.display = "flex";
@@ -812,6 +841,7 @@ socket.on("inicia-jogada", function(data) {
 socket.on("retorno-mensagem", function(data) {
     // console.log(data);
     exibeMensagem(data);
+    adicionaHistoricoMensagem(data, true);
 });
 
 // socket.on("carrega-dados-sala", function(data) {

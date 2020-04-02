@@ -69,7 +69,8 @@ io.on('connection', function(socket) {
         socket.join(dados.sala.toUpperCase());        
     });
     // socket.emit("atualiza-rival", )
-    // console.log(socket.rooms);
+    console.log(socket.rooms);
+    
     socket.on("tabuleiro-banco-pecas", async function(dados) {
         // console.log(dados);
         const retorno = await Salas.atualizarHistoricoSala({
