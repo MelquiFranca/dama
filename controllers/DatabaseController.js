@@ -22,6 +22,7 @@ const SQL_CREATE_POSTGRES = `CREATE TABLE IF NOT EXISTS salas(
     tabuleiro TEXT NULL,
     bancopecas TEXT NULL,
     chat TEXT NULL,
+    cronometro INTEGER NOT NULL
     PRIMARY KEY(sala)
 )`;
     // CREATE TABLE IF NOT EXISTS logUsuarios(
@@ -43,7 +44,7 @@ const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
 
 async function criarTabelaSalas(BANCO) {
     let sql;
-    // await deletarTabelaSalas();
+    await deletarTabelaSalas();
     if(BANCO) {
         sql = SQL_CREATE_POSTGRES;
     } else {
