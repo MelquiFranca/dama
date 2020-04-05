@@ -563,14 +563,14 @@ button {
 .cabecalhoEntrar {
     justify-content: center;
     /* border: 1px solid black; */
-    height: 120px;
+    height: 100px;
     align-items: flex-start;
     /* margin-top: 20px; */
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     align-items: center;
     justify-content: center;
     background-image: url("img/logo.png");
@@ -585,21 +585,23 @@ button {
     align-content: center;
     justify-content: center;
     /* border: 1px solid black; */
-    height: 70px;
+    height: 60px;
     /* margin: 0px 0px 20px 0px; */
 }
 .group-radio>label {
     width: 100%;
+    font-size: 12px;
+    margin-top: 30px;
     justify-content: center;
 }
 
 .group-radio .item-radio {
     align-items: center;
-    padding: 10px 0;
+    padding: 0;
 }
 .group-radio .item-radio>input {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     margin-right: 0;
 }
 .group-radio .item-radio>div {
@@ -609,8 +611,9 @@ button {
 }
 
 .group-radio .item-radio .pecaMini {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+    margin: 5px 30px;
 }
 
 .alerta {
@@ -929,7 +932,6 @@ button {
     }
 
     .form-group {
-        justify-content: center;
         margin: 20px auto;
         width: 95%;
     }
@@ -938,9 +940,10 @@ button {
         flex-direction: column;
     }
 
-    .corpo-right {
+    .corpo-left {
         align-items: center;
         justify-content: center;
+        height: 500px;
     }
 
     .corpo {
@@ -974,6 +977,14 @@ button {
         min-height: 330px;    
         /* height: 90%; */
         /* flex: 2; */
+    }
+
+    .input {
+        padding: 7px 10px;
+    }
+
+    .btn {
+        width: 50%;
     }
     .statusJogo {
         width: 100%;
