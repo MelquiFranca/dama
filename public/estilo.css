@@ -295,6 +295,7 @@ button {
 }
 
 .btn-group {
+    margin-top: 10px;
     height: 60px;
     justify-content: space-between;
     align-items: center;
