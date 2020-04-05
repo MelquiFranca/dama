@@ -635,11 +635,13 @@ function ativaDesativaFinalizarJogada(status) {
     if(status) {
         icon.classList.remove('fa-hourglass');
         icon.classList.add('fa-check');
+        FINALIZA_JOGADA.setAttribute('title', 'Finalizar Jogada.');
         FINALIZA_JOGADA.classList.add("vezJogadaAtivo");
         FINALIZA_JOGADA.classList.remove("vezJogadaInativo");
     } else {        
         icon.classList.remove('fa-check');
         icon.classList.add('fa-hourglass');
+        FINALIZA_JOGADA.setAttribute('title', 'Aguarde o seu Rival.');
         FINALIZA_JOGADA.classList.add("vezJogadaInativo");
         FINALIZA_JOGADA.classList.remove("vezJogadaAtivo");
     }  
