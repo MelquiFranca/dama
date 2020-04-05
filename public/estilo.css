@@ -354,6 +354,9 @@ button {
     text-align: center;
 }
 
+#finaliza-jogada:title {
+    font-size: 30px;
+}
 .vezJogadaAtivo {
     font-size: 35px;
     background: none;
