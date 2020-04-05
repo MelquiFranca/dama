@@ -758,6 +758,8 @@ function enviaChat(event) {
             document.getElementById("enviar-mensagem").disabled = false;
             document.getElementById("enviar-mensagem").innerText = "Enviar";
         }, 7000);
+
+        mensagem.value = "";
     }
 }
 
