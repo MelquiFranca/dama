@@ -22,7 +22,7 @@ const SQL_CREATE_POSTGRES = `CREATE TABLE IF NOT EXISTS salas(
     tabuleiro TEXT NULL,
     bancopecas TEXT NULL,
     chat TEXT NULL,
-    cronometro INTEGER NOT NULL
+    cronometro INTEGER NOT NULL,
     PRIMARY KEY(sala)
 )`;
     // CREATE TABLE IF NOT EXISTS logUsuarios(
