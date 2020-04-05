@@ -13,11 +13,11 @@ async function selecionar(nome) {
 
         return sala[0];
     }
-    
+    console.log(sala);
     return null;
 }
 
-async function criar(sala, jogador, cor) {        
+async function criar(sala, jogador, cor, cronometro) {        
     // let novaSala = selecionar(sala);
 
     let novaSala = await selecionar(sala);
@@ -41,7 +41,8 @@ async function criar(sala, jogador, cor) {
             jogadorblue,
             tabuleiro: null,
             bancopecas: null,
-            chat: null
+            chat: null, 
+            cronometro: cronometro
         };
 
         await DB.inserirSalaDB(novaSala);
@@ -95,7 +96,7 @@ async function entrarSala(sala, jogador, cor) {
 }
 
 async function sairSala(dados) {
-    console.log(dados);
+    // console.log(dados);
     const sala = await selecionar(dados.sala);
     if(sala) {
         switch(dados.jogador) {
@@ -134,6 +135,7 @@ async function atualizarHistoricoSala(dados) {
     sala.tabuleiro = JSON.stringify(dados.tabuleiro);
     sala.bancopecas = JSON.stringify(dados.bancopecas);
     sala.chat = JSON.stringify(dados.chat);
+    // sala.cronometro = dados.cronometro;
     // console.log(sala);
     // salvarArquivo(dados.sala, sala);
     await DB.atualizarSalaDB(sala);
@@ -152,6 +154,11 @@ async function atualizarVezJogada(dados) {
     return salaAtualizada;
 }
 
+async function atualizaCronometro(dados) {
+    await DB.atualizaCronometro(dados);
+    const salaAtualizada = await selecionar(dados.sala);
+    return salaAtualizada;
+}
 // function salvarArquivo(sala, dados) {
 //     const ARQUIVO = path.resolve("salas", `${sala}.json`);
 //     fs.writeFileSync(ARQUIVO, JSON.stringify(dados), {
@@ -165,5 +172,6 @@ module.exports = {
     entrarSala,
     atualizarHistoricoSala,
     atualizarVezJogada,
-    sairSala
+    sairSala,
+    atualizaCronometro
 }

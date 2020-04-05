@@ -19,6 +19,7 @@ const NOVO_JOGO = document.getElementById('novo-menu');
 const EXIBE_MENU = document.getElementById('exibe-menu');
 const VOLTAR_MENU = document.getElementById('voltar-menu');
 
+let CONTAGEM;
 
 if(!window.localStorage.sala) {
     window.location = "inicio";
@@ -617,14 +618,15 @@ function reiniciaJogo() {
 }
 
 function finalizaJogada() {
+    clearTimeout(CONTAGEM);
     window.localStorage.proximaJogada = false;
     socket.emit("finaliza-jogada", {
         vezjogada: window.localStorage.voce,
-        sala: window.localStorage.sala.toUpperCase()
+        sala: window.localStorage.sala.toUpperCase(),        
     });   
 
     socket.on("atualiza-rival-bk", function(data) {
-        atualizaStatusJogo(data);
+        atualizaStatusJogo(data, true);
     });
 }
 
@@ -637,6 +639,47 @@ function ativaDesativaFinalizarJogada(status) {
         FINALIZA_JOGADA.innerText = "Aguarde...";
         FINALIZA_JOGADA.classList.add("vezJogadaInativo");
         FINALIZA_JOGADA.classList.remove("vezJogadaAtivo");
+    }  
+        
+    
+}
+
+function iniciaCronometro(dados, tempo) {
+    const cronometro = document.getElementById('cronometro');
+    
+    function alteraContagem(seg) {
+        if(window.localStorage.rival == "null") {
+            socket.emit('atualiza-cronometro', {
+                sala: window.localStorage.sala,
+                cronometro: seg
+            });
+            clearTimeout(CONTAGEM);
+            cronometro.innerText = "30";     
+            return;
+        }
+
+        if(seg < 0) {
+            finalizaJogada();
+            return;
+        } else {            
+            cronometro.innerHTML = seg;
+            socket.emit('atualiza-cronometro', {
+                sala: window.localStorage.sala,
+                cronometro: seg
+            });
+            
+            CONTAGEM = setTimeout(() => {
+                alteraContagem(seg - 1)
+            }, 1000);    
+        }
+    }
+
+    // console.log(dados);
+    if(window.localStorage.voce == dados.vezjogada && window.localStorage.rival != "null") {
+        alteraContagem(tempo);        
+    } else {
+        clearTimeout(CONTAGEM);
+        cronometro.innerText = "30";          
     }
 }
 
@@ -660,6 +703,9 @@ function converteTabuleiroEmObjeto() {
 }
 
 function atualizaTabuleiro(dados) {
+    if(dados == null) {
+        return;
+    }
     Object.keys(dados).map((casaId) => {
         const casa = document.getElementById(casaId);
         const peca = document.getElementById(dados[casaId].pecaId);
@@ -675,6 +721,10 @@ function atualizaTabuleiro(dados) {
 
 function atualizaBancoPecas(data) {
     // console.log(data);
+    if(data == null) {
+        return;
+    }
+
     if(Object.keys(data).length) {
         Object.keys(data).map(indice => {
             const peca = document.getElementById(data[indice]);
@@ -763,11 +813,20 @@ function fechaChat(event) {
     CHAT.style.display = "none";   
 }
 
-function atualizaStatusJogo(data) {
+function atualizaStatusJogo(data, finaliza) {
     ativaJogadorVez(data);
     atualizaBancoPecas(data.bancopecas);
     atualizaTabuleiro(data.tabuleiro);
     exibirModoEspera('Aguardando seu rival conectar...');
+
+    socket.emit('atualiza-cronometro', {
+        sala: window.localStorage.sala,
+        cronometro: (finaliza) ? 30 : null,
+        reload: true
+    });
+    socket.on('atualiza-cronometro-bk', function(tempo) {
+        iniciaCronometro(data, tempo);        
+    });
 }
 
 function sairSala(e) {
@@ -791,6 +850,7 @@ function exibirModoEspera(texto) {
 }
 const socket = io();
 socket.on("connect", async function() {
+    // console.log(socket);
     socket.emit("nova-sala", {sala: window.localStorage.sala.toUpperCase(), rival: window.localStorage.voce});
 
     const retorno = await fetch("/carregaDadosSala", {
@@ -822,6 +882,14 @@ socket.on("connect", async function() {
     }
 
     exibirModoEspera('Aguardando seu rival conectar...');
+    socket.emit('atualiza-cronometro', {
+        sala: window.localStorage.sala,
+        // cronometro: seg,
+        reload: true
+    });
+    socket.on('atualiza-cronometro-bk', function(tempo) {
+        iniciaCronometro(resposta, tempo);        
+    });
 });
 
 socket.on("atualiza-rival-inicio-bk", function(data) {
@@ -833,9 +901,9 @@ socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
     atualizaStatusJogo(data);
 });
 
-socket.on("inicia-jogada", function(data) {    
+socket.on("inicia-jogada", function(data) {   
     atualizaStatusJogo(data);    
-    socket.emit("atualiza-rival", data);
+    socket.emit("atualiza-rival", data);    
 });
 
 socket.on("retorno-mensagem", function(data) {

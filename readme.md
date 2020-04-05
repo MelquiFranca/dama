@@ -1,7 +1,7 @@
 ###Lista de Pendências
 -  **1 Jogabilidade**
    - [ ] **Assoprar Peça que não foi comida**
-   - [ ] Cronômetro
+   - [x] Cronômetro
    - [ ] Fim de jogo
    - [x] ***Validar Continuação de Jogada após realizar primeiro movimento***
    - [x] **Liberar Início da partida após os Dois jogadores se conectarem**

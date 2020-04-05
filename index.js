@@ -8,6 +8,8 @@ const cors = require('cors');
 
 const Salas = require('./Salas');
 const DB = require('./controllers/DatabaseController');
+const Cronometro = require('./cronometro');
+
 DB.criarTabelaSalas(process.env.PORT || null);
 
 app.use(cors());
@@ -49,7 +51,7 @@ app.post('/validaLogin', async (req, res) => {
             res.send(retorno);
 
         } else {
-            const retorno = await Salas.criar(sala.toUpperCase(), jogador, cor);
+            const retorno = await Salas.criar(sala.toUpperCase(), jogador, cor, 30);
             res.send(retorno);            
         }
 }
@@ -68,32 +70,48 @@ io.on('connection', function(socket) {
         // console.log(socket.id);        
         socket.join(dados.sala.toUpperCase());        
     });
-    // socket.emit("atualiza-rival", )
-    console.log(socket.rooms);
-    
+
+    socket.on("atualiza-cronometro", async function(dados) {
+        const cronometroAtual = Cronometro.getContador();
+
+        if(!dados.reload) {
+            const cronometro = Cronometro.alterar(dados.cronometro);
+            // console.log(cronometro);
+        } else {
+            const cronometro = Cronometro.alterar(cronometroAtual);
+            socket.emit('atualiza-cronometro-bk', cronometro);
+            // console.log(cronometro);
+        }
+        // const retorno = await Salas.atualizaCronometro(dados);   
+    });
+
     socket.on("tabuleiro-banco-pecas", async function(dados) {
         // console.log(dados);
         const retorno = await Salas.atualizarHistoricoSala({
             sala: dados.sala, 
             tabuleiro: dados.tabuleiro, 
-            bancopecas: dados.bancopecas
+            bancopecas: dados.bancopecas,
         });
         // console.log(retorno);
         socket.in(dados.sala).emit('atualiza-tabuleiro-banco-pecas', retorno);
     });
     
     socket.on("finaliza-jogada", async function(data) {
+
+        
         const retorno = await Salas.atualizarVezJogada({
             vezjogada: data.vezjogada,
             sala: data.sala,
         });
+        
+        const cronometro = Cronometro.zerar();
+        // socket.emit('atualiza-cronometro-bk', cronometro);
 
         socket.in(data.sala).emit('inicia-jogada', retorno);
 
     });
 
     socket.on("atualiza-rival-inicio", async function(data) {
-        // console.log(data);
         const sala = await Salas.selecionar(data.sala);
         socket.in(data.sala).emit('atualiza-rival-inicio-bk', sala);
     });

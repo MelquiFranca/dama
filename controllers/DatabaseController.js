@@ -37,7 +37,8 @@ const SQL_CREATE = `CREATE TABLE IF NOT EXISTS salas(
     jogadorblue VARCHAR(255) NULL,
     tabuleiro TEXT NULL,
     bancopecas TEXT NULL,
-    chat TEXT NULL
+    chat TEXT NULL,
+    cronometro INTEGER NOT NULL
 )`;
 
 async function criarTabelaSalas(BANCO) {
@@ -53,8 +54,8 @@ async function criarTabelaSalas(BANCO) {
 
 async function inserirSalaDB(dados) {
     const retorno = await sequelize.query(`INSERT INTO salas 
-        (sala, vezjogada, jogadorred, jogadorblue, tabuleiro, bancopecas, chat) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)`, 
+        (sala, vezjogada, jogadorred, jogadorblue, tabuleiro, bancopecas, chat, cronometro) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
     {
         replacements: [
             dados.sala,
@@ -63,7 +64,8 @@ async function inserirSalaDB(dados) {
             dados.jogadorblue, 
             dados.tabuleiro, 
             dados.bancopecas,
-            dados.chat
+            dados.chat,
+            dados.cronometro
         ],
     });
 
@@ -79,7 +81,7 @@ async function selecionarSalaDB(sala) {
 }
 async function atualizarSalaDB(dados) {
     const retorno = await sequelize.query(`UPDATE salas 
-        SET vezjogada = ?, jogadorred = ?, jogadorblue = ?, tabuleiro = ?, bancopecas = ?, chat = ? 
+        SET vezjogada = ?, jogadorred = ?, jogadorblue = ?, tabuleiro = ?, bancopecas = ?, chat = ?, cronometro = ? 
         WHERE sala = ?
     `, {
         replacements: [
@@ -89,6 +91,7 @@ async function atualizarSalaDB(dados) {
             dados.tabuleiro, 
             dados.bancopecas,
             dados.chat,
+            dados.cronometro,
             dados.sala
         ],
     });
@@ -102,6 +105,20 @@ async function atualizarVezJogadaSalaDB(dados) {
     `, {
         replacements: [
             dados.vezjogada,
+            dados.sala
+        ],
+    });
+
+    return retorno;
+}
+
+async function atualizaCronometro(dados) {
+    const retorno = await sequelize.query(`UPDATE salas 
+        SET cronometro = ? 
+        WHERE sala = ?
+    `, {
+        replacements: [
+            dados.cronometro,
             dados.sala
         ],
     });
@@ -124,4 +141,5 @@ module.exports = {
     atualizarSalaDB,
     atualizarVezJogadaSalaDB,
     excluirSala,
+    atualizaCronometro
 }
