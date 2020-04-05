@@ -631,16 +631,20 @@ function finalizaJogada() {
 }
 
 function ativaDesativaFinalizarJogada(status) {
+    const icon = document.getElementById('finaliza-jogada-icone');
     if(status) {
-        FINALIZA_JOGADA.innerText = "Finalizar";
+        icon.classList.remove('fa-hourglass');
+        icon.classList.add('fa-check');
         FINALIZA_JOGADA.classList.add("vezJogadaAtivo");
         FINALIZA_JOGADA.classList.remove("vezJogadaInativo");
-    } else {
-        FINALIZA_JOGADA.innerText = "Aguarde...";
+    } else {        
+        icon.classList.remove('fa-check');
+        icon.classList.add('fa-hourglass');
         FINALIZA_JOGADA.classList.add("vezJogadaInativo");
         FINALIZA_JOGADA.classList.remove("vezJogadaAtivo");
     }  
-        
+    
+    // FINALIZA_JOGADA.innerHTML = icon.innerHTML;
     
 }
 
@@ -675,12 +679,12 @@ function iniciaCronometro(dados, tempo) {
     }
 
     // console.log(dados);
-    if(window.localStorage.voce == dados.vezjogada && window.localStorage.rival != "null") {
-        alteraContagem(tempo);        
-    } else {
-        clearTimeout(CONTAGEM);
-        cronometro.innerText = "30";          
-    }
+    // if(window.localStorage.voce == dados.vezjogada && window.localStorage.rival != "null") {
+    //     alteraContagem(tempo);        
+    // } else {
+    //     clearTimeout(CONTAGEM);
+    //     cronometro.innerText = "30";          
+    // }
 }
 
 function converteTabuleiroEmObjeto() {
