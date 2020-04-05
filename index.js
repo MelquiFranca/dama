@@ -73,12 +73,19 @@ io.on('connection', function(socket) {
 
     socket.on("atualiza-cronometro", async function(dados) {
         const cronometroAtual = Cronometro.getContador();
+        let cronometro;
 
         if(!dados.reload) {
-            const cronometro = Cronometro.alterar(dados.cronometro);
+            if(dados.finaliza) {
+                cronometro = Cronometro.zerar();
+            } else {
+                cronometro = Cronometro.alterar(dados.cronometro);
+            }
             // console.log(cronometro);
         } else {
-            const cronometro = Cronometro.alterar(cronometroAtual);
+ 
+            cronometro = Cronometro.alterar(cronometroAtual);
+    
             socket.emit('atualiza-cronometro-bk', cronometro);
             // console.log(cronometro);
         }

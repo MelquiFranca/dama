@@ -618,13 +618,13 @@ function reiniciaJogo() {
 }
 
 function finalizaJogada() {
-    clearTimeout(CONTAGEM);
     window.localStorage.proximaJogada = false;
     socket.emit("finaliza-jogada", {
         vezjogada: window.localStorage.voce,
         sala: window.localStorage.sala.toUpperCase(),        
     });   
-
+    
+    clearTimeout(CONTAGEM);
     socket.on("atualiza-rival-bk", function(data) {
         atualizaStatusJogo(data, true);
     });
@@ -821,7 +821,7 @@ function atualizaStatusJogo(data, finaliza) {
 
     socket.emit('atualiza-cronometro', {
         sala: window.localStorage.sala,
-        cronometro: (finaliza) ? 30 : null,
+        finaliza: finaliza || false,
         reload: true
     });
     socket.on('atualiza-cronometro-bk', function(tempo) {
@@ -902,7 +902,7 @@ socket.on('atualiza-tabuleiro-banco-pecas', function(data) {
 });
 
 socket.on("inicia-jogada", function(data) {   
-    atualizaStatusJogo(data);    
+    atualizaStatusJogo(data, true);    
     socket.emit("atualiza-rival", data);    
 });
 
